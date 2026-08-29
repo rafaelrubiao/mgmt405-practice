@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Module 4 (Part II) · MGMT 405 Practice</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Module 4 (Part II): Market Distortions / Externalities</div>
+</header>
+
+<nav class="modnav"><a href="index.html">All modules</a><a href="module-1.html">Module 1</a><a href="module-2.html">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html">Module 4 (Part I)</a><a href="module-4-part-2.html" class="active">Module 4 (Part II)</a><a href="module-5.html">Module 5</a><a href="module-6.html">Module 6</a><a href="module-7-part-1.html">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html">Module 8</a></nav>
+
+<div class="controls">
+  <label>Question type:</label>
+  <select id="typefilter">
+    <option value="all">All</option>
+    <option value="open">Open (numeric answer)</option>
+    <option value="mcq">Multiple choice</option>
+  </select>
+  <span class="stats">
+    <span id="progress">0 / 0 attempted</span> · <strong id="correct">0 correct</strong>
+    <button id="reset" style="margin-left:8px; font-size:11px; padding:2px 8px; background:#fff; border:1px solid var(--line); border-radius:3px; cursor:pointer;">Reset this module</button>
+  </span>
+</div>
+
+<main>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div id="main"></div>
+</main>
+
+<button class="calc-toggle" id="calctoggle">🖩 Calculator</button>
+<div class="calc" id="calc">
+  <div class="display" id="calcdisp">0</div>
+  <div class="keys">
+    <button class="fn" data-act="clear">C</button>
+    <button class="fn" data-act="back">⌫</button>
+    <button class="fn" data-key="(">(</button>
+    <button class="fn" data-key=")">)</button>
+    <button class="op" data-key="/">÷</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+    <button class="op" data-key="*">×</button>
+    <button class="fn" data-act="sqrt">√</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button class="op" data-key="-">−</button>
+    <button class="fn" data-key="**">x^y</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button class="op" data-key="+">+</button>
+    <button class="fn" data-key=".">.</button>
+    <button data-key="0">0</button>
+    <button data-key="00">00</button>
+    <button class="eq" data-act="eq">=</button>
+  </div>
+</div>
+
+<script id="QDATA" type="application/json">{"module": {"key": "M4-II", "label": "Module 4 (Part II)", "title": "Market Distortions / Externalities"}, "questions": [{"id": "m4ii-q1", "module": "M4-II", "theme": "Tax — Buyer Price", "format": "open", "stem": "A market has demand Q_d = 120 − 3P and supply Q_s = −30 + 2P. The government imposes a $5/unit tax on sellers.", "ask": "What is the new equilibrium price PAID BY BUYERS (in $)?", "answer": 32, "tolerance_abs": 0.1, "unit": "$", "hints": ["First find the free-market equilibrium. With a tax on sellers, P_buyer = P_seller + tax.", "Free-market: 120 − 3P = −30 + 2P → P* = 30.  With the tax: substitute P_seller = P_buyer − 5 into supply: Q_s = −30 + 2(P_b − 5) = −40 + 2P_b. Equate to demand.", "120 − 3P_b = −40 + 2P_b → 160 = 5P_b → P_b = $32."], "solution": "Step 1 — Free-market equilibrium:\n  120 − 3P = −30 + 2P → 150 = 5P → P* = $30, Q* = 30.\n\nStep 2 — With $5 tax on sellers, P_buyer = P_seller + 5, so supply (in terms of the buyer's price) shifts up. New supply: Q_s = −30 + 2(P_b − 5) = −40 + 2P_b.\n\nStep 3 — New equilibrium:\n  120 − 3P_b = −40 + 2P_b\n  160 = 5P_b\n  P_buyer = $32\n\nSeller receives $32 − $5 = $27. Quantity falls from 30 to Q = 120 − 3(32) = 24."}, {"id": "m4ii-q2", "module": "M4-II", "theme": "Tax Incidence", "format": "open", "stem": "Continuing the previous problem (Q_d = 120 − 3P, Q_s = −30 + 2P, $5 tax on sellers).", "ask": "Of the $5 tax, what fraction is borne by buyers? (Express as a decimal — e.g., 0.40.)", "answer": 0.4, "tolerance_abs": 0.02, "unit": "", "hints": ["Buyer's burden = how much the buyer's price ROSE from the original equilibrium.", "P_buyer rose from $30 to $32 → buyers pay $2 more out of the $5 tax.", "Buyer's share = $2 / $5 = 0.40. (Sellers absorb $3, or 60%.)"], "solution": "Old buyer price: $30.  New buyer price: $32.  Increase = $2.\nTax = $5. Buyer's share = $2 / $5 = 0.40.\n\n(Demand slope = −3, supply slope = +2. The MORE-INELASTIC side bears MORE of the tax. Supply is less elastic here (2 < 3) → sellers bear more, 60%.)"}, {"id": "m4ii-q3", "module": "M4-II", "theme": "Price Ceiling DWL", "format": "open", "stem": "A market has demand Q_d = 240 − 4P and supply Q_s = 6P. The government imposes a price ceiling at P_ceiling = $18.", "ask": "What is the deadweight loss caused by the price ceiling (in $)?", "answer": 270, "tolerance_abs": 2, "unit": "$", "hints": ["First find the free-market equilibrium. Then determine quantities at the ceiling and the DWL triangle.", "Free-market: 240 − 4P = 6P → P* = $24, Q* = 144. At ceiling P=$18: Q_s = 108 (only this much is supplied — the binding constraint), Q_d = 168 (demanders want more). Q_traded = 108.", "DWL triangle: ½ × (Q_eq − Q_traded) × (P_demand at Q_traded − P_supply at Q_traded). At Q=108: P_demand = (240−108)/4 = $33; P_supply = 108/6 = $18. DWL = ½ × (144−108) × ($33 − $18) = ½ × 36 × 15 = $270."], "solution": "Step 1 — Free-market equilibrium:\n  240 − 4P = 6P → 240 = 10P → P* = $24, Q* = 144.\n\nStep 2 — At the ceiling P = $18:\n  Q_s = 6(18) = 108 (supplied — binding constraint)\n  Q_d = 240 − 4(18) = 168 (wanted)\n  Q_traded = 108 (the SHORT side rules)\n\nStep 3 — DWL triangle, bounded by:\n  • the demand curve (top side)\n  • the supply curve (bottom side)\n  • from Q = 108 up to Q* = 144\n\n  At Q = 108: P_demand = $33, P_supply = $18.\n  DWL = ½ × (Q* − Q_traded) × (P_d − P_s) = ½ × 36 × 15 = $270."}, {"id": "m4ii-q4", "module": "M4-II", "theme": "Pigouvian Tax", "format": "mcq", "stem": "A chemical plant has a private marginal cost of $3.00/unit. Producing each unit emits pollution that imposes an estimated $0.80/unit external cost on society.", "ask": "What per-unit Pigouvian tax is needed to internalize the externality and achieve the socially efficient quantity?", "choices": ["$3.80/unit", "$2.20/unit", "It depends on demand elasticity", "Zero — markets handle externalities efficiently on their own", "$0.80/unit"], "correct_index": 4, "hints": ["A Pigouvian tax should equal the EXTERNAL marginal cost at the socially-optimal quantity.", "External MC here is $0.80/unit — the cost the polluter doesn't pay but society bears.", "Set tax = $0.80, so the firm's effective cost becomes $3.00 + $0.80 = $3.80 = social MC."], "solution": "Pigouvian tax = external marginal cost.\n\nHere external MC = $0.80/unit. A tax of $0.80/unit internalizes the externality: producers face $3.00 (private MC) + $0.80 (tax) = $3.80 = social MC. The market then equilibrates at the socially efficient quantity.\n\n(Answer: $0.80/unit)"}, {"id": "m4ii-q5", "module": "M4-II", "theme": "Consumer Surplus", "format": "open", "stem": "Linear demand for fresh-squeezed juice at a stand is P = 12 − 0.3Q (Q in cups/day). The stand sells juice at P = $6.", "ask": "What is the consumer surplus (in $)?", "answer": 60, "tolerance_abs": 0.5, "unit": "$", "hints": ["CS is the triangle between the demand curve and the price line, from 0 to the quantity sold.", "At P = $6: Q = (12 − 6)/0.3 = 20 cups. Price intercept of demand (price at Q = 0) = $12.", "CS = ½ × Q × (P_intercept − P) = ½ × 20 × ($12 − $6) = $60."], "solution": "Step 1 — Quantity sold at P=$6:\n  6 = 12 − 0.3Q → 0.3Q = 6 → Q = 20.\nStep 2 — Demand's price intercept (price at Q=0): $12.\nStep 3 — CS = ½ × base × height\n        = ½ × 20 × ($12 − $6)\n        = $60."}, {"id": "m4ii-mcq-2", "module": "M4-II", "theme": "Tax Incidence — Inelastic Demand", "format": "mcq", "stem": "A per-unit tax is imposed in a market where demand is very INELASTIC (small |e_D|) and supply is very ELASTIC (large e_S).", "ask": "Who bears more of the tax burden?", "choices": ["Burden is split evenly", "The government absorbs it", "Cannot determine without numerical values", "Sellers (supply is more elastic, so sellers absorb most of the tax)", "Buyers (demand is more inelastic, so buyers absorb most of the tax)"], "correct_index": 4, "hints": ["Tax incidence rule: the MORE INELASTIC side bears MORE of the burden.", "The inelastic side can't substitute away from the taxed good — they accept the price change.", "Demand is inelastic here → buyers bear most of the tax."], "solution": "Tax incidence depends on relative elasticities:\n  The more-inelastic side has fewer alternatives → can't avoid the tax → bears most of it.\n\nHere demand is inelastic and supply is elastic → BUYERS bear most of the tax burden."}, {"id": "m4ii-mcq-3", "module": "M4-II", "theme": "Tax-Induced Buyer Price (Numeric)", "format": "mcq", "stem": "Market demand: Q_d = 80 − P. Market supply: Q_s = 3P − 40. The government imposes a $4/unit tax on sellers.", "ask": "What is the new equilibrium price PAID BY BUYERS?", "choices": ["$34", "$35", "$36", "$30 (no change)", "$33"], "correct_index": 4, "hints": ["First find the pre-tax equilibrium: P* and Q*.", "With a $4 tax on sellers, P_buyer = P_seller + 4. Substitute P_seller = P_buyer − 4 into supply.", "Solve the new equilibrium for P_buyer."], "solution": "Pre-tax: 80 − P = 3P − 40 → 120 = 4P → P* = $30, Q* = 50.\n\nWith a $4 tax on sellers, supply (in terms of P_buyer) becomes:\n  Q_s = 3(P_b − 4) − 40 = 3P_b − 52\nSet Q_d = Q_s:\n  80 − P_b = 3P_b − 52\n  132 = 4P_b\n  P_b = $33.\n\nSeller receives $33 − $4 = $29. Buyer share = $3/$4 = 75%, seller share = 25% (demand is more inelastic, so buyers bear more)."}, {"id": "m4ii-mcq-4", "module": "M4-II", "theme": "Price Ceiling Effect", "format": "mcq", "stem": "A city government imposes a binding price ceiling (below market equilibrium) on apartment rents.", "ask": "What is the most likely effect?", "choices": ["A shortage of apartments", "A surplus of apartments", "Higher quality housing for tenants", "Equilibrium quantity rises", "No effect because prices adjust upward to clear the market"], "correct_index": 0, "hints": ["A binding price ceiling forces price BELOW the market-clearing level.", "At the lower legal price, Q_demanded > Q_supplied.", "Result: shortage (more people want apartments than landlords offer at the legal price)."], "solution": "Binding price ceiling → Q_d > Q_s at the legal price → SHORTAGE.\n\nCommon side effects: long search times, waiting lists, black markets, quality deterioration (landlords cut maintenance), and bribes/discrimination among potential tenants."}, {"id": "m4ii-mcq-5", "module": "M4-II", "theme": "Minimum Wage Effect", "format": "mcq", "stem": "A government imposes a binding minimum wage (above the market-clearing wage) for low-skill labor.", "ask": "What is the predicted short-run effect?", "choices": ["Unemployment (more workers want jobs than employers want to hire)", "A shortage of workers", "Equilibrium wage rises to the minimum naturally", "Lower wages for those already employed", "More total hires than before"], "correct_index": 0, "hints": ["A minimum wage above the equilibrium wage is a binding price floor in the labor market.", "At the higher wage, Q_supplied (workers wanting jobs) > Q_demanded (jobs offered).", "The gap = unemployment among low-skill workers."], "solution": "A binding minimum wage above equilibrium: more workers want jobs than employers want to hire at that wage → unemployment.\n\nWinners: workers who keep their jobs at the higher wage.\nLosers: workers laid off or never hired; firms with higher labor costs."}, {"id": "m4ii-mcq-6", "module": "M4-II", "theme": "Determinants of Tax DWL", "format": "mcq", "stem": "All else equal, the deadweight loss of a per-unit tax tends to be LARGER when:", "ask": "DWL is largest when:", "choices": ["Both demand and supply are very ELASTIC", "Both demand and supply are very INELASTIC", "Demand is unit-elastic", "The tax rate is zero", "The market has many small firms"], "correct_index": 0, "hints": ["DWL is the value of trades that DIDN'T happen because of the tax.", "Elastic curves: buyers/sellers respond strongly → many trades lost → big DWL.", "Inelastic curves: quantity barely moves → few trades lost → small DWL."], "solution": "DWL ∝ the drop in quantity caused by the tax. Elastic curves mean buyers/sellers easily substitute away → big quantity drop → big DWL.\n\nThis is why governments often tax INELASTIC items (like cigarettes or gasoline) to raise revenue with minimal DWL."}, {"id": "m4ii-mcq-7", "module": "M4-II", "theme": "Negative Externality Outcome", "format": "mcq", "stem": "A factory's production pollutes a river, harming downstream fishermen. The market price reflects only the factory's PRIVATE marginal cost.", "ask": "Without government intervention, the market produces:", "choices": ["The socially efficient quantity", "Nothing — the factory shuts down voluntarily", "The same amount as if pollution were costless", "Too LITTLE of the factory's good (underproduction)", "Too MUCH of the factory's good (overproduction)"], "correct_index": 4, "hints": ["Private MC ignores the external cost (pollution damage borne by fishermen).", "Social MC = private MC + external MC > private MC.", "The market clears where P = private MC, but the social optimum is where P = social MC → market quantity > social quantity → overproduction."], "solution": "Negative externality: private MC understates the true social cost.\n\nMarket equilibrium: P = private MC.\nSocial optimum: P = social MC = private MC + external MC.\n\nSince social MC > private MC, the market produces MORE than is socially efficient → overproduction. A Pigouvian tax (= external MC) restores efficiency."}, {"id": "m4ii-mcq-8", "module": "M4-II", "theme": "Positive Externality Outcome", "format": "mcq", "stem": "Flu vaccinations create positive externalities — they reduce disease spread to OTHER community members, not just the vaccinated person.", "ask": "Without government intervention, the market for vaccinations produces:", "choices": ["Too few vaccinations", "Too many vaccinations", "Just the right (socially efficient) amount", "Vaccinations at the wrong price (too high)", "Vaccinations only for the rich"], "correct_index": 0, "hints": ["Positive externality: the social marginal benefit (private benefit + spillover) > private marginal benefit.", "The market clears where private MB = MC, but the socially efficient quantity is where social MB = MC.", "Since social MB > private MB, market quantity < social quantity → UNDER-PRODUCTION."], "solution": "With positive externalities, social MB > private MB. The market produces where private MB = MC, which is LESS than the socially efficient quantity (where social MB = MC).\n\nSolution: subsidize the activity (Pigouvian subsidy), mandate it, or provide it publicly."}, {"id": "m4ii-mcq-9", "module": "M4-II", "theme": "Subsidy Effect", "format": "mcq", "stem": "A government per-unit subsidy is paid to producers of solar panels.", "ask": "What is the most likely effect on equilibrium price and quantity?", "choices": ["Buyer price falls; quantity rises", "Buyer price rises; quantity falls", "No change in price or quantity", "Both buyer price and quantity fall", "Buyer price rises; quantity rises"], "correct_index": 0, "hints": ["A subsidy to producers acts like a negative tax — it makes selling more profitable.", "The effective supply curve shifts down (or right): for every Q, producers are willing to accept a lower price by the subsidy amount.", "New equilibrium: buyer price falls; quantity rises. (Seller's effective revenue per unit = buyer price + subsidy.)"], "solution": "A subsidy to producers shifts supply down/right by the subsidy amount. At the new equilibrium:\n  Buyer price FALLS\n  Quantity RISES\n  Seller's revenue per unit = buyer price + subsidy\n\nThis is the mirror image of a per-unit tax."}, {"id": "m4ii-mcq-10", "module": "M4-II", "theme": "Tax Revenue (Numeric)", "format": "mcq", "stem": "A market had a pre-tax equilibrium quantity of 120 units. After a $5/unit tax is imposed, equilibrium quantity falls to 90 units.", "ask": "What is the government's tax revenue?", "choices": ["$90", "$150", "$450", "$600", "$480"], "correct_index": 2, "hints": ["Tax revenue = tax rate × quantity sold AFTER the tax.", "Use the after-tax quantity (lost trades pay no tax).", "Revenue = $5 × 90 = $450."], "solution": "Tax revenue = tax × Q_after = $5 × 90 = $450.\n\nThe lost 30 units don't generate any tax revenue — there's no transaction to tax.\n\n(Bonus: the DWL of this tax = ½ × $5 × (120 − 90) = $75.)"}, {"id": "m4ii-mcq-11", "module": "M4-II", "theme": "Quantity Restriction Effect", "format": "mcq", "stem": "A government imposes a binding maximum-quantity quota in a market, BELOW the free-market equilibrium quantity.", "ask": "What is the most likely effect on the price PAID BY BUYERS?", "choices": ["Buyer price unchanged", "Buyer price falls in SR, rises in LR", "Cannot determine", "Buyer price falls", "Buyer price rises"], "correct_index": 4, "hints": ["A quota limits the quantity that can legally be sold.", "At the restricted quantity, buyers' willingness to pay (read off the demand curve) is HIGHER than the original equilibrium price.", "The price rises to clear the limited supply."], "solution": "A binding quota reduces Q below equilibrium. With less quantity available, buyers compete and bid the price UP (along the demand curve).\n\nExamples: taxi medallions, agricultural quotas, fishery limits. Buyers pay more; sellers (or quota-holders) capture rents from the artificial scarcity."}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+const QS = D.questions;
+
+// ---- Per-question state, persisted in localStorage (shared across module pages) ----
+const STATE_KEY = 'mgmt405_practice_v1';
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch (_) { STATE = {}; }
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch (_) {} }
+function getQState(qid) {
+  if (!STATE[qid]) STATE[qid] = {attempts:0, hints_shown:0, completed:false, last_answer_correct:false, mcq_choice:null, last_input:'', show_solution:false};
+  if (STATE[qid].show_solution === undefined) STATE[qid].show_solution = false;
+  return STATE[qid];
+}
+
+let typeFilter = 'all';
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ---- Stats ----
+function updateStats() {
+  let attempted = 0, correct = 0, total = 0;
+  for (const q of QS) {
+    if (typeFilter !== 'all' && q.format !== typeFilter) continue;
+    total++;
+    const s = STATE[q.id];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  document.getElementById('progress').textContent = attempted + ' / ' + total + ' attempted';
+  document.getElementById('correct').textContent = correct + ' correct';
+}
+
+// ---- Render questions ----
+function renderQuestions() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filtered = QS.filter(q => typeFilter === 'all' || q.format === typeFilter);
+  if (filtered.length === 0) {
+    main.innerHTML = '<p style="color:var(--muted)">No questions match the current filter.</p>';
+    updateStats(); return;
+  }
+  for (const q of filtered) {
+    main.appendChild(renderQuestion(q));
+  }
+  updateStats();
+}
+
+function renderQuestion(q) {
+  const s = getQState(q.id);
+  const card = document.createElement('div');
+  card.className = 'q';
+  if (s.completed) card.classList.add('done', s.last_answer_correct ? 'correct' : 'failed');
+
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML =
+    '<span class="qtag ' + q.format + '">' + (q.format === 'open' ? 'OPEN' : 'MCQ') + '</span>' +
+    '<span class="qtheme">' + escapeHTML(q.theme) + '</span>' +
+    '<span class="qid">' + q.id + '</span>' +
+    '<span class="qstatus ' + (s.completed ? (s.last_answer_correct ? 'correct' : 'failed') : '') + '">' +
+      (s.completed ? (s.last_answer_correct ? '✓ Solved' : '✗ See solution') : '') +
+    '</span>';
+  card.appendChild(head);
+
+  const stem = document.createElement('div');
+  stem.className = 'qstem';
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const ask = document.createElement('div');
+  ask.className = 'qask';
+  ask.textContent = q.ask;
+  card.appendChild(ask);
+
+  // Input area
+  const inputArea = document.createElement('div');
+  if (q.format === 'open') {
+    inputArea.className = 'input-row';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.placeholder = 'Numeric answer';
+    inp.value = s.last_input || '';
+    if (s.completed) inp.disabled = true;
+    inp.dataset.qid = q.id;
+    inputArea.appendChild(inp);
+    if (q.unit) {
+      const u = document.createElement('span');
+      u.className = 'unit';
+      u.textContent = q.unit;
+      inputArea.appendChild(u);
+    }
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-open';
+      inputArea.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      inputArea.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      inputArea.appendChild(att);
+    }
+  } else {
+    inputArea.className = 'choices';
+    inputArea.dataset.qid = q.id;
+    for (let i = 0; i < q.choices.length; i++) {
+      const lbl = document.createElement('label');
+      const selected = s.mcq_choice === i;
+      if (selected) lbl.classList.add('selected');
+      lbl.innerHTML = '<input type="radio" name="' + q.id + '" value="' + i + '"' + (selected ? ' checked' : '') + (s.completed ? ' disabled' : '') + '> ' +
+                     '<strong>' + String.fromCharCode(65 + i) + ')</strong> ' + escapeHTML(q.choices[i]);
+      inputArea.appendChild(lbl);
+    }
+    const row = document.createElement('div');
+    row.style.marginTop = '8px';
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-mcq';
+      row.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      row.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      row.appendChild(att);
+    }
+    inputArea.appendChild(row);
+  }
+  card.appendChild(inputArea);
+
+  // Feedback and hints
+  const fb = document.createElement('div');
+  fb.className = 'feedback-area';
+  fb.dataset.qid = q.id;
+  card.appendChild(fb);
+
+  if (s.completed) {
+    const resDiv = document.createElement('div');
+    resDiv.className = 'feedback result ' + (s.last_answer_correct ? 'correct' : 'wrong');
+    if (s.last_answer_correct) {
+      const tag = s.hints_shown > 0 ? '(after ' + s.hints_shown + ' hint' + (s.hints_shown > 1 ? 's' : '') + ')' : '(first try)';
+      resDiv.innerHTML = '<span class="icon">✓</span><span><strong>Correct!</strong> <span class="sub">' + tag + '</span></span>';
+    } else {
+      resDiv.innerHTML = '<span class="icon">✗</span><span><strong>Incorrect.</strong> <span class="sub">No attempts remaining — full solution shown below.</span></span>';
+    }
+    fb.appendChild(resDiv);
+  } else if (s.attempts > 0) {
+    const left = 3 - s.attempts;
+    const tail = left >= 0 ? ' (' + Math.max(left, 0) + ' attempt' + (left === 1 ? '' : 's') + ' left)' : '';
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'feedback wrong';
+    wrongDiv.innerHTML = '<strong>✗ Not quite — try again.</strong> Hint ' + s.hints_shown + ' revealed below.' + tail;
+    fb.appendChild(wrongDiv);
+  }
+  if (s.hints_shown > 0) renderHints(fb, q, s.hints_shown);
+  if (s.completed && (!s.last_answer_correct || s.show_solution)) renderSolution(fb, q);
+
+  return card;
+}
+
+function renderHints(container, q, n_shown) {
+  container.querySelectorAll('.hint').forEach(el => el.remove());
+  for (let i = 0; i < n_shown && i < q.hints.length; i++) {
+    const h = document.createElement('div');
+    h.className = 'hint';
+    h.innerHTML = '<b>Hint ' + (i+1) + ':</b> ' + escapeHTML(q.hints[i]);
+    container.appendChild(h);
+  }
+}
+
+function renderSolution(container, q) {
+  if (container.querySelector('.solution')) return;
+  const sol = document.createElement('div');
+  sol.className = 'solution';
+  sol.innerHTML = '<h4>Full solution</h4><pre>' + escapeHTML(q.solution) + '</pre>';
+  container.appendChild(sol);
+}
+
+// ---- Answer checking ----
+function checkOpen(q, value) {
+  const userVal = parseFloat(value);
+  if (isNaN(userVal)) return {ok:false, msg:'Please enter a numeric answer.'};
+  const tol = q.tolerance_abs || 0;
+  const correct = Math.abs(userVal - q.answer) <= tol;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+function checkMCQ(q, choiceIndex) {
+  if (choiceIndex === null || choiceIndex === undefined) return {ok:false, msg:'Pick an option first.'};
+  const correct = choiceIndex === q.correct_index;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+// ---- Submit handler ----
+document.addEventListener('click', e => {
+  if (e.target.dataset.action === 'submit-open' || e.target.dataset.action === 'submit-mcq') {
+    handleSubmit(e.target);
+  } else if (e.target.dataset.action === 'toggle-solution') {
+    const qid = e.target.dataset.qid;
+    const s = getQState(qid);
+    s.show_solution = !s.show_solution;
+    saveState();
+    renderQuestions();
+  }
+});
+
+function handleSubmit(btn) {
+  const qid = btn.dataset.qid;
+  const q = QS.find(x => x.id === qid);
+  const s = getQState(qid);
+
+  if (s.completed) return;
+
+  let result;
+  if (q.format === 'open') {
+    const inp = btn.parentElement.querySelector('input[type=number]');
+    s.last_input = inp.value;
+    result = checkOpen(q, inp.value);
+  } else {
+    const sel = document.querySelector('.choices[data-qid="' + qid + '"] input[type=radio]:checked');
+    const choiceIndex = sel ? parseInt(sel.value) : null;
+    s.mcq_choice = choiceIndex;
+    result = checkMCQ(q, choiceIndex);
+  }
+
+  if (result.ok) {
+    s.attempts += 1;
+    s.completed = true;
+    s.last_answer_correct = true;
+    s.show_solution = false;
+    saveState();
+    renderQuestions();
+    return;
+  }
+
+  s.attempts += 1;
+  if (s.attempts <= 3) {
+    if (s.hints_shown < s.attempts) s.hints_shown = s.attempts;
+  } else {
+    s.completed = true;
+    s.last_answer_correct = false;
+    s.show_solution = true;
+    s.hints_shown = q.hints.length;
+  }
+  saveState();
+  renderQuestions();
+}
+
+// MCQ choice highlighting
+document.addEventListener('change', e => {
+  if (e.target.matches('.choices input[type=radio]')) {
+    const parent = e.target.closest('.choices');
+    parent.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+    e.target.closest('label').classList.add('selected');
+  }
+});
+
+// ---- Filters ----
+document.getElementById('typefilter').addEventListener('change', e => {
+  typeFilter = e.target.value;
+  renderQuestions();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Reset your progress on this module? This cannot be undone.')) return;
+  for (const q of QS) delete STATE[q.id];
+  saveState();
+  renderQuestions();
+});
+
+// ---- Calculator ----
+const calc = document.getElementById('calc');
+const calcDisp = document.getElementById('calcdisp');
+let calcExpr = '';
+function calcUpdate() { calcDisp.textContent = calcExpr || '0'; calcDisp.classList.remove('err'); }
+function calcEval() {
+  if (!calcExpr) return;
+  try {
+    if (!/^[\d+\-*/().\s*]+$/.test(calcExpr.replace(/\*\*/g, ''))) throw 'bad';
+    const v = Function('return (' + calcExpr + ')')();
+    if (!isFinite(v)) throw 'overflow';
+    calcExpr = String(+v.toFixed(10).replace(/\.?0+$/, ''));
+    calcUpdate();
+  } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+}
+document.getElementById('calctoggle').addEventListener('click', () => calc.classList.toggle('show'));
+document.querySelectorAll('.calc .keys button').forEach(b => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.key, a = b.dataset.act;
+    if (a === 'clear') { calcExpr = ''; calcUpdate(); }
+    else if (a === 'back') { calcExpr = calcExpr.slice(0, -1); calcUpdate(); }
+    else if (a === 'eq') { calcEval(); }
+    else if (a === 'sqrt') {
+      try {
+        const v = calcExpr ? Function('return (' + calcExpr + ')')() : 0;
+        if (v < 0) throw 'neg';
+        calcExpr = String(+Math.sqrt(v).toFixed(10).replace(/\.?0+$/, ''));
+        calcUpdate();
+      } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+    }
+    else if (k) { calcExpr += k; calcUpdate(); }
+  });
+});
+
+// ---- Init ----
+renderQuestions();
+</script>

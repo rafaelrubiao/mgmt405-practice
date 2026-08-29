@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Module 7 (Part I) · MGMT 405 Practice</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Module 7 (Part I): Oligopoly with Homogenous Goods</div>
+</header>
+
+<nav class="modnav"><a href="index.html">All modules</a><a href="module-1.html">Module 1</a><a href="module-2.html">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html">Module 4 (Part I)</a><a href="module-4-part-2.html">Module 4 (Part II)</a><a href="module-5.html">Module 5</a><a href="module-6.html">Module 6</a><a href="module-7-part-1.html" class="active">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html">Module 8</a></nav>
+
+<div class="controls">
+  <label>Question type:</label>
+  <select id="typefilter">
+    <option value="all">All</option>
+    <option value="open">Open (numeric answer)</option>
+    <option value="mcq">Multiple choice</option>
+  </select>
+  <span class="stats">
+    <span id="progress">0 / 0 attempted</span> · <strong id="correct">0 correct</strong>
+    <button id="reset" style="margin-left:8px; font-size:11px; padding:2px 8px; background:#fff; border:1px solid var(--line); border-radius:3px; cursor:pointer;">Reset this module</button>
+  </span>
+</div>
+
+<main>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div id="main"></div>
+</main>
+
+<button class="calc-toggle" id="calctoggle">🖩 Calculator</button>
+<div class="calc" id="calc">
+  <div class="display" id="calcdisp">0</div>
+  <div class="keys">
+    <button class="fn" data-act="clear">C</button>
+    <button class="fn" data-act="back">⌫</button>
+    <button class="fn" data-key="(">(</button>
+    <button class="fn" data-key=")">)</button>
+    <button class="op" data-key="/">÷</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+    <button class="op" data-key="*">×</button>
+    <button class="fn" data-act="sqrt">√</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button class="op" data-key="-">−</button>
+    <button class="fn" data-key="**">x^y</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button class="op" data-key="+">+</button>
+    <button class="fn" data-key=".">.</button>
+    <button data-key="0">0</button>
+    <button data-key="00">00</button>
+    <button class="eq" data-act="eq">=</button>
+  </div>
+</div>
+
+<script id="QDATA" type="application/json">{"module": {"key": "M7-I", "label": "Module 7 (Part I)", "title": "Oligopoly with Homogenous Goods"}, "questions": [{"id": "m7i-q1", "module": "M7-I", "theme": "Cournot Equilibrium Quantity", "format": "open", "stem": "Two firms compete in Cournot fashion (choosing quantities simultaneously). Inverse market demand is P = 120 − Q (where Q = q₁ + q₂). Both firms have constant MC = $30 and no fixed costs.", "ask": "What is each firm's equilibrium output?", "answer": 30, "tolerance_abs": 0.1, "unit": "", "hints": ["Each firm's reaction function: take the rival's q as given, write residual demand, set MR = MC.", "Firm 1's residual demand: P = (120 − q₂) − q₁. MR_1 = (120 − q₂) − 2q₁. Set = 30: q₁ = (90 − q₂)/2 = 45 − q₂/2.", "By symmetry, q₁ = q₂ = q*. Substitute: q* = 45 − q*/2 → 1.5 q* = 45 → q* = 30."], "solution": "Each firm's reaction function:\n  q_i = (a − MC − q_j) / 2  where a = 120\n      = (90 − q_j) / 2\n      = 45 − q_j/2\n\nSymmetric Nash equilibrium: q₁ = q₂ = q.\n  q = 45 − q/2\n  1.5 q = 45\n  q* = 30 each.\n\nTotal Q = 60. Market P = 120 − 60 = $60. Each firm's profit = (60 − 30) × 30 = $900.\n\n(For comparison: monopoly would set Q=45, P=$75, profit $2,025. Cournot industry profit is $1,800 — less than monopoly but more than PC's zero.)"}, {"id": "m7i-q2", "module": "M7-I", "theme": "Cournot Market Price", "format": "open", "stem": "Same Cournot setup as the previous question (P = 120 − Q, MC = $30, two symmetric firms).", "ask": "What is the equilibrium market price (in $)?", "answer": 60, "tolerance_abs": 0.1, "unit": "$", "hints": ["Plug total equilibrium quantity into the demand curve.", "Each firm produces 30, so total Q = 60.", "P = 120 − 60 = $60."], "solution": "Q_total = q₁ + q₂ = 2 × 30 = 60.\n\nP = 120 − Q = 120 − 60 = $60.\n\nCompare with monopoly (P = $75) and perfect competition (P = MC = $30). Duopoly gives a price between these."}, {"id": "m7i-mcq-1", "module": "M7-I", "theme": "Bertrand Outcome", "format": "mcq", "stem": "Two firms produce identical products and compete in Bertrand fashion (choosing prices simultaneously). Both have constant MC = $8. There is no collusion.", "ask": "What is the equilibrium market price?", "choices": ["$8 (equal to marginal cost)", "The monopoly price", "Halfway between MC and the monopoly price", "Depends on the demand elasticity", "There is no pure-strategy equilibrium"], "correct_index": 0, "hints": ["Identical products + price competition + same MC: classic Bertrand paradox setup.", "Each firm wants to undercut the other's price. As long as P > MC, undercutting is profitable. Where does undercutting stop?", "At P = MC = $8. Below that, neither firm wants to sell (would lose money). So the unique Nash equilibrium is P = $8."], "solution": "Bertrand competition with identical products and equal MC drives price down to MC.\n\nReasoning: as long as P > MC, each firm can profitably undercut the other and capture the whole market. This undercutting continues until P = MC = $8. Below that, neither firm would sell, so $8 is the floor.\n\nThis is the Bertrand paradox: with just two firms and identical products, we get the perfectly competitive outcome."}, {"id": "m7i-q3", "module": "M7-I", "theme": "Cartel vs Cournot", "format": "open", "stem": "Same Cournot setup (P = 120 − Q, MC = $30, two firms). If the two firms could form a cartel and split production equally, what would EACH firm produce?", "ask": "What is each firm's cartel output?", "answer": 22.5, "tolerance_abs": 0.5, "unit": "", "hints": ["A cartel acts as a single monopolist. Find total monopoly Q, then split.", "Monopoly: MR = 120 − 2Q = MC = 30 → Q_total = 45.", "Split equally: each firm produces 45 / 2 = 22.5."], "solution": "Cartel = joint monopoly. With combined output Q:\n  MR = 120 − 2Q. Set = MC = 30: Q* = 45.\n  P* = $75. Joint profit = (75 − 30) × 45 = $2,025.\n\nSplit equally: each firm produces 22.5 and earns $1,012.50.\n\nCompare to Cournot: each firm produced 30 and earned $900. The cartel is better for both firms BUT unstable: at the cartel quantity, each firm has incentive to cheat (best response to q_j = 22.5 is q_i = 45 − 11.25 = 33.75, not 22.5). This is why cartels are fragile."}, {"id": "m7i-mcq-2", "module": "M7-I", "theme": "Price Ranking Across Market Structures", "format": "mcq", "stem": "Two identical-cost firms produce a homogeneous product. Compare equilibrium prices across the standard market structures.", "ask": "How do the equilibrium prices rank from highest to lowest?", "choices": ["Bertrand > Cournot > Monopoly", "Cournot > Bertrand > Monopoly", "Monopoly > Cournot > Bertrand (= MC)", "Bertrand > Monopoly > Cournot", "All four are equal"], "correct_index": 2, "hints": ["Monopoly maximizes joint profit, so it has the highest price.", "Bertrand with identical goods and same MC drives price to MC = lowest (PC-like).", "Cournot lies between PC and monopoly. Standard ranking: Monopoly > Cournot > Bertrand = MC."], "solution": "Standard ranking for homogeneous goods with identical MC:\n  Monopoly P > Cournot P > Bertrand P = MC = PC P\n\nMonopoly: full pricing power, highest P.\nCournot: each firm produces more than half the monopoly Q, P is between PC and monopoly.\nBertrand: undercutting drives P to MC (Bertrand paradox)."}, {"id": "m7i-mcq-3", "module": "M7-I", "theme": "Why Cartels Are Unstable", "format": "mcq", "stem": "Cartels (such as OPEC) often have trouble maintaining their agreed-upon prices and production quotas.", "ask": "What is the fundamental reason for cartel instability?", "choices": ["Cartels are illegal in every country", "Each member has an incentive to CHEAT by producing more than its quota", "Customers refuse to buy from cartels", "Cartel agreements cannot be communicated effectively", "Cartel members never agree on price"], "correct_index": 1, "hints": ["At the cartel price, each firm's residual MR > MC for additional units.", "Each member can profit by sneaking out more production at the high cartel price.", "This is the Prisoner's Dilemma: cooperate (limit Q) is collectively rational; defect (produce more) is individually rational."], "solution": "At cartel quantities, each firm faces MR > MC for the next unit — so each one individually wants to produce more. Without enforcement (or repeated interactions with credible punishment), the cartel breaks down as members defect to gain share.\n\nClassic Prisoner's Dilemma structure: cooperate is collectively best, defect is individually best."}, {"id": "m7i-mcq-4", "module": "M7-I", "theme": "Cournot Equilibrium Quantity (Numeric)", "format": "mcq", "stem": "Two identical firms compete in Cournot fashion. Inverse demand: P = 240 − Q (Q = q₁ + q₂). Both firms have constant marginal cost = $60.", "ask": "What is each firm's equilibrium quantity?", "choices": ["30", "45", "60", "90", "120"], "correct_index": 2, "hints": ["Each firm's reaction function: q_i = (240 − MC − q_j)/2 = (180 − q_j)/2 = 90 − q_j/2.", "By symmetry, set q₁ = q₂ = q.", "q = 90 − q/2 → 1.5q = 90 → q = 60."], "solution": "Reaction function: q_i = (a − MC − q_j)/2 = (180 − q_j)/2 = 90 − q_j/2.\n\nSymmetric NE: q₁ = q₂ = q.\n  q = 90 − q/2\n  1.5q = 90\n  q* = 60 each.\n\nTotal Q = 120, market P = 240 − 120 = $120. Each firm's profit = (120 − 60) × 60 = $3,600."}, {"id": "m7i-mcq-5", "module": "M7-I", "theme": "Stackelberg First-Mover", "format": "mcq", "stem": "In Stackelberg quantity competition with two identical-cost firms, one firm (the leader) commits to a quantity first, and the other firm (the follower) observes and best-responds.", "ask": "Compared to the follower, the leader produces:", "choices": ["Less than the follower", "More than the follower", "Exactly the same as the follower", "The monopoly quantity", "Zero"], "correct_index": 1, "hints": ["The leader's first-move commitment changes the follower's optimal response.", "By committing to a high quantity, the leader pushes the follower onto its reaction curve at a lower q.", "In equilibrium, leader > follower. (First-mover advantage in quantity competition.)"], "solution": "The Stackelberg leader exploits the commitment advantage: by producing a high quantity first, it pushes the follower's best response down. Equilibrium: the leader produces ~2× the follower (with symmetric MC and linear demand).\n\nFirst-mover ADVANTAGE in Stackelberg (contrast with simultaneous Cournot, where both firms produce equally)."}, {"id": "m7i-mcq-6", "module": "M7-I", "theme": "Cournot Price (Numeric)", "format": "mcq", "stem": "Two identical Cournot firms face inverse demand P = 90 − Q (Q = q₁ + q₂) with MC = $18 each.", "ask": "What is the equilibrium market price?", "choices": ["$18", "$42", "$54", "$66", "$90"], "correct_index": 1, "hints": ["Reaction function: q_i = (90 − 18 − q_j)/2 = (72 − q_j)/2 = 36 − q_j/2.", "Symmetric NE: q = 36 − q/2 → 1.5q = 36 → q = 24 each. Total Q = 48.", "P = 90 − 48 = $42."], "solution": "Reaction: q_i = (72 − q_j)/2. Symmetric NE: q = 24 each. Total Q = 48. P = 90 − 48 = $42.\n\nCompare with monopoly P = $54 (Q_M = 36) and PC P = $18 = MC. Cournot lies between, as expected."}, {"id": "m7i-mcq-7", "module": "M7-I", "theme": "Cartel Output per Firm (Numeric)", "format": "mcq", "stem": "Two firms in Cournot competition face P = 100 − Q with MC = $20 each. Their Cournot equilibrium quantity per firm is approximately 26.67. If they instead colluded as a cartel and split production equally, how much would each firm produce?", "ask": "Cartel quantity per firm:", "choices": ["13.33 (less than Cournot)", "20 (less than Cournot)", "26.67 (same as Cournot)", "40 (more than Cournot)", "80 (much more)"], "correct_index": 1, "hints": ["A cartel acts as a single monopolist. Find total monopoly Q first.", "Monopoly: MR = 100 − 2Q = MC = 20 → Q_M = 40.", "Split equally between two firms: each = 40/2 = 20. (Less than Cournot's 26.67 — that's why each firm wants to cheat.)"], "solution": "Cartel = monopoly with output split.\n  MR = 100 − 2Q = 20 → Q_total = 40.\n  Each firm: 40 / 2 = 20.\n\nThis is LESS than Cournot (26.67 each). The cartel raises joint profits but is unstable: at q_j = 20, each firm's best response is q_i = 40 − 20/2 = 30, NOT 20. Each wants to cheat → the cartel breaks down without enforcement."}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+const QS = D.questions;
+
+// ---- Per-question state, persisted in localStorage (shared across module pages) ----
+const STATE_KEY = 'mgmt405_practice_v1';
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch (_) { STATE = {}; }
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch (_) {} }
+function getQState(qid) {
+  if (!STATE[qid]) STATE[qid] = {attempts:0, hints_shown:0, completed:false, last_answer_correct:false, mcq_choice:null, last_input:'', show_solution:false};
+  if (STATE[qid].show_solution === undefined) STATE[qid].show_solution = false;
+  return STATE[qid];
+}
+
+let typeFilter = 'all';
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ---- Stats ----
+function updateStats() {
+  let attempted = 0, correct = 0, total = 0;
+  for (const q of QS) {
+    if (typeFilter !== 'all' && q.format !== typeFilter) continue;
+    total++;
+    const s = STATE[q.id];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  document.getElementById('progress').textContent = attempted + ' / ' + total + ' attempted';
+  document.getElementById('correct').textContent = correct + ' correct';
+}
+
+// ---- Render questions ----
+function renderQuestions() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filtered = QS.filter(q => typeFilter === 'all' || q.format === typeFilter);
+  if (filtered.length === 0) {
+    main.innerHTML = '<p style="color:var(--muted)">No questions match the current filter.</p>';
+    updateStats(); return;
+  }
+  for (const q of filtered) {
+    main.appendChild(renderQuestion(q));
+  }
+  updateStats();
+}
+
+function renderQuestion(q) {
+  const s = getQState(q.id);
+  const card = document.createElement('div');
+  card.className = 'q';
+  if (s.completed) card.classList.add('done', s.last_answer_correct ? 'correct' : 'failed');
+
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML =
+    '<span class="qtag ' + q.format + '">' + (q.format === 'open' ? 'OPEN' : 'MCQ') + '</span>' +
+    '<span class="qtheme">' + escapeHTML(q.theme) + '</span>' +
+    '<span class="qid">' + q.id + '</span>' +
+    '<span class="qstatus ' + (s.completed ? (s.last_answer_correct ? 'correct' : 'failed') : '') + '">' +
+      (s.completed ? (s.last_answer_correct ? '✓ Solved' : '✗ See solution') : '') +
+    '</span>';
+  card.appendChild(head);
+
+  const stem = document.createElement('div');
+  stem.className = 'qstem';
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const ask = document.createElement('div');
+  ask.className = 'qask';
+  ask.textContent = q.ask;
+  card.appendChild(ask);
+
+  // Input area
+  const inputArea = document.createElement('div');
+  if (q.format === 'open') {
+    inputArea.className = 'input-row';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.placeholder = 'Numeric answer';
+    inp.value = s.last_input || '';
+    if (s.completed) inp.disabled = true;
+    inp.dataset.qid = q.id;
+    inputArea.appendChild(inp);
+    if (q.unit) {
+      const u = document.createElement('span');
+      u.className = 'unit';
+      u.textContent = q.unit;
+      inputArea.appendChild(u);
+    }
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-open';
+      inputArea.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      inputArea.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      inputArea.appendChild(att);
+    }
+  } else {
+    inputArea.className = 'choices';
+    inputArea.dataset.qid = q.id;
+    for (let i = 0; i < q.choices.length; i++) {
+      const lbl = document.createElement('label');
+      const selected = s.mcq_choice === i;
+      if (selected) lbl.classList.add('selected');
+      lbl.innerHTML = '<input type="radio" name="' + q.id + '" value="' + i + '"' + (selected ? ' checked' : '') + (s.completed ? ' disabled' : '') + '> ' +
+                     '<strong>' + String.fromCharCode(65 + i) + ')</strong> ' + escapeHTML(q.choices[i]);
+      inputArea.appendChild(lbl);
+    }
+    const row = document.createElement('div');
+    row.style.marginTop = '8px';
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-mcq';
+      row.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      row.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      row.appendChild(att);
+    }
+    inputArea.appendChild(row);
+  }
+  card.appendChild(inputArea);
+
+  // Feedback and hints
+  const fb = document.createElement('div');
+  fb.className = 'feedback-area';
+  fb.dataset.qid = q.id;
+  card.appendChild(fb);
+
+  if (s.completed) {
+    const resDiv = document.createElement('div');
+    resDiv.className = 'feedback result ' + (s.last_answer_correct ? 'correct' : 'wrong');
+    if (s.last_answer_correct) {
+      const tag = s.hints_shown > 0 ? '(after ' + s.hints_shown + ' hint' + (s.hints_shown > 1 ? 's' : '') + ')' : '(first try)';
+      resDiv.innerHTML = '<span class="icon">✓</span><span><strong>Correct!</strong> <span class="sub">' + tag + '</span></span>';
+    } else {
+      resDiv.innerHTML = '<span class="icon">✗</span><span><strong>Incorrect.</strong> <span class="sub">No attempts remaining — full solution shown below.</span></span>';
+    }
+    fb.appendChild(resDiv);
+  } else if (s.attempts > 0) {
+    const left = 3 - s.attempts;
+    const tail = left >= 0 ? ' (' + Math.max(left, 0) + ' attempt' + (left === 1 ? '' : 's') + ' left)' : '';
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'feedback wrong';
+    wrongDiv.innerHTML = '<strong>✗ Not quite — try again.</strong> Hint ' + s.hints_shown + ' revealed below.' + tail;
+    fb.appendChild(wrongDiv);
+  }
+  if (s.hints_shown > 0) renderHints(fb, q, s.hints_shown);
+  if (s.completed && (!s.last_answer_correct || s.show_solution)) renderSolution(fb, q);
+
+  return card;
+}
+
+function renderHints(container, q, n_shown) {
+  container.querySelectorAll('.hint').forEach(el => el.remove());
+  for (let i = 0; i < n_shown && i < q.hints.length; i++) {
+    const h = document.createElement('div');
+    h.className = 'hint';
+    h.innerHTML = '<b>Hint ' + (i+1) + ':</b> ' + escapeHTML(q.hints[i]);
+    container.appendChild(h);
+  }
+}
+
+function renderSolution(container, q) {
+  if (container.querySelector('.solution')) return;
+  const sol = document.createElement('div');
+  sol.className = 'solution';
+  sol.innerHTML = '<h4>Full solution</h4><pre>' + escapeHTML(q.solution) + '</pre>';
+  container.appendChild(sol);
+}
+
+// ---- Answer checking ----
+function checkOpen(q, value) {
+  const userVal = parseFloat(value);
+  if (isNaN(userVal)) return {ok:false, msg:'Please enter a numeric answer.'};
+  const tol = q.tolerance_abs || 0;
+  const correct = Math.abs(userVal - q.answer) <= tol;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+function checkMCQ(q, choiceIndex) {
+  if (choiceIndex === null || choiceIndex === undefined) return {ok:false, msg:'Pick an option first.'};
+  const correct = choiceIndex === q.correct_index;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+// ---- Submit handler ----
+document.addEventListener('click', e => {
+  if (e.target.dataset.action === 'submit-open' || e.target.dataset.action === 'submit-mcq') {
+    handleSubmit(e.target);
+  } else if (e.target.dataset.action === 'toggle-solution') {
+    const qid = e.target.dataset.qid;
+    const s = getQState(qid);
+    s.show_solution = !s.show_solution;
+    saveState();
+    renderQuestions();
+  }
+});
+
+function handleSubmit(btn) {
+  const qid = btn.dataset.qid;
+  const q = QS.find(x => x.id === qid);
+  const s = getQState(qid);
+
+  if (s.completed) return;
+
+  let result;
+  if (q.format === 'open') {
+    const inp = btn.parentElement.querySelector('input[type=number]');
+    s.last_input = inp.value;
+    result = checkOpen(q, inp.value);
+  } else {
+    const sel = document.querySelector('.choices[data-qid="' + qid + '"] input[type=radio]:checked');
+    const choiceIndex = sel ? parseInt(sel.value) : null;
+    s.mcq_choice = choiceIndex;
+    result = checkMCQ(q, choiceIndex);
+  }
+
+  if (result.ok) {
+    s.attempts += 1;
+    s.completed = true;
+    s.last_answer_correct = true;
+    s.show_solution = false;
+    saveState();
+    renderQuestions();
+    return;
+  }
+
+  s.attempts += 1;
+  if (s.attempts <= 3) {
+    if (s.hints_shown < s.attempts) s.hints_shown = s.attempts;
+  } else {
+    s.completed = true;
+    s.last_answer_correct = false;
+    s.show_solution = true;
+    s.hints_shown = q.hints.length;
+  }
+  saveState();
+  renderQuestions();
+}
+
+// MCQ choice highlighting
+document.addEventListener('change', e => {
+  if (e.target.matches('.choices input[type=radio]')) {
+    const parent = e.target.closest('.choices');
+    parent.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+    e.target.closest('label').classList.add('selected');
+  }
+});
+
+// ---- Filters ----
+document.getElementById('typefilter').addEventListener('change', e => {
+  typeFilter = e.target.value;
+  renderQuestions();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Reset your progress on this module? This cannot be undone.')) return;
+  for (const q of QS) delete STATE[q.id];
+  saveState();
+  renderQuestions();
+});
+
+// ---- Calculator ----
+const calc = document.getElementById('calc');
+const calcDisp = document.getElementById('calcdisp');
+let calcExpr = '';
+function calcUpdate() { calcDisp.textContent = calcExpr || '0'; calcDisp.classList.remove('err'); }
+function calcEval() {
+  if (!calcExpr) return;
+  try {
+    if (!/^[\d+\-*/().\s*]+$/.test(calcExpr.replace(/\*\*/g, ''))) throw 'bad';
+    const v = Function('return (' + calcExpr + ')')();
+    if (!isFinite(v)) throw 'overflow';
+    calcExpr = String(+v.toFixed(10).replace(/\.?0+$/, ''));
+    calcUpdate();
+  } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+}
+document.getElementById('calctoggle').addEventListener('click', () => calc.classList.toggle('show'));
+document.querySelectorAll('.calc .keys button').forEach(b => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.key, a = b.dataset.act;
+    if (a === 'clear') { calcExpr = ''; calcUpdate(); }
+    else if (a === 'back') { calcExpr = calcExpr.slice(0, -1); calcUpdate(); }
+    else if (a === 'eq') { calcEval(); }
+    else if (a === 'sqrt') {
+      try {
+        const v = calcExpr ? Function('return (' + calcExpr + ')')() : 0;
+        if (v < 0) throw 'neg';
+        calcExpr = String(+Math.sqrt(v).toFixed(10).replace(/\.?0+$/, ''));
+        calcUpdate();
+      } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+    }
+    else if (k) { calcExpr += k; calcUpdate(); }
+  });
+});
+
+// ---- Init ----
+renderQuestions();
+</script>

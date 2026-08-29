@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Module 6 · MGMT 405 Practice</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Module 6: Complex Pricing and Advanced Pricing Strategies</div>
+</header>
+
+<nav class="modnav"><a href="index.html">All modules</a><a href="module-1.html">Module 1</a><a href="module-2.html">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html">Module 4 (Part I)</a><a href="module-4-part-2.html">Module 4 (Part II)</a><a href="module-5.html">Module 5</a><a href="module-6.html" class="active">Module 6</a><a href="module-7-part-1.html">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html">Module 8</a></nav>
+
+<div class="controls">
+  <label>Question type:</label>
+  <select id="typefilter">
+    <option value="all">All</option>
+    <option value="open">Open (numeric answer)</option>
+    <option value="mcq">Multiple choice</option>
+  </select>
+  <span class="stats">
+    <span id="progress">0 / 0 attempted</span> · <strong id="correct">0 correct</strong>
+    <button id="reset" style="margin-left:8px; font-size:11px; padding:2px 8px; background:#fff; border:1px solid var(--line); border-radius:3px; cursor:pointer;">Reset this module</button>
+  </span>
+</div>
+
+<main>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div id="main"></div>
+</main>
+
+<button class="calc-toggle" id="calctoggle">🖩 Calculator</button>
+<div class="calc" id="calc">
+  <div class="display" id="calcdisp">0</div>
+  <div class="keys">
+    <button class="fn" data-act="clear">C</button>
+    <button class="fn" data-act="back">⌫</button>
+    <button class="fn" data-key="(">(</button>
+    <button class="fn" data-key=")">)</button>
+    <button class="op" data-key="/">÷</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+    <button class="op" data-key="*">×</button>
+    <button class="fn" data-act="sqrt">√</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button class="op" data-key="-">−</button>
+    <button class="fn" data-key="**">x^y</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button class="op" data-key="+">+</button>
+    <button class="fn" data-key=".">.</button>
+    <button data-key="0">0</button>
+    <button data-key="00">00</button>
+    <button class="eq" data-act="eq">=</button>
+  </div>
+</div>
+
+<script id="QDATA" type="application/json">{"module": {"key": "M6", "label": "Module 6", "title": "Complex Pricing and Advanced Pricing Strategies"}, "questions": [{"id": "m6-q1", "module": "M6", "theme": "Two-Part Tariff", "format": "open", "stem": "A tennis club faces typical-member demand Q = 24 − 0.4P, where Q is court-hours/month and P is the per-hour price. The club's marginal cost per court-hour is $5. The club charges a TWO-PART TARIFF (monthly fee + per-hour price).", "ask": "What is the profit-maximizing MONTHLY FEE (in $)?", "answer": 605, "tolerance_abs": 1, "unit": "$", "hints": ["Optimal two-part tariff with identical customers: per-unit price = MC, fee = consumer surplus at that price.", "Set per-hour P = MC = $5. Compute Q at this price: Q = 24 − 0.4(5) = 22. The price-axis intercept of inverse demand: from Q = 24 − 0.4P, P = 60 − 2.5Q, so at Q=0, P = $60.", "CS = ½ × Q × (P_intercept − price) = ½ × 22 × ($60 − $5) = ½ × 22 × 55 = $605. That's the maximum fee."], "solution": "Two-part tariff rule for homogeneous customers:\n  Per-unit price = MC (here, $5)\n  Membership fee = consumer surplus at that price\n\nStep 1 — Q at P = MC = $5:\n  Q = 24 − 0.4(5) = 22 court-hours.\nStep 2 — Inverse demand: P = 60 − 2.5Q, so the price intercept (Q=0) is $60.\nStep 3 — CS triangle:\n  CS = ½ × 22 × ($60 − $5) = $605.\n\nThe club charges a $605/month membership fee + $5/court-hour. This extracts all consumer surplus while still allowing every welfare-improving trade (since P = MC)."}, {"id": "m6-q2", "module": "M6", "theme": "3rd-Degree PD — Market A", "format": "open", "stem": "A firm sells a product in two markets it can keep separate. Market A: Q = 120 − 4P. Market B: Q = 80 − 2P. Marginal cost is constant at $6/unit.", "ask": "What is the profit-maximizing price in MARKET A (in $)?", "answer": 18, "tolerance_abs": 0.5, "unit": "$", "hints": ["Optimal 3rd-degree PD: in each market, set MR = MC separately.", "Inverse demand A: P = 30 − 0.25Q. MR_A = 30 − 0.5Q. Set MR = MC: 30 − 0.5Q = 6 → Q = 48. Then P = 30 − 0.25(48) = $18.", "Final answer: P_A = $18."], "solution": "Invert demand in A: from Q = 120 − 4P, P = 30 − 0.25Q.\nMR_A = 30 − 0.5Q.\n\nProfit-max: MR_A = MC\n  30 − 0.5Q = 6 → Q_A = 48\n  P_A = 30 − 0.25(48) = $18\n\n(Elasticity check at this point: e = (−4)·(18/48) = −1.5. |e| > 1, so the firm is operating in the elastic part of demand — as required.)"}, {"id": "m6-q3", "module": "M6", "theme": "3rd-Degree PD — Market B", "format": "open", "stem": "Continuing the previous setup: Market B: Q = 80 − 2P. MC = $6/unit.", "ask": "What is the profit-maximizing price in MARKET B (in $)?", "answer": 23, "tolerance_abs": 0.5, "unit": "$", "hints": ["Same procedure: invert demand, derive MR, set MR = MC.", "Inverse demand B: P = 40 − 0.5Q. MR_B = 40 − Q. Set = MC: 40 − Q = 6 → Q_B = 34.", "P_B = 40 − 0.5(34) = $23."], "solution": "Inverse demand B: from Q = 80 − 2P, P = 40 − 0.5Q.\nMR_B = 40 − Q.\n\nMR_B = MC\n  40 − Q = 6 → Q_B = 34\n  P_B = 40 − 0.5(34) = $23.\n\nB has less elastic demand than A at the optimum (|e_B| = (−2)(23/34) ≈ 1.35 < 1.5), so the firm charges a HIGHER price in B ($23 vs $18). General rule: less-elastic market → higher price under 3rd-degree PD."}, {"id": "m6-q4", "module": "M6", "theme": "Conditions for 3rd-Degree PD", "format": "mcq", "stem": "A firm is considering third-degree price discrimination (charging different prices to different customer groups).", "ask": "Which of the following is NOT a required condition for it to work?", "choices": ["The firm has market power (downward-sloping demand)", "The firm can identify and separate customer groups", "Different groups have different price elasticities of demand", "All customers have identical willingness to pay", "The firm can prevent resale/arbitrage between groups"], "correct_index": 3, "hints": ["Think about which condition would MAKE 3rd-degree PD worth doing vs which is required.", "If all customers had identical WTP, the firm would just set one optimal price — no need to discriminate.", "PD requires DIFFERENT elasticities across groups, market power, identifiable groups, and no-arbitrage — but not identical WTP. Identical WTP is the OPPOSITE of what PD requires."], "solution": "Required conditions for 3rd-degree PD:\n  ✓ Market power (else can't change P)\n  ✓ Identifiable groups (else can't separate)\n  ✓ Different price elasticities across groups (else no profit gain)\n  ✓ Prevent arbitrage (else low-price buyers resell to high-price buyers)\n\nNOT required (in fact, OPPOSITE):\n  ✗ Identical WTP — if all customers had the same WTP, there'd be no point segmenting."}, {"id": "m6-q5", "module": "M6", "theme": "Flat-Fee (Volume) Pricing", "format": "open", "stem": "A streaming music service faces per-subscriber demand Q = 40 − 2P, where Q is hours of listening per month and P is the per-hour price. The marginal cost of streaming is essentially zero. The service uses VOLUME PRICING — a flat monthly fee for unlimited access.", "ask": "What is the profit-maximizing flat monthly fee per subscriber (in $)?", "answer": 400, "tolerance_abs": 1, "unit": "$", "hints": ["Volume pricing = two-part tariff with per-unit P = $0. The flat fee captures all consumer surplus at P = 0.", "At P = 0: Q = 40 hours. Inverse demand: from Q = 40 − 2P, P = 20 − 0.5Q, so at Q = 0, P = $20.", "CS = ½ × 40 × ($20 − $0) = $400. Charge this as the flat fee."], "solution": "With MC = 0, the firm maximizes revenue per subscriber, which equals the consumer surplus at the chosen per-unit price. The optimal per-unit price is $0 (let them consume their full demand), and the fee captures all surplus.\n\nAt P = $0: Q = 40 hours. Inverse demand price intercept = $20.\nCS = ½ × 40 × $20 = $400.\n\nFlat monthly fee = $400 per subscriber.\n\n(More than any per-unit pricing: at the standard monopoly point P=$5, Q=30, revenue per subscriber = $150. The flat fee extracts far more.)"}, {"id": "m6-mcq-2", "module": "M6", "theme": "Segment Pricing", "format": "mcq", "stem": "A firm practices 3rd-degree price discrimination across two market segments: A (more elastic demand) and B (less elastic demand). Marginal cost is the same in both markets.", "ask": "Which segment gets the HIGHER price?", "choices": ["Segment A (more elastic)", "Segment B (less elastic)", "Same price in both (illegal to discriminate by price)", "The larger segment, regardless of elasticity", "Cannot determine without knowing demand levels"], "correct_index": 1, "hints": ["Optimal Lerner index: (P − MC)/P = 1/|e_D|. Less elastic → larger markup.", "Less elastic means consumers can't easily switch — the firm can charge more.", "Charge the higher price in the less-elastic segment."], "solution": "From MR = MC in each segment: (P − MC)/P = 1/|e_D|. A less elastic |e_D| → larger Lerner → bigger markup → higher P.\n\nIntuitively, less-elastic customers can't substitute away → the firm extracts more. Examples: senior discounts (elastic seniors), student discounts, geographic pricing."}, {"id": "m6-mcq-3", "module": "M6", "theme": "Limits of Price Discrimination", "format": "mcq", "stem": "Third-degree price discrimination is HARDEST to maintain when:", "ask": "PD breaks down when:", "choices": ["Customer groups are easily identifiable", "Resale (arbitrage) between groups is cheap and easy", "The product is a service consumed on-site", "Buyers face high switching costs", "The good is patented"], "correct_index": 1, "hints": ["PD requires preventing low-price buyers from reselling to high-price buyers.", "Cheap arbitrage allows the high-price segment to buy from the low-price segment.", "When arbitrage is cheap, the price gap collapses → PD fails."], "solution": "PD requires arbitrage prevention. Easy resale lets high-price buyers source from low-price ones → the price differential collapses to a single market price.\n\nServices (haircuts, on-site concerts, electricity) are hard to resell → PD is more sustainable. Physical goods need other barriers (labeling, geography, time)."}, {"id": "m6-mcq-4b", "module": "M6", "theme": "Two-Part Tariff Definition", "format": "mcq", "stem": "A two-part tariff is a pricing strategy with two components.", "ask": "What are those two components?", "choices": ["Wholesale price and retail price", "A fixed access fee + a per-unit price", "Cost-plus pricing and dynamic pricing", "Domestic price and international price", "A discount and a surcharge"], "correct_index": 1, "hints": ["'Two parts' — the consumer pays both a fixed amount AND a per-unit amount.", "Examples: Costco (membership + per-item), Disney (entry + per-ride), gyms (monthly + per-class).", "Fixed access fee + per-unit usage price."], "solution": "Two-part tariff: a fixed access fee (paid regardless of consumption) + a per-unit usage price.\n\nOptimal for identical customers:\n  Per-unit price = MC (efficient usage, no DWL)\n  Fixed fee = consumer surplus at that price (extracts all CS)\n\nExamples: club memberships, software with subscription + per-seat fees."}, {"id": "m6-mcq-5", "module": "M6", "theme": "Pricing Strategy Identification", "format": "mcq", "stem": "A water utility charges: the first 50 units/month at $3.00/unit; the next 50 units at $2.50/unit; additional units at $2.00/unit.", "ask": "This pricing scheme is best described as:", "choices": ["Third-degree price discrimination", "Bundling", "Block pricing", "Two-part tariff", "Versioning"], "correct_index": 2, "hints": ["The same customer pays different prices for different UNITS — that's block pricing.", "It's 2nd-degree PD: customers self-select into a price block based on how much they consume.", "Distinct from 3rd-degree PD (different prices for different GROUPS)."], "solution": "Block pricing (2nd-degree PD): the SAME customer pays different per-unit prices for different quantity blocks.\n\nHeavy users effectively get lower per-unit prices; light users pay the high block rate. The firm extracts more surplus than uniform pricing without needing to identify customer types."}, {"id": "m6-mcq-6", "module": "M6", "theme": "Pricing Strategy Identification", "format": "mcq", "stem": "A software company sells 'Basic,' 'Plus,' and 'Premium' editions of its product at different price points, with progressively more features.", "ask": "This is an example of:", "choices": ["First-degree price discrimination", "Third-degree price discrimination", "Versioning", "Block pricing", "Two-part tariff"], "correct_index": 2, "hints": ["The same firm offers MULTIPLE versions of the product at different prices/features.", "Customers SELF-SELECT into a version based on their willingness to pay for features.", "This is versioning — 2nd-degree PD by product variants."], "solution": "Versioning: the firm offers a menu of product variants. High-WTP customers self-select into premium versions; low-WTP customers buy basic. The firm captures more surplus than a single uniform price without needing to identify customer types.\n\nClassic examples: airline classes, software tiers, hardback vs paperback, premium vs ad-supported streaming."}, {"id": "m6-mcq-7", "module": "M6", "theme": "Perfect PD Welfare", "format": "mcq", "stem": "Under perfect (first-degree) price discrimination, the firm charges each consumer their exact willingness to pay. Assume MC > 0.", "ask": "Which statement about welfare under perfect PD is correct?", "choices": ["Consumer surplus is maximized", "The firm captures ALL surplus; consumer surplus is zero; there is zero deadweight loss", "Quantity sold is less than under simple monopoly", "The same price is charged to every customer", "Deadweight loss is maximized"], "correct_index": 1, "hints": ["Each consumer pays exactly their WTP → no consumer surplus left.", "The firm keeps selling to every consumer whose WTP ≥ MC, so no mutually beneficial trade goes unmade.", "Result: zero consumer surplus, all surplus to the producer, and no deadweight loss."], "solution": "Perfect PD: P_i = WTP_i for each consumer.\n  Consumer surplus = 0 (the firm extracts all of it)\n  Quantity: the firm serves every consumer whose WTP ≥ MC, so it stops at the same quantity a competitive market would reach\n  Deadweight loss = 0 — no welfare-improving trade is left on the table\n\nSo the outcome is efficient in the sense that nothing is wasted, but the DISTRIBUTION is very different from perfect competition: there, surplus is split between consumers and producers, whereas under perfect PD the producer captures every dollar of it."}, {"id": "m6-mcq-8", "module": "M6", "theme": "Coupons", "format": "mcq", "stem": "Manufacturer coupons that require time to clip and effort to redeem are best understood as:", "ask": "Pick the best characterization:", "choices": ["First-degree price discrimination", "Third-degree price discrimination", "Second-degree price discrimination", "Predatory pricing", "Bundling"], "correct_index": 2, "hints": ["Coupon redemption is OPTIONAL — customers self-select.", "Price-sensitive (high-elasticity) shoppers find clipping worth the effort.", "Price-insensitive (low-elasticity) shoppers pay full price (no time to clip)."], "solution": "Coupons are 2nd-degree PD via self-selection. The effort cost separates price-sensitive customers (who redeem) from price-insensitive ones (who don't). The firm gets a higher effective price from inelastic customers and a lower effective price from elastic ones — without needing to identify them directly."}, {"id": "m6-mcq-9", "module": "M6", "theme": "Pricing Strategy Identification", "format": "mcq", "stem": "A cable company offers Internet + Phone + TV as a 'Triple Play' bundle for $130/month, while each service costs $55/month if purchased standalone.", "ask": "This pricing strategy is:", "choices": ["Bundling", "Block pricing", "Versioning", "First-degree price discrimination", "Two-part tariff"], "correct_index": 0, "hints": ["Multiple products sold together as a single package = bundling.", "The bundle price ($130) < the sum of individual prices ($165), nudging customers to take the bundle.", "Bundling works well when customer valuations are negatively correlated across the goods."], "solution": "Bundling: selling multiple products together as a single package.\n\nWhen customer valuations are negatively correlated across goods (one customer values A more, another values B more), bundling extracts more surplus than separate sales: both types buy the bundle but neither would buy every item standalone."}, {"id": "m6-mcq-10", "module": "M6", "theme": "Optimal Q in 3rd-Degree PD (Numeric)", "format": "mcq", "stem": "A firm sells in two separable markets. Inverse demand in Market 1: P = 50 − Q. MC = $6 in both markets.", "ask": "What is the profit-maximizing QUANTITY in Market 1?", "choices": ["Q = 11", "Q = 16", "Q = 22", "Q = 28", "Q = 44"], "correct_index": 2, "hints": ["3rd-degree PD: in each market, set MR = MC separately.", "For P = 50 − Q, MR = 50 − 2Q.", "Set 50 − 2Q = 6 → 2Q = 44 → Q = 22. (Price in Market 1: P = 50 − 22 = $28.)"], "solution": "MR_1 = 50 − 2Q (twice the slope of demand). Set MR_1 = MC:\n  50 − 2Q = 6\n  Q_1 = 22.\n\nP_1 = 50 − 22 = $28. The firm sets each market's quantity independently by MR = MC."}, {"id": "m6-mcq-11", "module": "M6", "theme": "Flat-Fee Pricing (Numeric)", "format": "mcq", "stem": "A streaming service faces per-subscriber demand Q = 40 − P, where Q is hours of content per month and P is the per-hour price. The marginal cost of serving content is approximately zero. The service uses flat-fee pricing (unlimited access for a fixed monthly fee).", "ask": "What is the profit-maximizing flat monthly fee per subscriber?", "choices": ["$20", "$40", "$400", "$800", "$1,600"], "correct_index": 3, "hints": ["Flat-fee pricing = a two-part tariff with per-unit P = 0. The fee captures all consumer surplus at P = 0.", "At P = 0: Q = 40. Inverse demand intercept (Q = 0): P = 40.", "CS triangle = ½ × 40 × 40 = $800. That's the optimal flat fee."], "solution": "With MC = 0, the optimal per-unit price is 0 (allow full consumption) and the fee captures all CS.\n\nAt P = 0: Q = 40 hours.\nDemand price intercept: P = 40 at Q = 0.\nCS = ½ × 40 × $40 = $800.\n\nCharge $800/month flat. This is more than any per-unit pricing could extract."}, {"id": "m6-mcq-12", "module": "M6", "theme": "When PD is Profitable", "format": "mcq", "stem": "Third-degree price discrimination INCREASES the firm's profit (compared to a single uniform price) when:", "ask": "PD pays off when:", "choices": ["Customer groups have IDENTICAL demand curves", "Customer groups have DIFFERENT price elasticities of demand", "The marginal cost is exactly zero", "Demand is perfectly elastic everywhere", "The firm is a price taker"], "correct_index": 1, "hints": ["PD profits from charging different segments different prices.", "If segments have identical elasticities, the optimal price is the same in both → no gain from PD.", "Different elasticities → different optimal prices → PD captures more surplus than a single price could."], "solution": "PD pays off when different customer groups have different demand elasticities. Different elasticities → different optimal markups → the firm charges each group a different price and captures more total surplus.\n\nIf elasticities were identical, the optimal uniform price would equal the optimal segmented prices → no gain from PD."}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+const QS = D.questions;
+
+// ---- Per-question state, persisted in localStorage (shared across module pages) ----
+const STATE_KEY = 'mgmt405_practice_v1';
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch (_) { STATE = {}; }
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch (_) {} }
+function getQState(qid) {
+  if (!STATE[qid]) STATE[qid] = {attempts:0, hints_shown:0, completed:false, last_answer_correct:false, mcq_choice:null, last_input:'', show_solution:false};
+  if (STATE[qid].show_solution === undefined) STATE[qid].show_solution = false;
+  return STATE[qid];
+}
+
+let typeFilter = 'all';
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ---- Stats ----
+function updateStats() {
+  let attempted = 0, correct = 0, total = 0;
+  for (const q of QS) {
+    if (typeFilter !== 'all' && q.format !== typeFilter) continue;
+    total++;
+    const s = STATE[q.id];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  document.getElementById('progress').textContent = attempted + ' / ' + total + ' attempted';
+  document.getElementById('correct').textContent = correct + ' correct';
+}
+
+// ---- Render questions ----
+function renderQuestions() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filtered = QS.filter(q => typeFilter === 'all' || q.format === typeFilter);
+  if (filtered.length === 0) {
+    main.innerHTML = '<p style="color:var(--muted)">No questions match the current filter.</p>';
+    updateStats(); return;
+  }
+  for (const q of filtered) {
+    main.appendChild(renderQuestion(q));
+  }
+  updateStats();
+}
+
+function renderQuestion(q) {
+  const s = getQState(q.id);
+  const card = document.createElement('div');
+  card.className = 'q';
+  if (s.completed) card.classList.add('done', s.last_answer_correct ? 'correct' : 'failed');
+
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML =
+    '<span class="qtag ' + q.format + '">' + (q.format === 'open' ? 'OPEN' : 'MCQ') + '</span>' +
+    '<span class="qtheme">' + escapeHTML(q.theme) + '</span>' +
+    '<span class="qid">' + q.id + '</span>' +
+    '<span class="qstatus ' + (s.completed ? (s.last_answer_correct ? 'correct' : 'failed') : '') + '">' +
+      (s.completed ? (s.last_answer_correct ? '✓ Solved' : '✗ See solution') : '') +
+    '</span>';
+  card.appendChild(head);
+
+  const stem = document.createElement('div');
+  stem.className = 'qstem';
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const ask = document.createElement('div');
+  ask.className = 'qask';
+  ask.textContent = q.ask;
+  card.appendChild(ask);
+
+  // Input area
+  const inputArea = document.createElement('div');
+  if (q.format === 'open') {
+    inputArea.className = 'input-row';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.placeholder = 'Numeric answer';
+    inp.value = s.last_input || '';
+    if (s.completed) inp.disabled = true;
+    inp.dataset.qid = q.id;
+    inputArea.appendChild(inp);
+    if (q.unit) {
+      const u = document.createElement('span');
+      u.className = 'unit';
+      u.textContent = q.unit;
+      inputArea.appendChild(u);
+    }
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-open';
+      inputArea.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      inputArea.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      inputArea.appendChild(att);
+    }
+  } else {
+    inputArea.className = 'choices';
+    inputArea.dataset.qid = q.id;
+    for (let i = 0; i < q.choices.length; i++) {
+      const lbl = document.createElement('label');
+      const selected = s.mcq_choice === i;
+      if (selected) lbl.classList.add('selected');
+      lbl.innerHTML = '<input type="radio" name="' + q.id + '" value="' + i + '"' + (selected ? ' checked' : '') + (s.completed ? ' disabled' : '') + '> ' +
+                     '<strong>' + String.fromCharCode(65 + i) + ')</strong> ' + escapeHTML(q.choices[i]);
+      inputArea.appendChild(lbl);
+    }
+    const row = document.createElement('div');
+    row.style.marginTop = '8px';
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-mcq';
+      row.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      row.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      row.appendChild(att);
+    }
+    inputArea.appendChild(row);
+  }
+  card.appendChild(inputArea);
+
+  // Feedback and hints
+  const fb = document.createElement('div');
+  fb.className = 'feedback-area';
+  fb.dataset.qid = q.id;
+  card.appendChild(fb);
+
+  if (s.completed) {
+    const resDiv = document.createElement('div');
+    resDiv.className = 'feedback result ' + (s.last_answer_correct ? 'correct' : 'wrong');
+    if (s.last_answer_correct) {
+      const tag = s.hints_shown > 0 ? '(after ' + s.hints_shown + ' hint' + (s.hints_shown > 1 ? 's' : '') + ')' : '(first try)';
+      resDiv.innerHTML = '<span class="icon">✓</span><span><strong>Correct!</strong> <span class="sub">' + tag + '</span></span>';
+    } else {
+      resDiv.innerHTML = '<span class="icon">✗</span><span><strong>Incorrect.</strong> <span class="sub">No attempts remaining — full solution shown below.</span></span>';
+    }
+    fb.appendChild(resDiv);
+  } else if (s.attempts > 0) {
+    const left = 3 - s.attempts;
+    const tail = left >= 0 ? ' (' + Math.max(left, 0) + ' attempt' + (left === 1 ? '' : 's') + ' left)' : '';
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'feedback wrong';
+    wrongDiv.innerHTML = '<strong>✗ Not quite — try again.</strong> Hint ' + s.hints_shown + ' revealed below.' + tail;
+    fb.appendChild(wrongDiv);
+  }
+  if (s.hints_shown > 0) renderHints(fb, q, s.hints_shown);
+  if (s.completed && (!s.last_answer_correct || s.show_solution)) renderSolution(fb, q);
+
+  return card;
+}
+
+function renderHints(container, q, n_shown) {
+  container.querySelectorAll('.hint').forEach(el => el.remove());
+  for (let i = 0; i < n_shown && i < q.hints.length; i++) {
+    const h = document.createElement('div');
+    h.className = 'hint';
+    h.innerHTML = '<b>Hint ' + (i+1) + ':</b> ' + escapeHTML(q.hints[i]);
+    container.appendChild(h);
+  }
+}
+
+function renderSolution(container, q) {
+  if (container.querySelector('.solution')) return;
+  const sol = document.createElement('div');
+  sol.className = 'solution';
+  sol.innerHTML = '<h4>Full solution</h4><pre>' + escapeHTML(q.solution) + '</pre>';
+  container.appendChild(sol);
+}
+
+// ---- Answer checking ----
+function checkOpen(q, value) {
+  const userVal = parseFloat(value);
+  if (isNaN(userVal)) return {ok:false, msg:'Please enter a numeric answer.'};
+  const tol = q.tolerance_abs || 0;
+  const correct = Math.abs(userVal - q.answer) <= tol;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+function checkMCQ(q, choiceIndex) {
+  if (choiceIndex === null || choiceIndex === undefined) return {ok:false, msg:'Pick an option first.'};
+  const correct = choiceIndex === q.correct_index;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+// ---- Submit handler ----
+document.addEventListener('click', e => {
+  if (e.target.dataset.action === 'submit-open' || e.target.dataset.action === 'submit-mcq') {
+    handleSubmit(e.target);
+  } else if (e.target.dataset.action === 'toggle-solution') {
+    const qid = e.target.dataset.qid;
+    const s = getQState(qid);
+    s.show_solution = !s.show_solution;
+    saveState();
+    renderQuestions();
+  }
+});
+
+function handleSubmit(btn) {
+  const qid = btn.dataset.qid;
+  const q = QS.find(x => x.id === qid);
+  const s = getQState(qid);
+
+  if (s.completed) return;
+
+  let result;
+  if (q.format === 'open') {
+    const inp = btn.parentElement.querySelector('input[type=number]');
+    s.last_input = inp.value;
+    result = checkOpen(q, inp.value);
+  } else {
+    const sel = document.querySelector('.choices[data-qid="' + qid + '"] input[type=radio]:checked');
+    const choiceIndex = sel ? parseInt(sel.value) : null;
+    s.mcq_choice = choiceIndex;
+    result = checkMCQ(q, choiceIndex);
+  }
+
+  if (result.ok) {
+    s.attempts += 1;
+    s.completed = true;
+    s.last_answer_correct = true;
+    s.show_solution = false;
+    saveState();
+    renderQuestions();
+    return;
+  }
+
+  s.attempts += 1;
+  if (s.attempts <= 3) {
+    if (s.hints_shown < s.attempts) s.hints_shown = s.attempts;
+  } else {
+    s.completed = true;
+    s.last_answer_correct = false;
+    s.show_solution = true;
+    s.hints_shown = q.hints.length;
+  }
+  saveState();
+  renderQuestions();
+}
+
+// MCQ choice highlighting
+document.addEventListener('change', e => {
+  if (e.target.matches('.choices input[type=radio]')) {
+    const parent = e.target.closest('.choices');
+    parent.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+    e.target.closest('label').classList.add('selected');
+  }
+});
+
+// ---- Filters ----
+document.getElementById('typefilter').addEventListener('change', e => {
+  typeFilter = e.target.value;
+  renderQuestions();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Reset your progress on this module? This cannot be undone.')) return;
+  for (const q of QS) delete STATE[q.id];
+  saveState();
+  renderQuestions();
+});
+
+// ---- Calculator ----
+const calc = document.getElementById('calc');
+const calcDisp = document.getElementById('calcdisp');
+let calcExpr = '';
+function calcUpdate() { calcDisp.textContent = calcExpr || '0'; calcDisp.classList.remove('err'); }
+function calcEval() {
+  if (!calcExpr) return;
+  try {
+    if (!/^[\d+\-*/().\s*]+$/.test(calcExpr.replace(/\*\*/g, ''))) throw 'bad';
+    const v = Function('return (' + calcExpr + ')')();
+    if (!isFinite(v)) throw 'overflow';
+    calcExpr = String(+v.toFixed(10).replace(/\.?0+$/, ''));
+    calcUpdate();
+  } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+}
+document.getElementById('calctoggle').addEventListener('click', () => calc.classList.toggle('show'));
+document.querySelectorAll('.calc .keys button').forEach(b => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.key, a = b.dataset.act;
+    if (a === 'clear') { calcExpr = ''; calcUpdate(); }
+    else if (a === 'back') { calcExpr = calcExpr.slice(0, -1); calcUpdate(); }
+    else if (a === 'eq') { calcEval(); }
+    else if (a === 'sqrt') {
+      try {
+        const v = calcExpr ? Function('return (' + calcExpr + ')')() : 0;
+        if (v < 0) throw 'neg';
+        calcExpr = String(+Math.sqrt(v).toFixed(10).replace(/\.?0+$/, ''));
+        calcUpdate();
+      } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+    }
+    else if (k) { calcExpr += k; calcUpdate(); }
+  });
+});
+
+// ---- Init ----
+renderQuestions();
+</script>

@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Module 4 (Part I) · MGMT 405 Practice</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Module 4 (Part I): Competitive Markets and Market Interventions</div>
+</header>
+
+<nav class="modnav"><a href="index.html">All modules</a><a href="module-1.html">Module 1</a><a href="module-2.html">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html" class="active">Module 4 (Part I)</a><a href="module-4-part-2.html">Module 4 (Part II)</a><a href="module-5.html">Module 5</a><a href="module-6.html">Module 6</a><a href="module-7-part-1.html">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html">Module 8</a></nav>
+
+<div class="controls">
+  <label>Question type:</label>
+  <select id="typefilter">
+    <option value="all">All</option>
+    <option value="open">Open (numeric answer)</option>
+    <option value="mcq">Multiple choice</option>
+  </select>
+  <span class="stats">
+    <span id="progress">0 / 0 attempted</span> · <strong id="correct">0 correct</strong>
+    <button id="reset" style="margin-left:8px; font-size:11px; padding:2px 8px; background:#fff; border:1px solid var(--line); border-radius:3px; cursor:pointer;">Reset this module</button>
+  </span>
+</div>
+
+<main>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div id="main"></div>
+</main>
+
+<button class="calc-toggle" id="calctoggle">🖩 Calculator</button>
+<div class="calc" id="calc">
+  <div class="display" id="calcdisp">0</div>
+  <div class="keys">
+    <button class="fn" data-act="clear">C</button>
+    <button class="fn" data-act="back">⌫</button>
+    <button class="fn" data-key="(">(</button>
+    <button class="fn" data-key=")">)</button>
+    <button class="op" data-key="/">÷</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+    <button class="op" data-key="*">×</button>
+    <button class="fn" data-act="sqrt">√</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button class="op" data-key="-">−</button>
+    <button class="fn" data-key="**">x^y</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button class="op" data-key="+">+</button>
+    <button class="fn" data-key=".">.</button>
+    <button data-key="0">0</button>
+    <button data-key="00">00</button>
+    <button class="eq" data-act="eq">=</button>
+  </div>
+</div>
+
+<script id="QDATA" type="application/json">{"module": {"key": "M4-I", "label": "Module 4 (Part I)", "title": "Competitive Markets and Market Interventions"}, "questions": [{"id": "m4i-q1", "module": "M4-I", "theme": "Long-Run PC Equilibrium", "format": "open", "stem": "In a perfectly competitive market for organic milk, every firm has identical long-run cost curves with LATC minimized at Q = 50 gallons/day and a minimum LATC of $6/gallon. Market demand is Q_d = 6,000 − 300P (where Q is in gallons/day and P in $/gallon).", "ask": "In long-run equilibrium, how many firms operate in this market?", "answer": 84, "tolerance_abs": 0, "unit": "", "hints": ["Long-run PC equilibrium: each firm earns zero economic profit, so P = min LATC.", "P* = $6. Compute total market quantity at this price: Q_market = 6,000 − 300(6) = 4,200.", "Each firm produces 50 gallons at min LATC. Number of firms = 4,200 / 50 = 84."], "solution": "Long-run zero-profit condition: P = min LATC = $6.\n\nMarket Q at P=$6:\n  Q_market = 6,000 − 300(6) = 4,200 gallons/day\n\nEach firm produces Q_i = 50 gallons (the cost-minimizing scale).\n\nNumber of firms = 4,200 / 50 = 84.\n\n(Sanity check: each firm earns zero economic profit because P = min LATC.)"}, {"id": "m4i-q2", "module": "M4-I", "theme": "Short-Run Operating Decision", "format": "mcq", "stem": "A perfectly competitive firm faces market price P = $22. At its profit-maximizing output level it has ATC = $26, AVC = $19, and MC = $22.", "ask": "In the short run, the firm should:", "choices": ["Exit the industry immediately", "Increase output until ATC = P", "Shut down — ATC exceeds price", "Operate — price covers AVC", "Operate and earn positive profit"], "correct_index": 3, "hints": ["Short-run shutdown rule: operate if P ≥ AVC, shut down if P < AVC.", "Here P = $22 ≥ AVC = $19, so the firm should OPERATE in the short run.", "P < ATC ($22 < $26) means the firm is making negative economic profit, but by operating it covers VC and contributes $3/unit toward fixed costs. Shutting down means a loss equal to the full fixed cost — a worse outcome."], "solution": "Compare P to AVC, not ATC.\n  P = $22, AVC = $19 → P > AVC → OPERATE.\n  P = $22, ATC = $26 → P < ATC → losing money.\n\nBy operating, the firm covers all variable costs and earns $3/unit toward fixed costs. Shutting down would mean a loss equal to total fixed cost. Operating is the lesser loss."}, {"id": "m4i-q3", "module": "M4-I", "theme": "PC Firm Profit", "format": "open", "stem": "A perfectly competitive widget producer has TC = 600 + 5Q + 0.05Q². The market price is P = $9/widget.", "ask": "What is the firm's profit at the profit-maximizing quantity (in $; negative for loss)?", "answer": -520, "tolerance_abs": 1, "unit": "$", "hints": ["Profit-max for a price-taker: P = MC. Solve for Q.", "MC = 5 + 0.1Q. Set = 9: Q* = 40.", "TR = 9(40) = $360. TC = 600 + 5(40) + 0.05(40²) = 600 + 200 + 80 = $880. Profit = $360 − $880 = −$520. (AVC at Q=40 is 5 + 0.05·40 = $7 < P, so the firm still operates in the SR.)"], "solution": "MC = 5 + 0.1Q. Set P = MC:\n  9 = 5 + 0.1Q → Q* = 40.\n\nTR = 9 × 40 = $360\nTC = 600 + 5(40) + 0.05(40²) = 600 + 200 + 80 = $880\nProfit = $360 − $880 = −$520\n\nShould the firm operate? AVC at Q=40: VC = 5(40) + 0.05(40²) = 280, so AVC = $7. P=$9 > AVC=$7 → operate. The −$520 loss beats shutting down (loss of FC = $600)."}, {"id": "m4i-q4", "module": "M4-I", "theme": "PC Producer Surplus", "format": "open", "stem": "In a perfectly competitive market, the supply curve is Q_s = 5P − 25 (where Q is in units and P in $). The market price is P = $20.", "ask": "What is the total producer surplus (in $)?", "answer": 562.5, "tolerance_abs": 1, "unit": "$", "hints": ["Producer surplus = area between the market price and the supply curve, from Q = 0 to the equilibrium Q.", "At P = $20: Q = 5(20) − 25 = 75 units. Supply choke price (price at which Q = 0): 0 = 5P − 25 → P = $5.", "PS is the triangle: ½ × base × height = ½ × Q × (P − P_choke) = ½ × 75 × ($20 − $5) = $562.50."], "solution": "Step 1 — Find Q at P=$20: Q = 5(20) − 25 = 75.\nStep 2 — Find the supply-side price intercept (where Q=0): 5P − 25 = 0 → P = $5.\nStep 3 — PS is the triangle bounded by:\n  • P = $20 (top)\n  • the supply curve (rising from $5 at Q=0 to $20 at Q=75)\n  • the y-axis\n\n  PS = ½ × 75 × ($20 − $5) = ½ × 75 × 15 = $562.50."}, {"id": "m4i-mcq-2", "module": "M4-I", "theme": "PC Firm Demand Curve", "format": "mcq", "stem": "Consider an individual firm in a perfectly competitive market.", "ask": "What does its demand curve look like?", "choices": ["Vertical at the firm's capacity", "Upward-sloping for large quantities", "Steeply downward-sloping", "Slightly downward-sloping", "Horizontal at the market price"], "correct_index": 4, "hints": ["A PC firm is a 'price taker' — too small to influence the market price.", "At the market price, the firm can sell as much as it wants; at any higher price, it sells zero (customers go to other firms).", "This gives a horizontal (perfectly elastic) demand at the market price."], "solution": "PC firms are price takers. The individual firm's demand is HORIZONTAL at the market price — perfectly elastic. The MARKET demand (sum of all consumers) is downward-sloping, but no individual firm sees that slope."}, {"id": "m4i-mcq-3", "module": "M4-I", "theme": "MR for Price Taker", "format": "mcq", "stem": "A perfectly competitive firm sells at the market price P.", "ask": "What is its marginal revenue?", "choices": ["MR equals marginal cost", "MR equals average total cost", "MR equals the market price (P)", "MR equals zero", "MR equals half the market price"], "correct_index": 2, "hints": ["MR = additional revenue from one more unit sold.", "A PC firm sells each unit at the unchanged market price → adding one unit just adds P to revenue.", "So MR = P. (Note: this is the special case of MR = P + Q · (dP/dQ) when dP/dQ = 0.)"], "solution": "For a PC firm, every additional unit sells at the unchanged market price → MR = P. Average revenue is also P (TR/Q = PQ/Q = P). For a PC firm: MR = AR = P."}, {"id": "m4i-mcq-4", "module": "M4-I", "theme": "Long-Run PC Equilibrium Condition", "format": "mcq", "stem": "Consider the long-run equilibrium of a perfectly competitive industry with identical firms.", "ask": "Which condition holds for each firm in LR equilibrium?", "choices": ["Price exceeds LATC at the firm's chosen quantity", "Each firm earns negative economic profit, with some exiting", "Each firm earns large positive economic profit", "Each firm earns zero economic profit; P equals minimum LATC", "Firms produce where LMC is less than LATC"], "correct_index": 3, "hints": ["Free entry/exit erases any positive or negative economic profit in the long run.", "Zero profit means P = ATC. To be on the LATC curve, the firm must produce where MR = MC and P = ATC simultaneously.", "This is only true at the MINIMUM of LATC, where LMC = LATC = P."], "solution": "Long-run PC equilibrium for each firm:\n  P = LMC = min LATC\n  Economic profit = 0\n\nFree entry/exit drives positive profits to zero; firms operate at minimum efficient scale."}, {"id": "m4i-mcq-5", "module": "M4-I", "theme": "Entry Response to Positive Profit", "format": "mcq", "stem": "PC firms in a particular industry are earning positive economic profits in the short run.", "ask": "What is most likely to happen in the long run?", "choices": ["Existing firms gradually exit because of regulation", "Demand for the product falls due to the high profits", "Existing firms expand production until profits are zero", "New firms enter, industry supply shifts right, price falls, profits decline to zero", "The government taxes the profits away"], "correct_index": 3, "hints": ["In PC, there are no barriers to entry.", "Outsiders see the positive profits and enter the industry.", "More firms → industry supply shifts right → market price falls → profits decline. Continues until profit = 0."], "solution": "Positive economic profit attracts ENTRY. New firms enter, supply shifts right, price falls. The process continues until the typical firm earns zero economic profit (P = min LATC)."}, {"id": "m4i-mcq-6", "module": "M4-I", "theme": "Short-Run Operating Decision", "format": "mcq", "stem": "A perfectly competitive firm faces market price $12. At its profit-maximizing Q, its AVC = $14 and ATC = $20.", "ask": "What should the firm do in the short run?", "choices": ["Raise its price to cover ATC", "Exit the industry immediately", "Operate — the loss is smaller than shutting down", "Shut down — price does not cover AVC", "Operate and expand until MC = ATC"], "correct_index": 3, "hints": ["The short-run shutdown rule compares price to AVERAGE VARIABLE cost, not to average total cost.", "Here P = $12 and AVC = $14, so the firm cannot cover even the variable cost of the units it sells.", "When P < AVC, every unit produced adds to the loss. Shutting down caps the loss at fixed cost, which is the smaller loss."], "solution": "Compare P to AVC, not to ATC:\n  P = $12, AVC = $14 → P < AVC → SHUT DOWN.\n\nEach unit sold loses $2 on variable cost alone, on top of the fixed costs the firm owes either way. Producing nothing limits the short-run loss to total fixed cost.\n\nContrast this with the case where price falls BETWEEN AVC and ATC: there the firm still loses money overall, but each unit contributes something toward fixed cost, so operating is the smaller loss.\n\nNote that exiting is a LONG-run decision. In the short run the firm's fixed commitments stand whether or not it produces, so 'shut down' and 'exit' are not the same thing."}, {"id": "m4i-mcq-7", "module": "M4-I", "theme": "LR Number of Firms (Numeric)", "format": "mcq", "stem": "A perfectly competitive industry has market demand Q = 1,200 − 30P. Each firm has identical long-run cost curves with minimum LATC of $12/unit, achieved at a firm output of 6 units.", "ask": "In long-run equilibrium, how many firms operate in the industry?", "choices": ["70 firms", "100 firms", "120 firms", "140 firms", "840 firms"], "correct_index": 3, "hints": ["LR equilibrium price = minimum LATC = $12.", "Total market quantity at P = $12: Q_market = 1,200 − 30(12) = 840.", "Each firm produces 6. Number of firms = 840 / 6 = 140."], "solution": "LR P = min LATC = $12.\nMarket Q at P=12: Q = 1,200 − 30(12) = 840.\nEach firm produces 6 at min LATC.\nNumber of firms = 840 / 6 = 140.\n\n(Sanity check: each firm earns zero economic profit because P = min LATC.)"}, {"id": "m4i-mcq-8", "module": "M4-I", "theme": "PC Firm Supply Curve", "format": "mcq", "stem": "What is the SHORT-RUN supply curve of an individual perfectly competitive firm?", "ask": "The firm's SR supply curve is:", "choices": ["The full MC curve from Q = 0 upward", "The full ATC curve", "Horizontal at the market price", "The portion of its MC curve above minimum AVC", "The portion of its MC curve above minimum ATC"], "correct_index": 3, "hints": ["Above the shutdown threshold, the firm produces where P = MC.", "Below minimum AVC, the firm shuts down (Q = 0).", "So the SR supply curve = the MC curve, but only the portion above min AVC."], "solution": "Above min AVC: the firm operates and produces where P = MC → supply traces MC. Below min AVC: the firm shuts down (Q = 0). So the SR supply curve = the MC curve above min AVC."}, {"id": "m4i-mcq-9", "module": "M4-I", "theme": "Constant-Cost Industry LR Effect", "format": "mcq", "stem": "In a constant-cost competitive industry (input prices independent of industry size), market demand permanently shifts right.", "ask": "What happens to the equilibrium price in the LONG run?", "choices": ["Price falls permanently", "Price is unchanged in both the short and long run", "Price rises permanently above the original level", "Price rises in the short run but returns to its original level in the long run", "Price falls in the short run; rises in the long run"], "correct_index": 3, "hints": ["Constant-cost industry: input prices don't change as the industry grows.", "SR: demand right → P rises (existing firms produce more along their MC curves).", "LR: positive profit attracts entry → supply shifts right → P returns to min LATC. Only quantity rises permanently."], "solution": "In a constant-cost industry:\n  SR: demand shifts right → P rises, profits become positive.\n  LR: profits attract entry → supply shifts right by the same amount as demand → P returns to the original minimum LATC. Only Q rises permanently.\n\n(Increasing-cost industries: input prices rise as the industry grows → P ends higher in LR than originally.)"}, {"id": "m4i-mcq-10", "module": "M4-I", "theme": "Profit-Max Condition for PC Firm", "format": "mcq", "stem": "At the profit-maximizing quantity of a perfectly competitive firm, which relationship is ALWAYS true?", "ask": "Pick the always-true condition:", "choices": ["P = ATC always", "MR > MC", "P > MC", "P < MC", "P = MR = MC"], "correct_index": 4, "hints": ["PC firm: MR = P (price-taker condition).", "Profit-max: MR = MC.", "Combining: P = MR = MC at the profit-maximizing Q. (P vs ATC determines whether profit is positive, zero, or negative — but P = MC holds at profit max regardless.)"], "solution": "For a PC firm at profit max:\n  MR = P (price-taker)\n  MR = MC (profit-max condition)\n  ∴ P = MR = MC.\n\nThis is the always-true condition at profit max. P vs ATC tells you the profit level, but at the chosen Q, P = MC holds always."}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+const QS = D.questions;
+
+// ---- Per-question state, persisted in localStorage (shared across module pages) ----
+const STATE_KEY = 'mgmt405_practice_v1';
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch (_) { STATE = {}; }
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch (_) {} }
+function getQState(qid) {
+  if (!STATE[qid]) STATE[qid] = {attempts:0, hints_shown:0, completed:false, last_answer_correct:false, mcq_choice:null, last_input:'', show_solution:false};
+  if (STATE[qid].show_solution === undefined) STATE[qid].show_solution = false;
+  return STATE[qid];
+}
+
+let typeFilter = 'all';
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ---- Stats ----
+function updateStats() {
+  let attempted = 0, correct = 0, total = 0;
+  for (const q of QS) {
+    if (typeFilter !== 'all' && q.format !== typeFilter) continue;
+    total++;
+    const s = STATE[q.id];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  document.getElementById('progress').textContent = attempted + ' / ' + total + ' attempted';
+  document.getElementById('correct').textContent = correct + ' correct';
+}
+
+// ---- Render questions ----
+function renderQuestions() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filtered = QS.filter(q => typeFilter === 'all' || q.format === typeFilter);
+  if (filtered.length === 0) {
+    main.innerHTML = '<p style="color:var(--muted)">No questions match the current filter.</p>';
+    updateStats(); return;
+  }
+  for (const q of filtered) {
+    main.appendChild(renderQuestion(q));
+  }
+  updateStats();
+}
+
+function renderQuestion(q) {
+  const s = getQState(q.id);
+  const card = document.createElement('div');
+  card.className = 'q';
+  if (s.completed) card.classList.add('done', s.last_answer_correct ? 'correct' : 'failed');
+
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML =
+    '<span class="qtag ' + q.format + '">' + (q.format === 'open' ? 'OPEN' : 'MCQ') + '</span>' +
+    '<span class="qtheme">' + escapeHTML(q.theme) + '</span>' +
+    '<span class="qid">' + q.id + '</span>' +
+    '<span class="qstatus ' + (s.completed ? (s.last_answer_correct ? 'correct' : 'failed') : '') + '">' +
+      (s.completed ? (s.last_answer_correct ? '✓ Solved' : '✗ See solution') : '') +
+    '</span>';
+  card.appendChild(head);
+
+  const stem = document.createElement('div');
+  stem.className = 'qstem';
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const ask = document.createElement('div');
+  ask.className = 'qask';
+  ask.textContent = q.ask;
+  card.appendChild(ask);
+
+  // Input area
+  const inputArea = document.createElement('div');
+  if (q.format === 'open') {
+    inputArea.className = 'input-row';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.placeholder = 'Numeric answer';
+    inp.value = s.last_input || '';
+    if (s.completed) inp.disabled = true;
+    inp.dataset.qid = q.id;
+    inputArea.appendChild(inp);
+    if (q.unit) {
+      const u = document.createElement('span');
+      u.className = 'unit';
+      u.textContent = q.unit;
+      inputArea.appendChild(u);
+    }
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-open';
+      inputArea.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      inputArea.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      inputArea.appendChild(att);
+    }
+  } else {
+    inputArea.className = 'choices';
+    inputArea.dataset.qid = q.id;
+    for (let i = 0; i < q.choices.length; i++) {
+      const lbl = document.createElement('label');
+      const selected = s.mcq_choice === i;
+      if (selected) lbl.classList.add('selected');
+      lbl.innerHTML = '<input type="radio" name="' + q.id + '" value="' + i + '"' + (selected ? ' checked' : '') + (s.completed ? ' disabled' : '') + '> ' +
+                     '<strong>' + String.fromCharCode(65 + i) + ')</strong> ' + escapeHTML(q.choices[i]);
+      inputArea.appendChild(lbl);
+    }
+    const row = document.createElement('div');
+    row.style.marginTop = '8px';
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-mcq';
+      row.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      row.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      row.appendChild(att);
+    }
+    inputArea.appendChild(row);
+  }
+  card.appendChild(inputArea);
+
+  // Feedback and hints
+  const fb = document.createElement('div');
+  fb.className = 'feedback-area';
+  fb.dataset.qid = q.id;
+  card.appendChild(fb);
+
+  if (s.completed) {
+    const resDiv = document.createElement('div');
+    resDiv.className = 'feedback result ' + (s.last_answer_correct ? 'correct' : 'wrong');
+    if (s.last_answer_correct) {
+      const tag = s.hints_shown > 0 ? '(after ' + s.hints_shown + ' hint' + (s.hints_shown > 1 ? 's' : '') + ')' : '(first try)';
+      resDiv.innerHTML = '<span class="icon">✓</span><span><strong>Correct!</strong> <span class="sub">' + tag + '</span></span>';
+    } else {
+      resDiv.innerHTML = '<span class="icon">✗</span><span><strong>Incorrect.</strong> <span class="sub">No attempts remaining — full solution shown below.</span></span>';
+    }
+    fb.appendChild(resDiv);
+  } else if (s.attempts > 0) {
+    const left = 3 - s.attempts;
+    const tail = left >= 0 ? ' (' + Math.max(left, 0) + ' attempt' + (left === 1 ? '' : 's') + ' left)' : '';
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'feedback wrong';
+    wrongDiv.innerHTML = '<strong>✗ Not quite — try again.</strong> Hint ' + s.hints_shown + ' revealed below.' + tail;
+    fb.appendChild(wrongDiv);
+  }
+  if (s.hints_shown > 0) renderHints(fb, q, s.hints_shown);
+  if (s.completed && (!s.last_answer_correct || s.show_solution)) renderSolution(fb, q);
+
+  return card;
+}
+
+function renderHints(container, q, n_shown) {
+  container.querySelectorAll('.hint').forEach(el => el.remove());
+  for (let i = 0; i < n_shown && i < q.hints.length; i++) {
+    const h = document.createElement('div');
+    h.className = 'hint';
+    h.innerHTML = '<b>Hint ' + (i+1) + ':</b> ' + escapeHTML(q.hints[i]);
+    container.appendChild(h);
+  }
+}
+
+function renderSolution(container, q) {
+  if (container.querySelector('.solution')) return;
+  const sol = document.createElement('div');
+  sol.className = 'solution';
+  sol.innerHTML = '<h4>Full solution</h4><pre>' + escapeHTML(q.solution) + '</pre>';
+  container.appendChild(sol);
+}
+
+// ---- Answer checking ----
+function checkOpen(q, value) {
+  const userVal = parseFloat(value);
+  if (isNaN(userVal)) return {ok:false, msg:'Please enter a numeric answer.'};
+  const tol = q.tolerance_abs || 0;
+  const correct = Math.abs(userVal - q.answer) <= tol;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+function checkMCQ(q, choiceIndex) {
+  if (choiceIndex === null || choiceIndex === undefined) return {ok:false, msg:'Pick an option first.'};
+  const correct = choiceIndex === q.correct_index;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+// ---- Submit handler ----
+document.addEventListener('click', e => {
+  if (e.target.dataset.action === 'submit-open' || e.target.dataset.action === 'submit-mcq') {
+    handleSubmit(e.target);
+  } else if (e.target.dataset.action === 'toggle-solution') {
+    const qid = e.target.dataset.qid;
+    const s = getQState(qid);
+    s.show_solution = !s.show_solution;
+    saveState();
+    renderQuestions();
+  }
+});
+
+function handleSubmit(btn) {
+  const qid = btn.dataset.qid;
+  const q = QS.find(x => x.id === qid);
+  const s = getQState(qid);
+
+  if (s.completed) return;
+
+  let result;
+  if (q.format === 'open') {
+    const inp = btn.parentElement.querySelector('input[type=number]');
+    s.last_input = inp.value;
+    result = checkOpen(q, inp.value);
+  } else {
+    const sel = document.querySelector('.choices[data-qid="' + qid + '"] input[type=radio]:checked');
+    const choiceIndex = sel ? parseInt(sel.value) : null;
+    s.mcq_choice = choiceIndex;
+    result = checkMCQ(q, choiceIndex);
+  }
+
+  if (result.ok) {
+    s.attempts += 1;
+    s.completed = true;
+    s.last_answer_correct = true;
+    s.show_solution = false;
+    saveState();
+    renderQuestions();
+    return;
+  }
+
+  s.attempts += 1;
+  if (s.attempts <= 3) {
+    if (s.hints_shown < s.attempts) s.hints_shown = s.attempts;
+  } else {
+    s.completed = true;
+    s.last_answer_correct = false;
+    s.show_solution = true;
+    s.hints_shown = q.hints.length;
+  }
+  saveState();
+  renderQuestions();
+}
+
+// MCQ choice highlighting
+document.addEventListener('change', e => {
+  if (e.target.matches('.choices input[type=radio]')) {
+    const parent = e.target.closest('.choices');
+    parent.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+    e.target.closest('label').classList.add('selected');
+  }
+});
+
+// ---- Filters ----
+document.getElementById('typefilter').addEventListener('change', e => {
+  typeFilter = e.target.value;
+  renderQuestions();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Reset your progress on this module? This cannot be undone.')) return;
+  for (const q of QS) delete STATE[q.id];
+  saveState();
+  renderQuestions();
+});
+
+// ---- Calculator ----
+const calc = document.getElementById('calc');
+const calcDisp = document.getElementById('calcdisp');
+let calcExpr = '';
+function calcUpdate() { calcDisp.textContent = calcExpr || '0'; calcDisp.classList.remove('err'); }
+function calcEval() {
+  if (!calcExpr) return;
+  try {
+    if (!/^[\d+\-*/().\s*]+$/.test(calcExpr.replace(/\*\*/g, ''))) throw 'bad';
+    const v = Function('return (' + calcExpr + ')')();
+    if (!isFinite(v)) throw 'overflow';
+    calcExpr = String(+v.toFixed(10).replace(/\.?0+$/, ''));
+    calcUpdate();
+  } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+}
+document.getElementById('calctoggle').addEventListener('click', () => calc.classList.toggle('show'));
+document.querySelectorAll('.calc .keys button').forEach(b => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.key, a = b.dataset.act;
+    if (a === 'clear') { calcExpr = ''; calcUpdate(); }
+    else if (a === 'back') { calcExpr = calcExpr.slice(0, -1); calcUpdate(); }
+    else if (a === 'eq') { calcEval(); }
+    else if (a === 'sqrt') {
+      try {
+        const v = calcExpr ? Function('return (' + calcExpr + ')')() : 0;
+        if (v < 0) throw 'neg';
+        calcExpr = String(+Math.sqrt(v).toFixed(10).replace(/\.?0+$/, ''));
+        calcUpdate();
+      } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+    }
+    else if (k) { calcExpr += k; calcUpdate(); }
+  });
+});
+
+// ---- Init ----
+renderQuestions();
+</script>

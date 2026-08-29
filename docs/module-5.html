@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Module 5 · MGMT 405 Practice</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Module 5: Monopoly and Monopolistic Competition</div>
+</header>
+
+<nav class="modnav"><a href="index.html">All modules</a><a href="module-1.html">Module 1</a><a href="module-2.html">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html">Module 4 (Part I)</a><a href="module-4-part-2.html">Module 4 (Part II)</a><a href="module-5.html" class="active">Module 5</a><a href="module-6.html">Module 6</a><a href="module-7-part-1.html">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html">Module 8</a></nav>
+
+<div class="controls">
+  <label>Question type:</label>
+  <select id="typefilter">
+    <option value="all">All</option>
+    <option value="open">Open (numeric answer)</option>
+    <option value="mcq">Multiple choice</option>
+  </select>
+  <span class="stats">
+    <span id="progress">0 / 0 attempted</span> · <strong id="correct">0 correct</strong>
+    <button id="reset" style="margin-left:8px; font-size:11px; padding:2px 8px; background:#fff; border:1px solid var(--line); border-radius:3px; cursor:pointer;">Reset this module</button>
+  </span>
+</div>
+
+<main>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div id="main"></div>
+</main>
+
+<button class="calc-toggle" id="calctoggle">🖩 Calculator</button>
+<div class="calc" id="calc">
+  <div class="display" id="calcdisp">0</div>
+  <div class="keys">
+    <button class="fn" data-act="clear">C</button>
+    <button class="fn" data-act="back">⌫</button>
+    <button class="fn" data-key="(">(</button>
+    <button class="fn" data-key=")">)</button>
+    <button class="op" data-key="/">÷</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+    <button class="op" data-key="*">×</button>
+    <button class="fn" data-act="sqrt">√</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button class="op" data-key="-">−</button>
+    <button class="fn" data-key="**">x^y</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button class="op" data-key="+">+</button>
+    <button class="fn" data-key=".">.</button>
+    <button data-key="0">0</button>
+    <button data-key="00">00</button>
+    <button class="eq" data-act="eq">=</button>
+  </div>
+</div>
+
+<script id="QDATA" type="application/json">{"module": {"key": "M5", "label": "Module 5", "title": "Monopoly and Monopolistic Competition"}, "questions": [{"id": "m5-q1", "module": "M5", "theme": "Monopoly Profit-Max Price", "format": "open", "stem": "A monopolist sells a patented gadget. Inverse demand is P = 50 − Q (where Q is units/day and P is $/unit). Marginal cost is constant at $10.", "ask": "What is the profit-maximizing price (in $)?", "answer": 30, "tolerance_abs": 0, "unit": "$", "hints": ["Monopoly profit-max: MR = MC. Find MR, set equal to MC, solve for Q, then read P off the demand curve.", "MR = 50 − 2Q (twice the slope of P = 50 − Q). Set MR = MC: 50 − 2Q = 10 → Q* = 20.", "Plug Q* = 20 into demand: P* = 50 − 20 = $30."], "solution": "Step 1 — MR from linear demand: MR = 50 − 2Q.\nStep 2 — Set MR = MC: 50 − 2Q = 10 → Q* = 20.\nStep 3 — Read P from demand: P* = 50 − 20 = $30.\n\n(Profit per unit = P − MC = $20. Total profit (assuming no FC) = $20 × 20 = $400.)"}, {"id": "m5-q2", "module": "M5", "theme": "Monopoly Deadweight Loss", "format": "open", "stem": "The same monopolist (P = 50 − Q, MC = $10) sells at the profit-maximizing price.", "ask": "What is the deadweight loss of monopoly (in $)?", "answer": 200, "tolerance_abs": 1, "unit": "$", "hints": ["DWL = the triangle between the demand curve and MC, from Q_monopoly to Q_competitive. Area = ½ × (Q_PC − Q_M) × (P_M − MC).", "Q_competitive (where P = MC): 50 − Q = 10 → Q_PC = 40. Q_monopoly = 20 (from the previous question). P_monopoly = $30, MC = $10.", "DWL = ½ × (40 − 20) × ($30 − $10) = ½ × 20 × 20 = $200."], "solution": "Step 1 — PC quantity (where P = MC): 50 − Q = 10 → Q_PC = 40.\nStep 2 — Monopoly quantity (from M5.Q1): Q_M = 20; P_M = $30.\nStep 3 — DWL is the triangle between demand and MC, from Q_M to Q_PC:\n          DWL = ½ × (Q_PC − Q_M) × (P_M − MC)\n              = ½ × (40 − 20) × ($30 − $10)\n              = ½ × 20 × 20\n              = $200."}, {"id": "m5-q3", "module": "M5", "theme": "Lerner Index", "format": "open", "stem": "A monopolist sells at P = $60 with constant MC = $24.", "ask": "What is the Lerner index? (As a decimal, e.g., 0.40.)", "answer": 0.6, "tolerance_abs": 0.01, "unit": "", "hints": ["Lerner index measures market power: L = (P − MC) / P.", "Plug in: L = ($60 − $24) / $60.", "L = $36 / $60 = 0.60 (60% of the price is markup over MC)."], "solution": "Lerner index: L = (P − MC) / P = (60 − 24) / 60 = 36/60 = 0.60.\n\nThis equals 1/|e_D| at the profit-maximizing point, so the implied demand elasticity is |e_D| = 1/0.60 ≈ 1.67."}, {"id": "m5-q4", "module": "M5", "theme": "FC Effect on Monopolist", "format": "mcq", "stem": "A monopolist faces a new annual government licensing fee (a fixed cost). Its marginal cost is unchanged.", "ask": "In the short run, what happens to the monopolist's profit-maximizing price?", "choices": ["Price rises to pass the new cost on to consumers", "Price falls because total cost rises", "Price is unchanged — only profit changes", "Price rises by exactly the new fixed cost", "The monopolist always shuts down when a fixed cost rises"], "correct_index": 2, "hints": ["Profit-max comes from MR = MC. A fixed cost doesn't appear in MC.", "If MC is unchanged, the optimal Q and P are unchanged.", "Only PROFIT (level) changes — it falls by the licensing fee. (As long as the firm still earns enough to cover variable costs, it keeps the same P and Q.)"], "solution": "Profit-max condition: MR = MC. A fixed cost doesn't enter MC, so the optimal Q (and hence P) is UNCHANGED.\n\nWhat changes: profit falls by exactly the licensing fee.\n\nThis is why a one-time fee, license, or property-tax change doesn't get passed through to consumers in the short run — even a monopolist can't profit from raising P above the MR = MC level."}, {"id": "m5-q5", "module": "M5", "theme": "Monopolistic Competition LR Profit", "format": "open", "stem": "In a monopolistically competitive industry (many firms with differentiated products, free entry), a typical firm in long-run equilibrium has P = $25, Q = 60, ATC = $25, MC = $16.", "ask": "What is the typical firm's long-run economic profit (in $)?", "answer": 0, "tolerance_abs": 1, "unit": "$", "hints": ["Long-run economic profit in monopolistic competition: free entry drives profit to zero.", "Profit = (P − ATC) × Q. With P = $25 and ATC = $25, what does that give?", "Profit = (25 − 25) × 60 = $0. P = ATC always in LR mon comp."], "solution": "Long-run mon comp equilibrium: P = ATC (free entry erodes any positive profit).\n\nProfit = (P − ATC) × Q = ($25 − $25) × 60 = $0.\n\nNotice P = $25 > MC = $16, so there's still a markup (Lerner = (25−16)/25 = 36%). But because the firm operates above min ATC (excess capacity), all that markup just covers average fixed cost — no economic profit."}, {"id": "m5-mcq-2", "module": "M5", "theme": "Lerner from Elasticity (Numeric)", "format": "mcq", "stem": "A monopolist's price elasticity of demand at the profit-maximizing point is e_D = −4.0.", "ask": "What is the firm's Lerner index?", "choices": ["0.10", "0.25", "0.40", "0.60", "4.00"], "correct_index": 1, "hints": ["At profit-max: Lerner = (P − MC)/P = 1/|e_D|.", "|e_D| = 4.0.", "Lerner = 1 / 4.0 = 0.25 → 25% of the price is markup over MC."], "solution": "Profit-max condition for any price searcher:\n  (P − MC)/P = 1/|e_D|\n  Lerner = 1/4.0 = 0.25\n\nThis says 25% of the price is markup above MC. Equivalently, MC = 0.75 × P."}, {"id": "m5-mcq-3", "module": "M5", "theme": "Operating Region of Monopolist", "format": "mcq", "stem": "A profit-maximizing monopolist faces standard downward-sloping demand and positive marginal cost.", "ask": "Where on the demand curve will the monopolist operate?", "choices": ["Inelastic region (|e| < 1)", "Unit-elastic point (|e| = 1)", "Elastic region (|e| > 1)", "Perfectly elastic point (|e| → ∞)", "Either elastic or inelastic, depending on costs"], "correct_index": 2, "hints": ["Profit-max requires MR = MC > 0.", "MR > 0 only when demand is ELASTIC (|e| > 1).", "So the monopolist always operates in the elastic region. (If it were in the inelastic region, raising P would raise TR AND lower Q (=> lower costs) → higher profit.)"], "solution": "Profit-max: MR = MC > 0. MR > 0 ⇔ |e| > 1 (elastic region).\n\nWhy: in the inelastic region, raising P raises TR while reducing Q (and so costs). Both push profit up. A profit-maximizer never operates in the inelastic part."}, {"id": "m5-mcq-4b", "module": "M5", "theme": "Source of Monopoly DWL", "format": "mcq", "stem": "Why does monopoly create deadweight loss compared to perfect competition?", "ask": "The primary source of monopoly DWL is:", "choices": ["The monopolist's average cost is too high", "The monopolist restricts output below where P = MC", "Consumers cannot afford the product", "The monopolist earns positive profit", "Marginal cost is positive"], "correct_index": 1, "hints": ["Socially efficient quantity: where P (willingness to pay) = MC (cost of producing one more).", "Monopolist quantity: where MR = MC, with P > MR → Q_M < Q_PC.", "The 'missing' trades (where WTP > MC) are foregone surplus → DWL."], "solution": "The monopolist sets MR = MC, but because MR < P, this implies Q_M < Q_PC (the social optimum).\n\nFor every unit between Q_M and Q_PC, the consumer's willingness to pay EXCEEDS the marginal cost — those would be welfare-improving trades. The monopolist forgoes them to keep the price high. The lost surplus is DWL."}, {"id": "m5-mcq-5", "module": "M5", "theme": "Monopoly Profit-Max Price (Numeric)", "format": "mcq", "stem": "A monopolist faces inverse demand P = 80 − 4Q and constant marginal cost MC = $8.", "ask": "What is the profit-maximizing price?", "choices": ["$8", "$36", "$44", "$52", "$80"], "correct_index": 2, "hints": ["For P = 80 − 4Q, MR = 80 − 8Q (same intercept, twice the slope).", "Set MR = MC: 80 − 8Q = 8 → Q* = 9.", "Plug back into demand: P* = 80 − 4(9) = $44."], "solution": "MR = 80 − 8Q. Set MR = MC:\n  80 − 8Q = 8\n  8Q = 72\n  Q* = 9.\n\nP* = 80 − 4(9) = $44.\n\n(Profit per unit = $44 − $8 = $36. Total profit assuming no FC = $36 × 9 = $324.)"}, {"id": "m5-mcq-6", "module": "M5", "theme": "Mon Comp LR Equilibrium", "format": "mcq", "stem": "Consider a representative firm in a monopolistically competitive industry in long-run equilibrium.", "ask": "Which set of conditions describes this firm?", "choices": ["P > MC and P > ATC (positive economic profit)", "P > MC and P = ATC (zero economic profit)", "P = MC and P = ATC (efficient outcome like PC)", "P = MC and P > ATC", "P < MC"], "correct_index": 1, "hints": ["Mon comp combines elements of monopoly and PC.", "Product differentiation → downward-sloping demand → P > MC (some markup).", "Free entry → economic profit → 0 → P = ATC. Combining: P > MC AND P = ATC."], "solution": "Monopolistic competition LR equilibrium:\n  Differentiated products → the firm has some market power → P > MC (Lerner > 0).\n  Free entry → entry erodes profits → P = ATC, economic profit = 0.\n\nSo P > MC AND P = ATC. The firm operates above min ATC (excess capacity) — the markup just covers AFC."}, {"id": "m5-mcq-7", "module": "M5", "theme": "Sources of Market Power", "format": "mcq", "stem": "Which of the following is NOT a source of market power for a firm?", "ask": "Pick the option that does NOT create market power:", "choices": ["Holding a patent on a unique product", "Strong brand identity that customers value", "Control of an essential input", "Network effects with high switching costs", "Many close substitutes available in the market"], "correct_index": 4, "hints": ["Market power = the ability to set P above MC.", "Things that CREATE power: patents, brands, input control, network effects, entry barriers.", "Things that DESTROY power: many substitutes, easy entry, low switching costs, perfect info. The OPPOSITE of market power."], "solution": "Many close substitutes makes demand HIGHLY ELASTIC → the firm has LITTLE market power (raising P loses most customers).\n\nAll the other options listed (patents, brand, input control, network effects) create market power by reducing the elasticity of demand the firm faces."}, {"id": "m5-mcq-8", "module": "M5", "theme": "Network Effects Industry", "format": "mcq", "stem": "Which business is MOST likely to be characterized by strong network effects?", "ask": "Pick the business with the strongest network effects:", "choices": ["Corn farming", "A ride-sharing platform", "Brick manufacturing", "A local dry cleaner", "Commodity steel production"], "correct_index": 1, "hints": ["Network effects: a product becomes MORE VALUABLE to a user as MORE other users adopt it.", "A ride-sharing platform: more riders attract more drivers (shorter waits), and more drivers attract more riders.", "The others are commodities, local services, or generic products — no inherent benefit from other consumers using them."], "solution": "A ride-sharing platform has strong network effects: more riders attract more drivers (shorter waits, more coverage), which attracts still more riders. This creates 'tippy' markets where a large platform dominates, and entrants face a cold-start problem.\n\nCorn, bricks, dry cleaning, and steel don't get more valuable when more people use them."}, {"id": "m5-mcq-9", "module": "M5", "theme": "Markup-Elasticity Relationship", "format": "mcq", "stem": "Two firms with market power face different demand elasticities at their respective profit-maximizing points. Firm A's |e_D| = 1.8; Firm B's |e_D| = 5.0.", "ask": "Which firm has the larger markup?", "choices": ["Firm A — less elastic demand", "Firm B — more elastic demand", "Both have the same markup", "Cannot determine without MC", "Cannot determine without quantity"], "correct_index": 0, "hints": ["Lerner index: (P − MC)/P = 1/|e_D|.", "Smaller |e_D| → larger Lerner.", "Firm A: Lerner = 1/1.8 ≈ 0.56. Firm B: Lerner = 1/5 = 0.20. A has the larger markup."], "solution": "Lerner = 1/|e_D|.\n  Firm A: 1/1.8 ≈ 0.56 (56% markup share).\n  Firm B: 1/5 = 0.20 (20% markup share).\n\nFirm A has the larger markup because its demand is less elastic — customers are less able to switch away, giving the firm more pricing power."}, {"id": "m5-mcq-10", "module": "M5", "theme": "PC vs Mon Comp Distinction", "format": "mcq", "stem": "What is the KEY distinction between a perfectly competitive firm and a monopolistically competitive firm?", "ask": "The defining difference is:", "choices": ["PC firms produce homogeneous products; mon comp firms produce DIFFERENTIATED products", "PC firms earn positive LR profits; mon comp firms earn zero", "PC firms face downward-sloping demand; mon comp firms face horizontal demand", "PC firms have higher costs than mon comp firms", "Mon comp firms face high entry barriers; PC firms don't"], "correct_index": 0, "hints": ["Both have many firms and free entry, so LR economic profit = 0 in BOTH.", "What distinguishes mon comp from PC is product differentiation.", "Homogeneous (PC) vs differentiated (mon comp). Different products = different demand curves for individual firms."], "solution": "Both PC and mon comp have:\n  • Many firms\n  • Free entry/exit (zero LR economic profit)\n\nDistinction: PC has HOMOGENEOUS products (the individual firm faces horizontal demand at the market price). Mon comp has DIFFERENTIATED products (the individual firm faces downward-sloping demand with some markup, P > MC)."}, {"id": "m5-mcq-11", "module": "M5", "theme": "Identifying Price Takers", "format": "mcq", "stem": "Which firm is MOST likely to be a price taker?", "ask": "The firm most closely matching the price-taker assumption is:", "choices": ["Microsoft (Windows operating system)", "A small corn farmer in Iowa", "The local water utility", "Intel (CPUs)", "Pfizer (a patented drug)"], "correct_index": 1, "hints": ["A price taker is tiny relative to market size + produces a homogeneous good + faces no barriers to entry.", "Microsoft, the water utility, Intel, and Pfizer all have substantial market power (brand, regulation, scale, patents).", "A small corn farmer produces a commodity into a huge market — exactly the textbook price taker."], "solution": "A small corn farmer sells a homogeneous commodity into a national/global market with millions of similar producers. They must accept the market price → price taker.\n\nThe other firms all have significant market power: Microsoft (brand + ecosystem), the water utility (local monopoly), Intel (oligopoly), Pfizer (patent)."}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+const QS = D.questions;
+
+// ---- Per-question state, persisted in localStorage (shared across module pages) ----
+const STATE_KEY = 'mgmt405_practice_v1';
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch (_) { STATE = {}; }
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch (_) {} }
+function getQState(qid) {
+  if (!STATE[qid]) STATE[qid] = {attempts:0, hints_shown:0, completed:false, last_answer_correct:false, mcq_choice:null, last_input:'', show_solution:false};
+  if (STATE[qid].show_solution === undefined) STATE[qid].show_solution = false;
+  return STATE[qid];
+}
+
+let typeFilter = 'all';
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ---- Stats ----
+function updateStats() {
+  let attempted = 0, correct = 0, total = 0;
+  for (const q of QS) {
+    if (typeFilter !== 'all' && q.format !== typeFilter) continue;
+    total++;
+    const s = STATE[q.id];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  document.getElementById('progress').textContent = attempted + ' / ' + total + ' attempted';
+  document.getElementById('correct').textContent = correct + ' correct';
+}
+
+// ---- Render questions ----
+function renderQuestions() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filtered = QS.filter(q => typeFilter === 'all' || q.format === typeFilter);
+  if (filtered.length === 0) {
+    main.innerHTML = '<p style="color:var(--muted)">No questions match the current filter.</p>';
+    updateStats(); return;
+  }
+  for (const q of filtered) {
+    main.appendChild(renderQuestion(q));
+  }
+  updateStats();
+}
+
+function renderQuestion(q) {
+  const s = getQState(q.id);
+  const card = document.createElement('div');
+  card.className = 'q';
+  if (s.completed) card.classList.add('done', s.last_answer_correct ? 'correct' : 'failed');
+
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML =
+    '<span class="qtag ' + q.format + '">' + (q.format === 'open' ? 'OPEN' : 'MCQ') + '</span>' +
+    '<span class="qtheme">' + escapeHTML(q.theme) + '</span>' +
+    '<span class="qid">' + q.id + '</span>' +
+    '<span class="qstatus ' + (s.completed ? (s.last_answer_correct ? 'correct' : 'failed') : '') + '">' +
+      (s.completed ? (s.last_answer_correct ? '✓ Solved' : '✗ See solution') : '') +
+    '</span>';
+  card.appendChild(head);
+
+  const stem = document.createElement('div');
+  stem.className = 'qstem';
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const ask = document.createElement('div');
+  ask.className = 'qask';
+  ask.textContent = q.ask;
+  card.appendChild(ask);
+
+  // Input area
+  const inputArea = document.createElement('div');
+  if (q.format === 'open') {
+    inputArea.className = 'input-row';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.placeholder = 'Numeric answer';
+    inp.value = s.last_input || '';
+    if (s.completed) inp.disabled = true;
+    inp.dataset.qid = q.id;
+    inputArea.appendChild(inp);
+    if (q.unit) {
+      const u = document.createElement('span');
+      u.className = 'unit';
+      u.textContent = q.unit;
+      inputArea.appendChild(u);
+    }
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-open';
+      inputArea.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      inputArea.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      inputArea.appendChild(att);
+    }
+  } else {
+    inputArea.className = 'choices';
+    inputArea.dataset.qid = q.id;
+    for (let i = 0; i < q.choices.length; i++) {
+      const lbl = document.createElement('label');
+      const selected = s.mcq_choice === i;
+      if (selected) lbl.classList.add('selected');
+      lbl.innerHTML = '<input type="radio" name="' + q.id + '" value="' + i + '"' + (selected ? ' checked' : '') + (s.completed ? ' disabled' : '') + '> ' +
+                     '<strong>' + String.fromCharCode(65 + i) + ')</strong> ' + escapeHTML(q.choices[i]);
+      inputArea.appendChild(lbl);
+    }
+    const row = document.createElement('div');
+    row.style.marginTop = '8px';
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-mcq';
+      row.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      row.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      row.appendChild(att);
+    }
+    inputArea.appendChild(row);
+  }
+  card.appendChild(inputArea);
+
+  // Feedback and hints
+  const fb = document.createElement('div');
+  fb.className = 'feedback-area';
+  fb.dataset.qid = q.id;
+  card.appendChild(fb);
+
+  if (s.completed) {
+    const resDiv = document.createElement('div');
+    resDiv.className = 'feedback result ' + (s.last_answer_correct ? 'correct' : 'wrong');
+    if (s.last_answer_correct) {
+      const tag = s.hints_shown > 0 ? '(after ' + s.hints_shown + ' hint' + (s.hints_shown > 1 ? 's' : '') + ')' : '(first try)';
+      resDiv.innerHTML = '<span class="icon">✓</span><span><strong>Correct!</strong> <span class="sub">' + tag + '</span></span>';
+    } else {
+      resDiv.innerHTML = '<span class="icon">✗</span><span><strong>Incorrect.</strong> <span class="sub">No attempts remaining — full solution shown below.</span></span>';
+    }
+    fb.appendChild(resDiv);
+  } else if (s.attempts > 0) {
+    const left = 3 - s.attempts;
+    const tail = left >= 0 ? ' (' + Math.max(left, 0) + ' attempt' + (left === 1 ? '' : 's') + ' left)' : '';
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'feedback wrong';
+    wrongDiv.innerHTML = '<strong>✗ Not quite — try again.</strong> Hint ' + s.hints_shown + ' revealed below.' + tail;
+    fb.appendChild(wrongDiv);
+  }
+  if (s.hints_shown > 0) renderHints(fb, q, s.hints_shown);
+  if (s.completed && (!s.last_answer_correct || s.show_solution)) renderSolution(fb, q);
+
+  return card;
+}
+
+function renderHints(container, q, n_shown) {
+  container.querySelectorAll('.hint').forEach(el => el.remove());
+  for (let i = 0; i < n_shown && i < q.hints.length; i++) {
+    const h = document.createElement('div');
+    h.className = 'hint';
+    h.innerHTML = '<b>Hint ' + (i+1) + ':</b> ' + escapeHTML(q.hints[i]);
+    container.appendChild(h);
+  }
+}
+
+function renderSolution(container, q) {
+  if (container.querySelector('.solution')) return;
+  const sol = document.createElement('div');
+  sol.className = 'solution';
+  sol.innerHTML = '<h4>Full solution</h4><pre>' + escapeHTML(q.solution) + '</pre>';
+  container.appendChild(sol);
+}
+
+// ---- Answer checking ----
+function checkOpen(q, value) {
+  const userVal = parseFloat(value);
+  if (isNaN(userVal)) return {ok:false, msg:'Please enter a numeric answer.'};
+  const tol = q.tolerance_abs || 0;
+  const correct = Math.abs(userVal - q.answer) <= tol;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+function checkMCQ(q, choiceIndex) {
+  if (choiceIndex === null || choiceIndex === undefined) return {ok:false, msg:'Pick an option first.'};
+  const correct = choiceIndex === q.correct_index;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+// ---- Submit handler ----
+document.addEventListener('click', e => {
+  if (e.target.dataset.action === 'submit-open' || e.target.dataset.action === 'submit-mcq') {
+    handleSubmit(e.target);
+  } else if (e.target.dataset.action === 'toggle-solution') {
+    const qid = e.target.dataset.qid;
+    const s = getQState(qid);
+    s.show_solution = !s.show_solution;
+    saveState();
+    renderQuestions();
+  }
+});
+
+function handleSubmit(btn) {
+  const qid = btn.dataset.qid;
+  const q = QS.find(x => x.id === qid);
+  const s = getQState(qid);
+
+  if (s.completed) return;
+
+  let result;
+  if (q.format === 'open') {
+    const inp = btn.parentElement.querySelector('input[type=number]');
+    s.last_input = inp.value;
+    result = checkOpen(q, inp.value);
+  } else {
+    const sel = document.querySelector('.choices[data-qid="' + qid + '"] input[type=radio]:checked');
+    const choiceIndex = sel ? parseInt(sel.value) : null;
+    s.mcq_choice = choiceIndex;
+    result = checkMCQ(q, choiceIndex);
+  }
+
+  if (result.ok) {
+    s.attempts += 1;
+    s.completed = true;
+    s.last_answer_correct = true;
+    s.show_solution = false;
+    saveState();
+    renderQuestions();
+    return;
+  }
+
+  s.attempts += 1;
+  if (s.attempts <= 3) {
+    if (s.hints_shown < s.attempts) s.hints_shown = s.attempts;
+  } else {
+    s.completed = true;
+    s.last_answer_correct = false;
+    s.show_solution = true;
+    s.hints_shown = q.hints.length;
+  }
+  saveState();
+  renderQuestions();
+}
+
+// MCQ choice highlighting
+document.addEventListener('change', e => {
+  if (e.target.matches('.choices input[type=radio]')) {
+    const parent = e.target.closest('.choices');
+    parent.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+    e.target.closest('label').classList.add('selected');
+  }
+});
+
+// ---- Filters ----
+document.getElementById('typefilter').addEventListener('change', e => {
+  typeFilter = e.target.value;
+  renderQuestions();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Reset your progress on this module? This cannot be undone.')) return;
+  for (const q of QS) delete STATE[q.id];
+  saveState();
+  renderQuestions();
+});
+
+// ---- Calculator ----
+const calc = document.getElementById('calc');
+const calcDisp = document.getElementById('calcdisp');
+let calcExpr = '';
+function calcUpdate() { calcDisp.textContent = calcExpr || '0'; calcDisp.classList.remove('err'); }
+function calcEval() {
+  if (!calcExpr) return;
+  try {
+    if (!/^[\d+\-*/().\s*]+$/.test(calcExpr.replace(/\*\*/g, ''))) throw 'bad';
+    const v = Function('return (' + calcExpr + ')')();
+    if (!isFinite(v)) throw 'overflow';
+    calcExpr = String(+v.toFixed(10).replace(/\.?0+$/, ''));
+    calcUpdate();
+  } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+}
+document.getElementById('calctoggle').addEventListener('click', () => calc.classList.toggle('show'));
+document.querySelectorAll('.calc .keys button').forEach(b => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.key, a = b.dataset.act;
+    if (a === 'clear') { calcExpr = ''; calcUpdate(); }
+    else if (a === 'back') { calcExpr = calcExpr.slice(0, -1); calcUpdate(); }
+    else if (a === 'eq') { calcEval(); }
+    else if (a === 'sqrt') {
+      try {
+        const v = calcExpr ? Function('return (' + calcExpr + ')')() : 0;
+        if (v < 0) throw 'neg';
+        calcExpr = String(+Math.sqrt(v).toFixed(10).replace(/\.?0+$/, ''));
+        calcUpdate();
+      } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+    }
+    else if (k) { calcExpr += k; calcUpdate(); }
+  });
+});
+
+// ---- Init ----
+renderQuestions();
+</script>

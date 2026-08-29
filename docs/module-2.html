@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Module 2 · MGMT 405 Practice</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Module 2: Demand Analysis</div>
+</header>
+
+<nav class="modnav"><a href="index.html">All modules</a><a href="module-1.html">Module 1</a><a href="module-2.html" class="active">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html">Module 4 (Part I)</a><a href="module-4-part-2.html">Module 4 (Part II)</a><a href="module-5.html">Module 5</a><a href="module-6.html">Module 6</a><a href="module-7-part-1.html">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html">Module 8</a></nav>
+
+<div class="controls">
+  <label>Question type:</label>
+  <select id="typefilter">
+    <option value="all">All</option>
+    <option value="open">Open (numeric answer)</option>
+    <option value="mcq">Multiple choice</option>
+  </select>
+  <span class="stats">
+    <span id="progress">0 / 0 attempted</span> · <strong id="correct">0 correct</strong>
+    <button id="reset" style="margin-left:8px; font-size:11px; padding:2px 8px; background:#fff; border:1px solid var(--line); border-radius:3px; cursor:pointer;">Reset this module</button>
+  </span>
+</div>
+
+<main>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div id="main"></div>
+</main>
+
+<button class="calc-toggle" id="calctoggle">🖩 Calculator</button>
+<div class="calc" id="calc">
+  <div class="display" id="calcdisp">0</div>
+  <div class="keys">
+    <button class="fn" data-act="clear">C</button>
+    <button class="fn" data-act="back">⌫</button>
+    <button class="fn" data-key="(">(</button>
+    <button class="fn" data-key=")">)</button>
+    <button class="op" data-key="/">÷</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+    <button class="op" data-key="*">×</button>
+    <button class="fn" data-act="sqrt">√</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button class="op" data-key="-">−</button>
+    <button class="fn" data-key="**">x^y</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button class="op" data-key="+">+</button>
+    <button class="fn" data-key=".">.</button>
+    <button data-key="0">0</button>
+    <button data-key="00">00</button>
+    <button class="eq" data-act="eq">=</button>
+  </div>
+</div>
+
+<script id="QDATA" type="application/json">{"module": {"key": "M2", "label": "Module 2", "title": "Demand Analysis"}, "questions": [{"id": "m2-q1", "module": "M2", "theme": "Point Elasticity", "format": "open", "stem": "A boutique gym faces demand of Q = 5,000 − 100P memberships/year, where P is the monthly fee in dollars.", "ask": "What is the price elasticity of demand at P = $30?", "answer": -1.5, "tolerance_abs": 0.05, "unit": "", "hints": ["Point elasticity: e = (dQ/dP) · (P/Q).", "Compute Q at P=30: Q = 5,000 − 100·30 = 2,000. And dQ/dP = −100.", "e = (−100) · (30 / 2,000) = −3,000 / 2,000 = −1.5."], "solution": "Step 1 — Compute Q at the point: Q(30) = 5,000 − 100(30) = 2,000.\nStep 2 — Slope: dQ/dP = −100.\nStep 3 — Point elasticity:\n  e = (dQ/dP) · (P/Q) = (−100)(30/2,000) = −1.5\n\nSince |e| > 1, demand is ELASTIC at this price — the gym is in the region where raising the fee would reduce total revenue."}, {"id": "m2-q2", "module": "M2", "theme": "Elasticity from Two Points", "format": "open", "stem": "A bookstore sold 500 novels/month at $20 each. After raising the price to $22, monthly sales fell to 460 novels. Other conditions (season, competition, income) were unchanged.", "ask": "What is the implied price elasticity of demand?", "answer": -0.8, "tolerance_abs": 0.05, "unit": "", "hints": ["Use e = %ΔQ / %ΔP, with each percentage measured relative to the initial point.", "%ΔQ = (460 − 500)/500 = −0.08 = −8%. %ΔP = ($22 − $20)/$20 = +0.10 = +10%.", "e = (−8%) / (+10%) = −0.80."], "solution": "%ΔQ = (460 − 500) / 500 = −8%\n%ΔP = (22 − 20) / 20 = +10%\n\ne = (−8%) / (+10%) = −0.80\n\n|e| < 1, so demand is INELASTIC at this price — raising the price INCREASED total revenue (TR_old = $10,000; TR_new = $10,120)."}, {"id": "m2-q3", "module": "M2", "theme": "Marginal Revenue", "format": "open", "stem": "Demand for a firm's product is Q = 300 − 2.5P, where P is the price in dollars.", "ask": "What is marginal revenue at Q = 50 (in dollars)?", "answer": 80, "tolerance_abs": 0, "unit": "$", "hints": ["The MR rule applies to INVERSE demand (P as a function of Q), so rearrange the demand curve first.", "Solving Q = 300 − 2.5P for P gives P = 120 − 0.4Q. For P = a − bQ, marginal revenue is MR = a − 2bQ.", "So MR = 120 − 0.8Q. At Q = 50: MR = 120 − 0.8(50) = 120 − 40 = $80."], "solution": "Step 1 — Invert the demand curve:\n  Q = 300 − 2.5P  →  2.5P = 300 − Q  →  P = 120 − 0.4Q\n\nStep 2 — Total revenue: TR = P·Q = (120 − 0.4Q)·Q = 120Q − 0.4Q²\nStep 3 — Marginal revenue: MR = dTR/dQ = 120 − 0.8Q\n\nAt Q = 50: MR = 120 − 40 = $80.\n\n(Rule of thumb for linear demand: MR has the same intercept as inverse demand but TWICE the slope.)"}, {"id": "m2-q4", "module": "M2", "theme": "Elasticity & Total Revenue", "format": "mcq", "stem": "A toll-road operator finds that demand for crossings is elastic at the current toll. The operator raises the toll by 5%.", "ask": "What is the most likely effect on the number of crossings and on toll revenue?", "choices": ["Crossings rise; revenue rises", "Crossings unchanged; revenue rises by exactly 5%", "Crossings fall; revenue unchanged", "Crossings fall less than 5%; revenue rises", "Crossings fall more than 5%; revenue falls"], "correct_index": 4, "hints": ["Elastic demand means |e| > 1 — quantity reacts proportionally MORE than price.", "If the toll rises 5%, crossings fall by MORE than 5%.", "Since the quantity drop more than offsets the price increase, TR = P·Q falls."], "solution": "Elastic ⇒ |e| > 1 ⇒ |%ΔQ| > |%ΔP|.\n\nToll rises 5% → crossings fall more than 5% (in percentage terms). The quantity effect dominates → total revenue FALLS.\n\nIntuition: in the elastic region, a firm RAISES revenue by LOWERING price, not raising it."}, {"id": "m2-q5", "module": "M2", "theme": "Revenue-Maximizing Quantity", "format": "open", "stem": "A firm faces inverse demand P = 150 − 3Q.", "ask": "At what quantity is total revenue maximized?", "answer": 25, "tolerance_abs": 0, "unit": "", "hints": ["Total revenue is maximized where marginal revenue equals zero.", "MR for P = 150 − 3Q is MR = 150 − 6Q.", "Set 150 − 6Q = 0 → Q = 25."], "solution": "Inverse demand: P = 150 − 3Q\nMR = 150 − 6Q (twice the slope of demand)\n\nTR is max where MR = 0:\n  150 − 6Q = 0\n  Q* = 25\n\nAt Q = 25, P = 150 − 75 = $75 and TR = $1,875 (the maximum possible). This is also where demand is unit-elastic (|e| = 1)."}, {"id": "m2-mcq-2", "module": "M2", "theme": "Income Elasticity Classification", "format": "mcq", "stem": "The income elasticity of demand for designer handbags is estimated at +3.1.", "ask": "Based on this number, designer handbags are best classified as:", "choices": ["Inferior", "Necessity (normal but income-inelastic)", "Normal AND luxury", "Giffen good", "Unrelated to income"], "correct_index": 2, "hints": ["The SIGN of income elasticity tells you normal (+) vs inferior (−).", "The MAGNITUDE: if |e_I| > 1, it's a luxury (consumption rises faster than income); if 0 < e_I < 1, it's a normal necessity.", "e_I = +3.1 > 0 → normal. And 3.1 > 1 → luxury. So normal AND luxury."], "solution": "e_I > 0 → normal good (rises with income).\ne_I > 1 → luxury (rises faster than income).\nBoth conditions hold for e_I = +3.1.\n\nDesigner handbags are a normal good AND a luxury — exactly what intuition suggests."}, {"id": "m2-mcq-3", "module": "M2", "theme": "Cross-Price Elasticity Sign", "format": "mcq", "stem": "The cross-price elasticity of demand for product X with respect to the price of product Y is −2.1.", "ask": "What does this tell you about X and Y?", "choices": ["X and Y are unrelated", "Both X and Y are inferior goods", "Both X and Y are luxuries", "X and Y are substitutes", "X and Y are complements"], "correct_index": 4, "hints": ["Cross-price elasticity formula: e_xy = %ΔQ_x / %ΔP_y.", "Negative cross-price elasticity means: when Y gets more expensive, people buy LESS X. The goods are consumed together.", "That's the definition of complements. Examples: printers and ink, cars and gasoline, coffee and cream."], "solution": "Negative cross-price elasticity: when P_y rises, Q_x falls. The goods are COMPLEMENTS (consumed together).\n\nExamples with e_xy < 0: printers/ink, cars/gasoline, hot dogs/buns.\nExamples with e_xy > 0 (substitutes): Coke/Pepsi, butter/margarine, train/plane."}, {"id": "m2-mcq-4b", "module": "M2", "theme": "Inferior Good Response", "format": "mcq", "stem": "The income elasticity of demand for intercity bus travel is estimated at −0.6. Average household income rises by 10%.", "ask": "What is the most likely effect on the quantity of bus travel demanded?", "choices": ["Falls by exactly 10%", "Rises by 6%", "Is unchanged (since 10% is small)", "Rises by 10%", "Falls by approximately 6%"], "correct_index": 4, "hints": ["Income elasticity: e_I = %ΔQ / %ΔI. Rearrange: %ΔQ = e_I × %ΔI.", "%ΔQ = (−0.6) × (+10%) = −6%.", "Negative income elasticity means the good is INFERIOR — consumption falls as income rises (people switch to cars/flights)."], "solution": "%ΔQ = e_I × %ΔI = (−0.6)(10%) = −6%.\n\nNegative income elasticity = INFERIOR good. As income rises, bus travel falls (people switch to cars or flights)."}, {"id": "m2-mcq-5", "module": "M2", "theme": "Elasticity from Two Data Points", "format": "mcq", "stem": "A café raised latte prices from $5 to $6 and weekly sales fell from 500 to 425 lattes. All other factors held constant.", "ask": "The implied price elasticity of demand is approximately:", "choices": ["−1.33", "−0.75", "−2.50", "−0.25", "−5.00"], "correct_index": 1, "hints": ["Elasticity = %ΔQ / %ΔP, with each percentage measured relative to the initial point.", "%ΔQ = (425 − 500)/500 = −15%. %ΔP = ($6 − $5)/$5 = +20%.", "e = (−15%) / (+20%) = −0.75 → inelastic."], "solution": "%ΔQ = (425 − 500) / 500 = −15%\n%ΔP = ($6 − $5) / $5 = +20%\n\ne = −15% / +20% = −0.75\n\nDemand is INELASTIC at this price. Check TR: old = $2,500; new = $2,550 — TR rose when P rose, consistent with inelastic demand."}, {"id": "m2-mcq-6", "module": "M2", "theme": "MR vs Price for Downward-Sloping Demand", "format": "mcq", "stem": "A firm with downward-sloping demand sells Q > 0 units at price P.", "ask": "How does marginal revenue (MR) compare to price (P)?", "choices": ["MR > P always", "MR = P always", "MR < P always (for Q > 0)", "MR equals zero always", "MR is positive only when demand is inelastic"], "correct_index": 2, "hints": ["To sell one additional unit, the firm must LOWER price on ALL units sold (not just the marginal one).", "MR = P + Q · (dP/dQ). For downward-sloping demand, dP/dQ < 0, so Q · (dP/dQ) is negative.", "Therefore MR < P for any Q > 0. (MR can even be NEGATIVE — that's the inelastic region.)"], "solution": "MR = P + Q · (dP/dQ). With downward-sloping demand, dP/dQ < 0, so MR < P for Q > 0.\n\nIntuition: selling one more unit gives you P from the new unit BUT you lose ΔP on each of the Q units you were already selling. Net is less than P.\n\n(For a price taker, dP/dQ = 0 → MR = P.)"}, {"id": "m2-mcq-7", "module": "M2", "theme": "Point Elasticity (Numeric)", "format": "mcq", "stem": "Inverse demand is given by P = 80 − 2Q.", "ask": "What is the price elasticity of demand at P = $60?", "choices": ["−0.50", "−1.00", "−2.00", "−3.00", "−6.00"], "correct_index": 3, "hints": ["Point elasticity is e = (dQ/dP) × (P/Q), so you need the demand curve with Q on the left.", "Rearranging P = 80 − 2Q gives Q = 40 − 0.5P, so dQ/dP = −0.5. At P = 60: Q = 40 − 0.5(60) = 10.", "e = (−0.5) × (60/10) = −3.00. Demand is elastic at this point."], "solution": "Step 1 — Rearrange to get Q as a function of P:\n  P = 80 − 2Q  →  2Q = 80 − P  →  Q = 40 − 0.5P\nStep 2 — Slope: dQ/dP = −0.5.\nStep 3 — Q at P = 60: Q = 40 − 0.5(60) = 10.\nStep 4 — Apply the formula:\n  e = (−0.5) × (60/10) = −3.00.\n\n|e| > 1 → elastic. The firm could raise total revenue by LOWERING price here."}, {"id": "m2-mcq-8", "module": "M2", "theme": "Determinants of Elasticity", "format": "mcq", "stem": "On a given route, demand for one specific airline (say, Delta) is MORE elastic than demand for 'air travel in general' on that route.", "ask": "What's the primary reason?", "choices": ["Brand-specific demand has more close substitutes", "Delta is a luxury good", "Delta passengers tend to have lower incomes", "Brand-specific demand has higher income elasticity", "Delta has lower marginal cost than other airlines"], "correct_index": 0, "hints": ["The more close substitutes a good has, the MORE elastic its demand (consumers can switch easily).", "One airline competes directly with every other carrier on the same route — many close substitutes.", "'Air travel in general' competes only with non-air options (driving, train, not traveling) — fewer close substitutes."], "solution": "The narrower the product definition, the more close substitutes exist. A single airline has many close substitutes (the other carriers on the route → high elasticity). 'Air travel in general' has fewer close substitutes (only driving/train/not going → lower elasticity).\n\nRule: more substitutes → more elastic demand."}, {"id": "m2-mcq-9", "module": "M2", "theme": "Inelastic Region and Total Revenue", "format": "mcq", "stem": "A firm currently operating in the INELASTIC part of its demand curve raises prices by 8%.", "ask": "What is the most likely effect on QUANTITY sold and TOTAL REVENUE?", "choices": ["Q rises; TR rises", "Q unchanged; TR rises exactly 8%", "Cannot determine without knowing demand exactly", "Q falls more than 8%; TR falls", "Q falls less than 8%; TR rises"], "correct_index": 4, "hints": ["Inelastic demand: |e| < 1, meaning quantity responds LESS than proportionally to price.", "If P rises 8% and |e| < 1, then |%ΔQ| < 8%.", "Since the price effect dominates: TR (= P × Q) rises. A firm operating in the inelastic region SHOULD raise prices."], "solution": "Inelastic ⇒ |%ΔQ| < |%ΔP|. With P up 8%, Q falls less than 8% in percentage. The price effect dominates, so TR rises.\n\nGeneral rule: firms with market power should NEVER operate in the inelastic part of their demand curve — they could always raise profit by raising P (TR up, costs down since Q is lower)."}, {"id": "m2-mcq-10", "module": "M2", "theme": "Elasticity Along Linear Demand", "format": "mcq", "stem": "Consider a linear downward-sloping demand curve P = a − bQ.", "ask": "Which statement about its price elasticity of demand is correct?", "choices": ["Elasticity is constant along the curve and equals −1", "Elasticity is constant and equals the slope b", "Elasticity varies along the curve: elastic at the top, inelastic at the bottom", "Elasticity equals zero everywhere", "Elasticity equals −∞ everywhere"], "correct_index": 2, "hints": ["The SLOPE of linear demand is constant, but elasticity is NOT (because elasticity also depends on P/Q).", "Use e = (dQ/dP) × (P/Q). At Q→0 (top of demand): P/Q → ∞ → |e| → ∞. At P→0 (bottom): P/Q → 0 → e → 0.", "Elasticity smoothly DECREASES (in absolute value) as you move down a linear demand curve. The midpoint is unit-elastic (|e| = 1)."], "solution": "Linear demand has constant SLOPE but variable elasticity. e = (dQ/dP)(P/Q). Near the price intercept (small Q, large P): |e| → ∞. Near the quantity intercept (P → 0): |e| → 0. Midpoint of the curve is unit-elastic."}, {"id": "m2-mcq-11", "module": "M2", "theme": "Profit Max Location", "format": "mcq", "stem": "A firm with downward-sloping demand and positive marginal cost wants to maximize PROFIT (not revenue).", "ask": "Where on its demand curve should it operate?", "choices": ["Where price equals marginal cost", "Where price equals average total cost", "Where total revenue is at its maximum", "Where marginal revenue equals zero", "Where marginal revenue equals marginal cost"], "correct_index": 4, "hints": ["Profit = TR − TC. Adding a unit is worth it whenever the extra revenue it brings in exceeds the extra cost.", "Keep expanding while MR > MC and stop expanding once MR < MC — the optimum is where the two are equal.", "MR = 0 is the REVENUE-maximizing rule. With MC > 0, profit max requires MR = MC > 0, so the firm stops short of the revenue-maximizing quantity."], "solution": "Profit = TR − TC, so the extra profit from one more unit is MR − MC. The firm expands while MR > MC and stops where MR = MC.\n\nWhy the other rules fail here:\n  MR = 0 maximizes REVENUE, not profit. Since MC > 0, the firm would be selling units that cost more to make than they bring in.\n  P = MC is the price-taker's rule; with downward-sloping demand MR < P, so P = MC means producing too much.\n\nBecause MR falls as Q rises, MR = MC > 0 happens at a LOWER quantity (and higher price) than MR = 0. A firm maximizing profit always sells less than one maximizing revenue."}, {"id": "m2-mcq-12", "module": "M2", "theme": "Cross-Price Elasticity (Numeric)", "format": "mcq", "stem": "When the price of tea rose by 10%, the quantity of coffee demanded rose by 6%.", "ask": "What is the cross-price elasticity of coffee demand with respect to the price of tea?", "choices": ["−0.60", "+0.60", "+1.67", "−1.67", "+16"], "correct_index": 1, "hints": ["Cross-price elasticity: e_xy = %ΔQ_x / %ΔP_y.", "Here, x = coffee, y = tea. %ΔQ_coffee = +6%. %ΔP_tea = +10%.", "e = +6% / +10% = +0.60. Positive → substitutes (which tea and coffee are)."], "solution": "e_xy = %ΔQ_coffee / %ΔP_tea = +6% / +10% = +0.60.\n\nPositive cross-price elasticity → SUBSTITUTES. Tea getting more expensive pushes some drinkers toward coffee."}, {"id": "m2-mcq-13", "module": "M2", "theme": "Interpreting an Estimated Demand Equation", "format": "mcq", "stem": "A regional grocery chain estimates demand for its store-brand orange juice as\n\n  Q = 4,800 − 60P + 25P_N + 0.8I\n\nwhere Q is cartons sold per week, P is the price of the store brand (in dollars), P_N is the price of the national brand (in dollars), and I is average household income (in thousands of dollars).", "ask": "What do the estimated coefficients imply about the national brand and about the store brand itself?", "choices": ["The national brand is a substitute; the store brand is an inferior good", "The national brand is a complement; the store brand is a normal good", "The coefficients say nothing about either relationship", "The national brand is a complement; the store brand is an inferior good", "The national brand is a substitute; the store brand is a normal good"], "correct_index": 4, "hints": ["Each coefficient shows how Q responds to that one variable, holding the others fixed. The SIGN is what you need here.", "The coefficient on P_N is +25: when the national brand gets more expensive, sales of the store brand RISE. The coefficient on I is +0.8: when income rises, sales RISE.", "A positive response to a rival's price means the two goods are substitutes. A positive response to income means the good is normal."], "solution": "Read the sign of each coefficient:\n\n  P_N coefficient = +25 (positive)\n  A higher national-brand price sends shoppers TO the store brand, so the two are SUBSTITUTES. (A negative coefficient would mean complements — goods consumed together.)\n\n  Income coefficient = +0.8 (positive)\n  Higher income raises purchases of the store brand, so it is a NORMAL good. (A negative coefficient would make it inferior — the case where shoppers trade down to it as income falls.)\n\nThe own-price coefficient of −60 is negative, as the law of demand requires.\n\nAnswer: the national brand is a substitute and the store brand is a normal good."}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+const QS = D.questions;
+
+// ---- Per-question state, persisted in localStorage (shared across module pages) ----
+const STATE_KEY = 'mgmt405_practice_v1';
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch (_) { STATE = {}; }
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch (_) {} }
+function getQState(qid) {
+  if (!STATE[qid]) STATE[qid] = {attempts:0, hints_shown:0, completed:false, last_answer_correct:false, mcq_choice:null, last_input:'', show_solution:false};
+  if (STATE[qid].show_solution === undefined) STATE[qid].show_solution = false;
+  return STATE[qid];
+}
+
+let typeFilter = 'all';
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ---- Stats ----
+function updateStats() {
+  let attempted = 0, correct = 0, total = 0;
+  for (const q of QS) {
+    if (typeFilter !== 'all' && q.format !== typeFilter) continue;
+    total++;
+    const s = STATE[q.id];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  document.getElementById('progress').textContent = attempted + ' / ' + total + ' attempted';
+  document.getElementById('correct').textContent = correct + ' correct';
+}
+
+// ---- Render questions ----
+function renderQuestions() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filtered = QS.filter(q => typeFilter === 'all' || q.format === typeFilter);
+  if (filtered.length === 0) {
+    main.innerHTML = '<p style="color:var(--muted)">No questions match the current filter.</p>';
+    updateStats(); return;
+  }
+  for (const q of filtered) {
+    main.appendChild(renderQuestion(q));
+  }
+  updateStats();
+}
+
+function renderQuestion(q) {
+  const s = getQState(q.id);
+  const card = document.createElement('div');
+  card.className = 'q';
+  if (s.completed) card.classList.add('done', s.last_answer_correct ? 'correct' : 'failed');
+
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML =
+    '<span class="qtag ' + q.format + '">' + (q.format === 'open' ? 'OPEN' : 'MCQ') + '</span>' +
+    '<span class="qtheme">' + escapeHTML(q.theme) + '</span>' +
+    '<span class="qid">' + q.id + '</span>' +
+    '<span class="qstatus ' + (s.completed ? (s.last_answer_correct ? 'correct' : 'failed') : '') + '">' +
+      (s.completed ? (s.last_answer_correct ? '✓ Solved' : '✗ See solution') : '') +
+    '</span>';
+  card.appendChild(head);
+
+  const stem = document.createElement('div');
+  stem.className = 'qstem';
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const ask = document.createElement('div');
+  ask.className = 'qask';
+  ask.textContent = q.ask;
+  card.appendChild(ask);
+
+  // Input area
+  const inputArea = document.createElement('div');
+  if (q.format === 'open') {
+    inputArea.className = 'input-row';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.placeholder = 'Numeric answer';
+    inp.value = s.last_input || '';
+    if (s.completed) inp.disabled = true;
+    inp.dataset.qid = q.id;
+    inputArea.appendChild(inp);
+    if (q.unit) {
+      const u = document.createElement('span');
+      u.className = 'unit';
+      u.textContent = q.unit;
+      inputArea.appendChild(u);
+    }
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-open';
+      inputArea.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      inputArea.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      inputArea.appendChild(att);
+    }
+  } else {
+    inputArea.className = 'choices';
+    inputArea.dataset.qid = q.id;
+    for (let i = 0; i < q.choices.length; i++) {
+      const lbl = document.createElement('label');
+      const selected = s.mcq_choice === i;
+      if (selected) lbl.classList.add('selected');
+      lbl.innerHTML = '<input type="radio" name="' + q.id + '" value="' + i + '"' + (selected ? ' checked' : '') + (s.completed ? ' disabled' : '') + '> ' +
+                     '<strong>' + String.fromCharCode(65 + i) + ')</strong> ' + escapeHTML(q.choices[i]);
+      inputArea.appendChild(lbl);
+    }
+    const row = document.createElement('div');
+    row.style.marginTop = '8px';
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-mcq';
+      row.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      row.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      row.appendChild(att);
+    }
+    inputArea.appendChild(row);
+  }
+  card.appendChild(inputArea);
+
+  // Feedback and hints
+  const fb = document.createElement('div');
+  fb.className = 'feedback-area';
+  fb.dataset.qid = q.id;
+  card.appendChild(fb);
+
+  if (s.completed) {
+    const resDiv = document.createElement('div');
+    resDiv.className = 'feedback result ' + (s.last_answer_correct ? 'correct' : 'wrong');
+    if (s.last_answer_correct) {
+      const tag = s.hints_shown > 0 ? '(after ' + s.hints_shown + ' hint' + (s.hints_shown > 1 ? 's' : '') + ')' : '(first try)';
+      resDiv.innerHTML = '<span class="icon">✓</span><span><strong>Correct!</strong> <span class="sub">' + tag + '</span></span>';
+    } else {
+      resDiv.innerHTML = '<span class="icon">✗</span><span><strong>Incorrect.</strong> <span class="sub">No attempts remaining — full solution shown below.</span></span>';
+    }
+    fb.appendChild(resDiv);
+  } else if (s.attempts > 0) {
+    const left = 3 - s.attempts;
+    const tail = left >= 0 ? ' (' + Math.max(left, 0) + ' attempt' + (left === 1 ? '' : 's') + ' left)' : '';
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'feedback wrong';
+    wrongDiv.innerHTML = '<strong>✗ Not quite — try again.</strong> Hint ' + s.hints_shown + ' revealed below.' + tail;
+    fb.appendChild(wrongDiv);
+  }
+  if (s.hints_shown > 0) renderHints(fb, q, s.hints_shown);
+  if (s.completed && (!s.last_answer_correct || s.show_solution)) renderSolution(fb, q);
+
+  return card;
+}
+
+function renderHints(container, q, n_shown) {
+  container.querySelectorAll('.hint').forEach(el => el.remove());
+  for (let i = 0; i < n_shown && i < q.hints.length; i++) {
+    const h = document.createElement('div');
+    h.className = 'hint';
+    h.innerHTML = '<b>Hint ' + (i+1) + ':</b> ' + escapeHTML(q.hints[i]);
+    container.appendChild(h);
+  }
+}
+
+function renderSolution(container, q) {
+  if (container.querySelector('.solution')) return;
+  const sol = document.createElement('div');
+  sol.className = 'solution';
+  sol.innerHTML = '<h4>Full solution</h4><pre>' + escapeHTML(q.solution) + '</pre>';
+  container.appendChild(sol);
+}
+
+// ---- Answer checking ----
+function checkOpen(q, value) {
+  const userVal = parseFloat(value);
+  if (isNaN(userVal)) return {ok:false, msg:'Please enter a numeric answer.'};
+  const tol = q.tolerance_abs || 0;
+  const correct = Math.abs(userVal - q.answer) <= tol;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+function checkMCQ(q, choiceIndex) {
+  if (choiceIndex === null || choiceIndex === undefined) return {ok:false, msg:'Pick an option first.'};
+  const correct = choiceIndex === q.correct_index;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+// ---- Submit handler ----
+document.addEventListener('click', e => {
+  if (e.target.dataset.action === 'submit-open' || e.target.dataset.action === 'submit-mcq') {
+    handleSubmit(e.target);
+  } else if (e.target.dataset.action === 'toggle-solution') {
+    const qid = e.target.dataset.qid;
+    const s = getQState(qid);
+    s.show_solution = !s.show_solution;
+    saveState();
+    renderQuestions();
+  }
+});
+
+function handleSubmit(btn) {
+  const qid = btn.dataset.qid;
+  const q = QS.find(x => x.id === qid);
+  const s = getQState(qid);
+
+  if (s.completed) return;
+
+  let result;
+  if (q.format === 'open') {
+    const inp = btn.parentElement.querySelector('input[type=number]');
+    s.last_input = inp.value;
+    result = checkOpen(q, inp.value);
+  } else {
+    const sel = document.querySelector('.choices[data-qid="' + qid + '"] input[type=radio]:checked');
+    const choiceIndex = sel ? parseInt(sel.value) : null;
+    s.mcq_choice = choiceIndex;
+    result = checkMCQ(q, choiceIndex);
+  }
+
+  if (result.ok) {
+    s.attempts += 1;
+    s.completed = true;
+    s.last_answer_correct = true;
+    s.show_solution = false;
+    saveState();
+    renderQuestions();
+    return;
+  }
+
+  s.attempts += 1;
+  if (s.attempts <= 3) {
+    if (s.hints_shown < s.attempts) s.hints_shown = s.attempts;
+  } else {
+    s.completed = true;
+    s.last_answer_correct = false;
+    s.show_solution = true;
+    s.hints_shown = q.hints.length;
+  }
+  saveState();
+  renderQuestions();
+}
+
+// MCQ choice highlighting
+document.addEventListener('change', e => {
+  if (e.target.matches('.choices input[type=radio]')) {
+    const parent = e.target.closest('.choices');
+    parent.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+    e.target.closest('label').classList.add('selected');
+  }
+});
+
+// ---- Filters ----
+document.getElementById('typefilter').addEventListener('change', e => {
+  typeFilter = e.target.value;
+  renderQuestions();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Reset your progress on this module? This cannot be undone.')) return;
+  for (const q of QS) delete STATE[q.id];
+  saveState();
+  renderQuestions();
+});
+
+// ---- Calculator ----
+const calc = document.getElementById('calc');
+const calcDisp = document.getElementById('calcdisp');
+let calcExpr = '';
+function calcUpdate() { calcDisp.textContent = calcExpr || '0'; calcDisp.classList.remove('err'); }
+function calcEval() {
+  if (!calcExpr) return;
+  try {
+    if (!/^[\d+\-*/().\s*]+$/.test(calcExpr.replace(/\*\*/g, ''))) throw 'bad';
+    const v = Function('return (' + calcExpr + ')')();
+    if (!isFinite(v)) throw 'overflow';
+    calcExpr = String(+v.toFixed(10).replace(/\.?0+$/, ''));
+    calcUpdate();
+  } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+}
+document.getElementById('calctoggle').addEventListener('click', () => calc.classList.toggle('show'));
+document.querySelectorAll('.calc .keys button').forEach(b => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.key, a = b.dataset.act;
+    if (a === 'clear') { calcExpr = ''; calcUpdate(); }
+    else if (a === 'back') { calcExpr = calcExpr.slice(0, -1); calcUpdate(); }
+    else if (a === 'eq') { calcEval(); }
+    else if (a === 'sqrt') {
+      try {
+        const v = calcExpr ? Function('return (' + calcExpr + ')')() : 0;
+        if (v < 0) throw 'neg';
+        calcExpr = String(+Math.sqrt(v).toFixed(10).replace(/\.?0+$/, ''));
+        calcUpdate();
+      } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+    }
+    else if (k) { calcExpr += k; calcUpdate(); }
+  });
+});
+
+// ---- Init ----
+renderQuestions();
+</script>

@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Module 8 · MGMT 405 Practice</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Module 8: Auctions</div>
+</header>
+
+<nav class="modnav"><a href="index.html">All modules</a><a href="module-1.html">Module 1</a><a href="module-2.html">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html">Module 4 (Part I)</a><a href="module-4-part-2.html">Module 4 (Part II)</a><a href="module-5.html">Module 5</a><a href="module-6.html">Module 6</a><a href="module-7-part-1.html">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html" class="active">Module 8</a></nav>
+
+<div class="controls">
+  <label>Question type:</label>
+  <select id="typefilter">
+    <option value="all">All</option>
+    <option value="open">Open (numeric answer)</option>
+    <option value="mcq">Multiple choice</option>
+  </select>
+  <span class="stats">
+    <span id="progress">0 / 0 attempted</span> · <strong id="correct">0 correct</strong>
+    <button id="reset" style="margin-left:8px; font-size:11px; padding:2px 8px; background:#fff; border:1px solid var(--line); border-radius:3px; cursor:pointer;">Reset this module</button>
+  </span>
+</div>
+
+<main>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div id="main"></div>
+</main>
+
+<button class="calc-toggle" id="calctoggle">🖩 Calculator</button>
+<div class="calc" id="calc">
+  <div class="display" id="calcdisp">0</div>
+  <div class="keys">
+    <button class="fn" data-act="clear">C</button>
+    <button class="fn" data-act="back">⌫</button>
+    <button class="fn" data-key="(">(</button>
+    <button class="fn" data-key=")">)</button>
+    <button class="op" data-key="/">÷</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+    <button class="op" data-key="*">×</button>
+    <button class="fn" data-act="sqrt">√</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button class="op" data-key="-">−</button>
+    <button class="fn" data-key="**">x^y</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button class="op" data-key="+">+</button>
+    <button class="fn" data-key=".">.</button>
+    <button data-key="0">0</button>
+    <button data-key="00">00</button>
+    <button class="eq" data-act="eq">=</button>
+  </div>
+</div>
+
+<script id="QDATA" type="application/json">{"module": {"key": "M8", "label": "Module 8", "title": "Auctions"}, "questions": [{"id": "m8-q1", "module": "M8", "theme": "Second-Price Sealed Bid", "format": "open", "stem": "You are bidding in a second-price sealed-bid auction (the highest bidder wins but pays the SECOND-highest bid). Your private value for the item is $1,500. You expect the next-highest bidder values it at $1,100.", "ask": "What is your optimal bid (in $)?", "answer": 1500, "tolerance_abs": 0, "unit": "$", "hints": ["Recall the dominant strategy in second-price auctions.", "In a 2nd-price auction, bidding your TRUE VALUE is a dominant strategy — bidding higher risks paying more than the item is worth to you; bidding lower risks losing when you could have won at a profitable price.", "Bid your true value: $1,500. If you win, you pay the 2nd-highest bid ($1,100) → surplus = $1,500 − $1,100 = $400."], "solution": "Dominant strategy in 2nd-price sealed-bid auctions: bid your true value.\n\nWhy?\n  • If you bid above true value: you might win the auction but pay more than the item is worth → loss.\n  • If you bid below true value: you might lose to someone who values it less but bid higher than you → forgone profit.\n  • Bidding exactly your value: you win when (and only when) you're the highest valuer, and you pay the 2nd price — so winning is always weakly profitable.\n\nOptimal bid: $1,500. Expected payment if you win: $1,100. Expected surplus: $400."}, {"id": "m8-q2", "module": "M8", "theme": "First-Price Bidding (Symmetric)", "format": "open", "stem": "You're bidding in a first-price sealed-bid auction. Your private value is $80. You have ONE opponent whose value is independently drawn from a uniform distribution on [$0, $80]. Both bidders use the symmetric Bayes-Nash equilibrium strategy.", "ask": "What is your optimal bid (in $)?", "answer": 40, "tolerance_abs": 1, "unit": "$", "hints": ["In a first-price auction with n symmetric bidders, each with value uniformly drawn from [0, V], the equilibrium bid is ((n−1)/n) × your value.", "Here n = 2, so the optimal bid is ((2−1)/2) × your value = half your value.", "Bid = ½ × $80 = $40."], "solution": "In a first-price sealed-bid auction with n symmetric bidders (each value drawn IID from uniform [0, V_max]), the equilibrium bid is:\n  b(v) = ((n − 1) / n) × v\n\nFor n = 2: b(v) = v/2.\n\nYour bid: $80 / 2 = $40.\n\nIntuition: you SHADE your bid below your value because in first-price you pay what you bid. Bidding too low → low win probability. Bidding too high → win but small surplus. The optimum balances these."}, {"id": "m8-q3", "module": "M8", "theme": "Winner's Curse", "format": "mcq", "stem": "An energy company is bidding for the rights to develop an offshore wind tract. The true value depends on the wind resource and grid conditions — uncertain to all bidders, who each form their own estimate. This is a COMMON-VALUE auction.", "ask": "What is the recommended strategy to avoid the winner's curse?", "choices": ["Refuse to participate in common-value auctions — they're never profitable", "Bid randomly to confuse other bidders", "Bid your private estimate of the value — that's a dominant strategy", "Bid slightly above your estimate to ensure winning", "Shade your bid BELOW your estimate, and shade more when there are MORE bidders"], "correct_index": 4, "hints": ["The 'winner's curse' refers to what happens to whoever wins a common-value auction.", "Whoever wins likely had the HIGHEST estimate among all bidders. If estimates are unbiased, the highest estimate is likely an OVERESTIMATE of the true value.", "To avoid systematically overpaying, shade your bid BELOW your estimate. The more bidders there are, the more extreme the winning estimate likely is — shade more aggressively."], "solution": "Winner's curse: in a common-value auction, the bidder with the highest estimate is the one most likely to have OVERESTIMATED the true value. Naively bidding your estimate leads to systematic overpayment.\n\nOptimal response: shade your bid BELOW your private estimate. With more bidders, the gap between the highest estimate and the true value grows on average, so shade more aggressively when n is large.\n\n(In private-value auctions like 1st-price, you also shade — but for a different reason: to balance win probability against surplus. The winner's-curse shading is on top of that strategic shading.)"}, {"id": "m8-mcq-2", "module": "M8", "theme": "Dominant Strategy — Second-Price", "format": "mcq", "stem": "You are bidding in a SECOND-PRICE sealed-bid auction with PRIVATE values. The highest bidder wins but pays the second-highest bid.", "ask": "What is your dominant strategy?", "choices": ["Bid zero", "Bid your value plus a small premium", "Bid half your value", "Bid just below the highest other bid you expect", "Bid your true private value"], "correct_index": 4, "hints": ["Key insight: in 2nd-price, the price you PAY (if you win) is the 2nd-highest bid — independent of YOUR bid.", "Bidding above your value: risk paying more than the item is worth.", "Bidding below your value: risk losing the auction when you could have won profitably. Bid TRUE VALUE — the dominant strategy."], "solution": "In a 2nd-price auction, bidding your true value is a DOMINANT strategy:\n  • Bid above value: might win but pay more than the item's worth → loss.\n  • Bid below value: might lose to someone who values it less but bid higher → forgone profit.\n  • Bid exactly your value: you win when you should (value > 2nd-highest) and surplus = value − 2nd-highest ≥ 0.\n\nVickrey (1961) auction: incentive-compatible truthful bidding."}, {"id": "m8-mcq-3", "module": "M8", "theme": "Auction Format Equivalence", "format": "mcq", "stem": "An ENGLISH auction (ascending public bidding — the auctioneer raises the price until only one bidder remains) is strategically equivalent to which sealed-bid auction (under private values)?", "ask": "English auction ≡:", "choices": ["Lottery", "Negotiated sale", "First-price sealed-bid auction", "Second-price sealed-bid auction", "Dutch auction"], "correct_index": 3, "hints": ["In an English auction, bidding rises until the SECOND-highest valuer drops out.", "The winner pays just above the second-highest value.", "This is essentially the 2nd-price sealed-bid outcome: winner is the highest valuer, paying approximately the 2nd-highest value."], "solution": "English auction: as the price rises, bidders drop out when the price exceeds their value. The auction ends when only the highest valuer remains, paying just above the 2nd-highest value.\n\nOutcome ≡ 2nd-price sealed bid: the highest valuer wins, paying the 2nd-highest value."}, {"id": "m8-mcq-4", "module": "M8", "theme": "Auction Format Equivalence", "format": "mcq", "stem": "A DUTCH auction (the auctioneer starts at a high price and lowers it until someone accepts) is strategically equivalent to which sealed-bid auction?", "ask": "Dutch auction ≡:", "choices": ["Reverse auction", "None of the above", "English auction", "First-price sealed-bid auction", "Second-price sealed-bid auction"], "correct_index": 3, "hints": ["In a Dutch auction, the bidder watches the price fall and must decide WHEN to accept (i.e., at what price to bid).", "Each bidder decides their stop-price in isolation — like a sealed bid.", "The winner pays the price at which they accepted — like a 1st-price sealed bid (winner pays their own bid)."], "solution": "Dutch: the bidder's strategy reduces to choosing a stop-price (independent of others' actions, like a sealed bid). The winner pays exactly the price at which they stopped.\n\nThis is identical to a 1st-price sealed-bid auction: winner pays their bid. Strategic equivalence: optimal stop-prices match optimal 1st-price bids."}, {"id": "m8-mcq-5", "module": "M8", "theme": "Private vs Common Value", "format": "mcq", "stem": "A jar containing an UNKNOWN number of coins is auctioned to a group of bidders. Each bidder forms their own estimate of how many coins are inside, but the actual count is unknown until the jar is opened.", "ask": "This auction is best characterized as having:", "choices": ["Reserve values", "No well-defined values", "Private values", "Common values", "A mix of private and common values"], "correct_index": 3, "hints": ["Private value: each bidder's value depends on personal preferences (e.g., art collectors).", "Common value: the item has an OBJECTIVE value that all bidders would agree on if it were known.", "A jar of coins has an objective value (count × coin value). Estimates differ due to uncertainty, not preferences."], "solution": "Common value auction: a single objective true value exists, uncertain to bidders. Estimates differ because of estimation noise, not preferences.\n\nClassic examples: a jar of coins, oil/gas field rights, FCC spectrum, mineral leases. The winner's curse arises here."}, {"id": "m8-mcq-6", "module": "M8", "theme": "1st-Price Bid Shading with More Bidders (Private Value)", "format": "mcq", "stem": "In a FIRST-price sealed-bid auction with PRIVATE values, there are n symmetric bidders in total (each with values drawn independently from the same distribution).", "ask": "As n increases, your optimal bid:", "choices": ["Falls to zero", "Exceeds your true value", "Shades MORE aggressively (bids closer to zero)", "Shades LESS aggressively (bids closer to your true value)", "Stays the same"], "correct_index": 3, "hints": ["Symmetric Bayes-Nash equilibrium with n total bidders, uniform values: bid = ((n−1)/n) × value.", "As n grows, (n−1)/n → 1, so the bid approaches your true value.", "Intuition: more competitors lower your win probability — to keep a chance, you must bid closer to your true value."], "solution": "Symmetric BNE: bid = ((n − 1)/n) × value, where n is the total number of bidders.\n  n = 2 → bid 1/2 of value.\n  n = 5 → bid 4/5 of value.\n  n = 10 → bid 9/10 of value.\n\nMore competition reduces win probability → you must bid closer to your value to maintain a reasonable chance."}, {"id": "m8-mcq-7", "module": "M8", "theme": "Comparing Seller Revenue Across Formats", "format": "mcq", "stem": "Under symmetric independent private values with risk-neutral bidders, compare expected SELLER REVENUE across the four standard auction formats (English, Dutch, 1st-price sealed, 2nd-price sealed).", "ask": "Which statement is correct?", "choices": ["All four yield the same expected revenue", "English raises the most", "First-price raises the most", "Second-price raises the most", "Dutch raises the least"], "correct_index": 0, "hints": ["There is a well-known result covering exactly this comparison — the revenue equivalence theorem.", "Under symmetric IPV with risk-neutral bidders, all four standard auctions yield the SAME expected revenue.", "Bidders adjust their bids (truthful in 2nd-price/English, shaded in 1st-price/Dutch) so that expected revenue is the same."], "solution": "Revenue Equivalence Theorem: under symmetric independent private values with risk-neutral bidders, all four standard auctions (English, Dutch, 1st-price sealed, 2nd-price sealed) yield the SAME expected revenue to the seller.\n\nReal-world deviations arise from risk-averse bidders, asymmetric bidders, or common-value elements — but with the standard assumptions, all four are equivalent."}, {"id": "m8-mcq-8", "module": "M8", "theme": "Reserve Price", "format": "mcq", "stem": "A seller in an auction sets a RESERVE PRICE.", "ask": "What does that mean?", "choices": ["The average bid", "The second-highest bid", "The maximum price the seller will accept", "The minimum price the seller will accept", "The starting price of the auction"], "correct_index": 3, "hints": ["'Reserve' = the floor below which the seller refuses to sell.", "If the highest bid is BELOW the reserve, the seller keeps the item.", "Used to avoid bad outcomes (e.g., a few low-value bidders driving the price too low)."], "solution": "Reserve price = the seller's minimum acceptable price. If no bid exceeds the reserve, the seller does NOT sell — the item is withdrawn. Reserve prices raise expected seller revenue at the cost of some unsold items (when no bidder values the item above the reserve)."}, {"id": "m8-mcq-9", "module": "M8", "theme": "Common Value Example", "format": "mcq", "stem": "Which of the following is MOST clearly a common-value auction?", "ask": "Pick the best common-value example:", "choices": ["Auctioning concert tickets to fans of the band", "Auctioning a used car to a private buyer", "Auctioning a unique painting to art collectors with different personal tastes", "Auctioning the rights to drill in an unexplored natural-gas field", "Auctioning a vintage guitar to musicians with sentimental attachment"], "correct_index": 3, "hints": ["Common value: the item has a single objective value that all bidders would agree on if it were known.", "Gas-field rights depend on how much gas is in the ground — an objective fact, the same value for everyone.", "The other options depend on personal taste/preferences (private values)."], "solution": "Gas-field rights = COMMON value: the value depends on the amount of gas in the ground (an objective, unknown fact). All bidders would agree on its value if it were measured.\n\nThe other options are private values: a painting's worth depends on who's buying (collectors with different tastes), a guitar's worth depends on sentimental attachment, etc.\n\nCommon-value auctions are where the winner's curse matters."}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+const QS = D.questions;
+
+// ---- Per-question state, persisted in localStorage (shared across module pages) ----
+const STATE_KEY = 'mgmt405_practice_v1';
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch (_) { STATE = {}; }
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch (_) {} }
+function getQState(qid) {
+  if (!STATE[qid]) STATE[qid] = {attempts:0, hints_shown:0, completed:false, last_answer_correct:false, mcq_choice:null, last_input:'', show_solution:false};
+  if (STATE[qid].show_solution === undefined) STATE[qid].show_solution = false;
+  return STATE[qid];
+}
+
+let typeFilter = 'all';
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ---- Stats ----
+function updateStats() {
+  let attempted = 0, correct = 0, total = 0;
+  for (const q of QS) {
+    if (typeFilter !== 'all' && q.format !== typeFilter) continue;
+    total++;
+    const s = STATE[q.id];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  document.getElementById('progress').textContent = attempted + ' / ' + total + ' attempted';
+  document.getElementById('correct').textContent = correct + ' correct';
+}
+
+// ---- Render questions ----
+function renderQuestions() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filtered = QS.filter(q => typeFilter === 'all' || q.format === typeFilter);
+  if (filtered.length === 0) {
+    main.innerHTML = '<p style="color:var(--muted)">No questions match the current filter.</p>';
+    updateStats(); return;
+  }
+  for (const q of filtered) {
+    main.appendChild(renderQuestion(q));
+  }
+  updateStats();
+}
+
+function renderQuestion(q) {
+  const s = getQState(q.id);
+  const card = document.createElement('div');
+  card.className = 'q';
+  if (s.completed) card.classList.add('done', s.last_answer_correct ? 'correct' : 'failed');
+
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML =
+    '<span class="qtag ' + q.format + '">' + (q.format === 'open' ? 'OPEN' : 'MCQ') + '</span>' +
+    '<span class="qtheme">' + escapeHTML(q.theme) + '</span>' +
+    '<span class="qid">' + q.id + '</span>' +
+    '<span class="qstatus ' + (s.completed ? (s.last_answer_correct ? 'correct' : 'failed') : '') + '">' +
+      (s.completed ? (s.last_answer_correct ? '✓ Solved' : '✗ See solution') : '') +
+    '</span>';
+  card.appendChild(head);
+
+  const stem = document.createElement('div');
+  stem.className = 'qstem';
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const ask = document.createElement('div');
+  ask.className = 'qask';
+  ask.textContent = q.ask;
+  card.appendChild(ask);
+
+  // Input area
+  const inputArea = document.createElement('div');
+  if (q.format === 'open') {
+    inputArea.className = 'input-row';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.placeholder = 'Numeric answer';
+    inp.value = s.last_input || '';
+    if (s.completed) inp.disabled = true;
+    inp.dataset.qid = q.id;
+    inputArea.appendChild(inp);
+    if (q.unit) {
+      const u = document.createElement('span');
+      u.className = 'unit';
+      u.textContent = q.unit;
+      inputArea.appendChild(u);
+    }
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-open';
+      inputArea.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      inputArea.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      inputArea.appendChild(att);
+    }
+  } else {
+    inputArea.className = 'choices';
+    inputArea.dataset.qid = q.id;
+    for (let i = 0; i < q.choices.length; i++) {
+      const lbl = document.createElement('label');
+      const selected = s.mcq_choice === i;
+      if (selected) lbl.classList.add('selected');
+      lbl.innerHTML = '<input type="radio" name="' + q.id + '" value="' + i + '"' + (selected ? ' checked' : '') + (s.completed ? ' disabled' : '') + '> ' +
+                     '<strong>' + String.fromCharCode(65 + i) + ')</strong> ' + escapeHTML(q.choices[i]);
+      inputArea.appendChild(lbl);
+    }
+    const row = document.createElement('div');
+    row.style.marginTop = '8px';
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-mcq';
+      row.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      row.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      row.appendChild(att);
+    }
+    inputArea.appendChild(row);
+  }
+  card.appendChild(inputArea);
+
+  // Feedback and hints
+  const fb = document.createElement('div');
+  fb.className = 'feedback-area';
+  fb.dataset.qid = q.id;
+  card.appendChild(fb);
+
+  if (s.completed) {
+    const resDiv = document.createElement('div');
+    resDiv.className = 'feedback result ' + (s.last_answer_correct ? 'correct' : 'wrong');
+    if (s.last_answer_correct) {
+      const tag = s.hints_shown > 0 ? '(after ' + s.hints_shown + ' hint' + (s.hints_shown > 1 ? 's' : '') + ')' : '(first try)';
+      resDiv.innerHTML = '<span class="icon">✓</span><span><strong>Correct!</strong> <span class="sub">' + tag + '</span></span>';
+    } else {
+      resDiv.innerHTML = '<span class="icon">✗</span><span><strong>Incorrect.</strong> <span class="sub">No attempts remaining — full solution shown below.</span></span>';
+    }
+    fb.appendChild(resDiv);
+  } else if (s.attempts > 0) {
+    const left = 3 - s.attempts;
+    const tail = left >= 0 ? ' (' + Math.max(left, 0) + ' attempt' + (left === 1 ? '' : 's') + ' left)' : '';
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'feedback wrong';
+    wrongDiv.innerHTML = '<strong>✗ Not quite — try again.</strong> Hint ' + s.hints_shown + ' revealed below.' + tail;
+    fb.appendChild(wrongDiv);
+  }
+  if (s.hints_shown > 0) renderHints(fb, q, s.hints_shown);
+  if (s.completed && (!s.last_answer_correct || s.show_solution)) renderSolution(fb, q);
+
+  return card;
+}
+
+function renderHints(container, q, n_shown) {
+  container.querySelectorAll('.hint').forEach(el => el.remove());
+  for (let i = 0; i < n_shown && i < q.hints.length; i++) {
+    const h = document.createElement('div');
+    h.className = 'hint';
+    h.innerHTML = '<b>Hint ' + (i+1) + ':</b> ' + escapeHTML(q.hints[i]);
+    container.appendChild(h);
+  }
+}
+
+function renderSolution(container, q) {
+  if (container.querySelector('.solution')) return;
+  const sol = document.createElement('div');
+  sol.className = 'solution';
+  sol.innerHTML = '<h4>Full solution</h4><pre>' + escapeHTML(q.solution) + '</pre>';
+  container.appendChild(sol);
+}
+
+// ---- Answer checking ----
+function checkOpen(q, value) {
+  const userVal = parseFloat(value);
+  if (isNaN(userVal)) return {ok:false, msg:'Please enter a numeric answer.'};
+  const tol = q.tolerance_abs || 0;
+  const correct = Math.abs(userVal - q.answer) <= tol;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+function checkMCQ(q, choiceIndex) {
+  if (choiceIndex === null || choiceIndex === undefined) return {ok:false, msg:'Pick an option first.'};
+  const correct = choiceIndex === q.correct_index;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+// ---- Submit handler ----
+document.addEventListener('click', e => {
+  if (e.target.dataset.action === 'submit-open' || e.target.dataset.action === 'submit-mcq') {
+    handleSubmit(e.target);
+  } else if (e.target.dataset.action === 'toggle-solution') {
+    const qid = e.target.dataset.qid;
+    const s = getQState(qid);
+    s.show_solution = !s.show_solution;
+    saveState();
+    renderQuestions();
+  }
+});
+
+function handleSubmit(btn) {
+  const qid = btn.dataset.qid;
+  const q = QS.find(x => x.id === qid);
+  const s = getQState(qid);
+
+  if (s.completed) return;
+
+  let result;
+  if (q.format === 'open') {
+    const inp = btn.parentElement.querySelector('input[type=number]');
+    s.last_input = inp.value;
+    result = checkOpen(q, inp.value);
+  } else {
+    const sel = document.querySelector('.choices[data-qid="' + qid + '"] input[type=radio]:checked');
+    const choiceIndex = sel ? parseInt(sel.value) : null;
+    s.mcq_choice = choiceIndex;
+    result = checkMCQ(q, choiceIndex);
+  }
+
+  if (result.ok) {
+    s.attempts += 1;
+    s.completed = true;
+    s.last_answer_correct = true;
+    s.show_solution = false;
+    saveState();
+    renderQuestions();
+    return;
+  }
+
+  s.attempts += 1;
+  if (s.attempts <= 3) {
+    if (s.hints_shown < s.attempts) s.hints_shown = s.attempts;
+  } else {
+    s.completed = true;
+    s.last_answer_correct = false;
+    s.show_solution = true;
+    s.hints_shown = q.hints.length;
+  }
+  saveState();
+  renderQuestions();
+}
+
+// MCQ choice highlighting
+document.addEventListener('change', e => {
+  if (e.target.matches('.choices input[type=radio]')) {
+    const parent = e.target.closest('.choices');
+    parent.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+    e.target.closest('label').classList.add('selected');
+  }
+});
+
+// ---- Filters ----
+document.getElementById('typefilter').addEventListener('change', e => {
+  typeFilter = e.target.value;
+  renderQuestions();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Reset your progress on this module? This cannot be undone.')) return;
+  for (const q of QS) delete STATE[q.id];
+  saveState();
+  renderQuestions();
+});
+
+// ---- Calculator ----
+const calc = document.getElementById('calc');
+const calcDisp = document.getElementById('calcdisp');
+let calcExpr = '';
+function calcUpdate() { calcDisp.textContent = calcExpr || '0'; calcDisp.classList.remove('err'); }
+function calcEval() {
+  if (!calcExpr) return;
+  try {
+    if (!/^[\d+\-*/().\s*]+$/.test(calcExpr.replace(/\*\*/g, ''))) throw 'bad';
+    const v = Function('return (' + calcExpr + ')')();
+    if (!isFinite(v)) throw 'overflow';
+    calcExpr = String(+v.toFixed(10).replace(/\.?0+$/, ''));
+    calcUpdate();
+  } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+}
+document.getElementById('calctoggle').addEventListener('click', () => calc.classList.toggle('show'));
+document.querySelectorAll('.calc .keys button').forEach(b => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.key, a = b.dataset.act;
+    if (a === 'clear') { calcExpr = ''; calcUpdate(); }
+    else if (a === 'back') { calcExpr = calcExpr.slice(0, -1); calcUpdate(); }
+    else if (a === 'eq') { calcEval(); }
+    else if (a === 'sqrt') {
+      try {
+        const v = calcExpr ? Function('return (' + calcExpr + ')')() : 0;
+        if (v < 0) throw 'neg';
+        calcExpr = String(+Math.sqrt(v).toFixed(10).replace(/\.?0+$/, ''));
+        calcUpdate();
+      } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+    }
+    else if (k) { calcExpr += k; calcUpdate(); }
+  });
+});
+
+// ---- Init ----
+renderQuestions();
+</script>

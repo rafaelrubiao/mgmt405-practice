@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>MGMT 405 — Practice Problems</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Managerial Economics · Interactive practice with hints and step-by-step solutions</div>
+</header>
+
+<nav class="modnav"><a href="index.html" class="active">All modules</a><a href="module-1.html">Module 1</a><a href="module-2.html">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html">Module 4 (Part I)</a><a href="module-4-part-2.html">Module 4 (Part II)</a><a href="module-5.html">Module 5</a><a href="module-6.html">Module 6</a><a href="module-7-part-1.html">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html">Module 8</a></nav>
+
+<main>
+  <p class="intro">Pick a module below. Each question gives you three attempts, revealing one more hint after each miss; the full step-by-step solution appears once you solve it (or run out of attempts). Your progress is saved in this browser.</p>
+  <div class="cards"><a class="card" href="module-1.html"><div class="mlabel">Module 1</div><div class="mtitle">Basic Concepts and Economic Principles</div><div class="mmeta">14 questions · 4 open + 10 multiple choice</div><div class="mprog" data-slug="module-1"></div></a><a class="card" href="module-2.html"><div class="mlabel">Module 2</div><div class="mtitle">Demand Analysis</div><div class="mmeta">17 questions · 4 open + 13 multiple choice</div><div class="mprog" data-slug="module-2"></div></a><a class="card" href="module-3.html"><div class="mlabel">Module 3</div><div class="mtitle">Production & Costs</div><div class="mmeta">15 questions · 4 open + 11 multiple choice</div><div class="mprog" data-slug="module-3"></div></a><a class="card" href="module-4-part-1.html"><div class="mlabel">Module 4 (Part I)</div><div class="mtitle">Competitive Markets and Market Interventions</div><div class="mmeta">13 questions · 3 open + 10 multiple choice</div><div class="mprog" data-slug="module-4-part-1"></div></a><a class="card" href="module-4-part-2.html"><div class="mlabel">Module 4 (Part II)</div><div class="mtitle">Market Distortions / Externalities</div><div class="mmeta">15 questions · 4 open + 11 multiple choice</div><div class="mprog" data-slug="module-4-part-2"></div></a><a class="card" href="module-5.html"><div class="mlabel">Module 5</div><div class="mtitle">Monopoly and Monopolistic Competition</div><div class="mmeta">15 questions · 4 open + 11 multiple choice</div><div class="mprog" data-slug="module-5"></div></a><a class="card" href="module-6.html"><div class="mlabel">Module 6</div><div class="mtitle">Complex Pricing and Advanced Pricing Strategies</div><div class="mmeta">16 questions · 4 open + 12 multiple choice</div><div class="mprog" data-slug="module-6"></div></a><a class="card" href="module-7-part-1.html"><div class="mlabel">Module 7 (Part I)</div><div class="mtitle">Oligopoly with Homogenous Goods</div><div class="mmeta">10 questions · 3 open + 7 multiple choice</div><div class="mprog" data-slug="module-7-part-1"></div></a><a class="card" href="module-7-part-2.html"><div class="mlabel">Module 7 (Part II)</div><div class="mtitle">Oligopoly with Diff. Goods; Game Theory</div><div class="mmeta">5 questions · 0 open + 5 multiple choice</div><div class="mprog" data-slug="module-7-part-2"></div></a><a class="card" href="module-8.html"><div class="mlabel">Module 8</div><div class="mtitle">Auctions</div><div class="mmeta">11 questions · 2 open + 9 multiple choice</div><div class="mprog" data-slug="module-8"></div></a></div>
+</main>
+
+<script id="QDATA" type="application/json">{"modules": [{"slug": "module-1", "label": "Module 1", "title": "Basic Concepts and Economic Principles", "ids": ["m1-q1", "m1-q2", "m1-q3", "m1-q4", "m1-q5", "m1-mcq-2", "m1-mcq-3", "m1-mcq-4b", "m1-mcq-5b", "m1-mcq-6", "m1-mcq-7", "m1-mcq-8", "m1-mcq-9", "m1-mcq-10"]}, {"slug": "module-2", "label": "Module 2", "title": "Demand Analysis", "ids": ["m2-q1", "m2-q2", "m2-q3", "m2-q4", "m2-q5", "m2-mcq-2", "m2-mcq-3", "m2-mcq-4b", "m2-mcq-5", "m2-mcq-6", "m2-mcq-7", "m2-mcq-8", "m2-mcq-9", "m2-mcq-10", "m2-mcq-11", "m2-mcq-12", "m2-mcq-13"]}, {"slug": "module-3", "label": "Module 3", "title": "Production & Costs", "ids": ["m3-q1", "m3-q2", "m3-q3", "m3-q4", "m3-q5", "m3-mcq-2", "m3-mcq-3", "m3-mcq-4", "m3-mcq-5", "m3-mcq-6", "m3-mcq-7", "m3-mcq-8", "m3-mcq-9", "m3-mcq-10", "m3-mcq-11"]}, {"slug": "module-4-part-1", "label": "Module 4 (Part I)", "title": "Competitive Markets and Market Interventions", "ids": ["m4i-q1", "m4i-q2", "m4i-q3", "m4i-q4", "m4i-mcq-2", "m4i-mcq-3", "m4i-mcq-4", "m4i-mcq-5", "m4i-mcq-6", "m4i-mcq-7", "m4i-mcq-8", "m4i-mcq-9", "m4i-mcq-10"]}, {"slug": "module-4-part-2", "label": "Module 4 (Part II)", "title": "Market Distortions / Externalities", "ids": ["m4ii-q1", "m4ii-q2", "m4ii-q3", "m4ii-q4", "m4ii-q5", "m4ii-mcq-2", "m4ii-mcq-3", "m4ii-mcq-4", "m4ii-mcq-5", "m4ii-mcq-6", "m4ii-mcq-7", "m4ii-mcq-8", "m4ii-mcq-9", "m4ii-mcq-10", "m4ii-mcq-11"]}, {"slug": "module-5", "label": "Module 5", "title": "Monopoly and Monopolistic Competition", "ids": ["m5-q1", "m5-q2", "m5-q3", "m5-q4", "m5-q5", "m5-mcq-2", "m5-mcq-3", "m5-mcq-4b", "m5-mcq-5", "m5-mcq-6", "m5-mcq-7", "m5-mcq-8", "m5-mcq-9", "m5-mcq-10", "m5-mcq-11"]}, {"slug": "module-6", "label": "Module 6", "title": "Complex Pricing and Advanced Pricing Strategies", "ids": ["m6-q1", "m6-q2", "m6-q3", "m6-q4", "m6-q5", "m6-mcq-2", "m6-mcq-3", "m6-mcq-4b", "m6-mcq-5", "m6-mcq-6", "m6-mcq-7", "m6-mcq-8", "m6-mcq-9", "m6-mcq-10", "m6-mcq-11", "m6-mcq-12"]}, {"slug": "module-7-part-1", "label": "Module 7 (Part I)", "title": "Oligopoly with Homogenous Goods", "ids": ["m7i-q1", "m7i-q2", "m7i-mcq-1", "m7i-q3", "m7i-mcq-2", "m7i-mcq-3", "m7i-mcq-4", "m7i-mcq-5", "m7i-mcq-6", "m7i-mcq-7"]}, {"slug": "module-7-part-2", "label": "Module 7 (Part II)", "title": "Oligopoly with Diff. Goods; Game Theory", "ids": ["m7ii-mcq-1", "m7ii-mcq-2", "m7ii-mcq-3", "m7ii-mcq-4", "m7ii-mcq-5"]}, {"slug": "module-8", "label": "Module 8", "title": "Auctions", "ids": ["m8-q1", "m8-q2", "m8-q3", "m8-mcq-2", "m8-mcq-3", "m8-mcq-4", "m8-mcq-5", "m8-mcq-6", "m8-mcq-7", "m8-mcq-8", "m8-mcq-9"]}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem('mgmt405_practice_v1')) || {}; } catch (_) { STATE = {}; }
+for (const m of D.modules) {
+  const el = document.querySelector('.mprog[data-slug="' + m.slug + '"]');
+  if (!el) continue;
+  let attempted = 0, correct = 0;
+  for (const qid of m.ids) {
+    const s = STATE[qid];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  if (attempted === 0) { el.textContent = 'Not started'; }
+  else { el.textContent = attempted + ' / ' + m.ids.length + ' attempted · ' + correct + ' correct'; el.classList.add('some'); }
+}
+</script>

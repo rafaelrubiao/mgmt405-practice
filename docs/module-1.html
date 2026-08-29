@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Module 1 · MGMT 405 Practice</title>
+<style>
+:root {
+  --bg:#fafaf7; --fg:#1a1a1a; --muted:#666; --line:#dcd9d2; --card:#fff;
+  --accent:#0066cc; --accent-soft:#e6f0fa; --good:#2a8a3e; --good-soft:#e7f5ea;
+  --warn:#b85c00; --warn-soft:#fff7ea; --bad:#b03030; --bad-soft:#fdecec;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+header { background:#1f3a5f; color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+header .sub { color:#cfdbe8; font-size:13px; margin-top:2px; }
+.modnav { background:#fff; border-bottom:1px solid var(--line); padding:0 10px; display:flex; overflow-x:auto; }
+.modnav a { padding:11px 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:3px solid transparent; white-space:nowrap; }
+.modnav a:hover { color:var(--fg); background:#f5f3ec; }
+.modnav a.active { color:var(--accent); border-bottom-color:var(--accent); }
+.controls { background:#f0ede5; padding:8px 22px; display:flex; align-items:center; gap:14px; font-size:13px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.controls label { font-weight:600; }
+.controls select { padding:4px 8px; font-size:13px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+.controls .stats { margin-left:auto; color:var(--muted); }
+.controls .stats strong { color:var(--good); }
+main { max-width:880px; margin:0 auto; padding:18px 22px 100px; }
+.note { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); padding:8px 12px; margin:0 0 14px; border-radius:0 4px 4px 0; font-size:13.5px; font-weight:600; }
+.intro { color:var(--muted); font-size:14px; margin:4px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-top:18px; }
+.card { display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; text-decoration:none; color:var(--fg); box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.card:hover { border-color:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.card .mlabel { color:var(--accent); font-weight:700; font-size:13px; }
+.card .mtitle { font-weight:600; margin:4px 0 8px; font-size:15px; line-height:1.35; }
+.card .mmeta { color:var(--muted); font-size:12.5px; }
+.card .mprog { margin-top:8px; font-size:12.5px; color:var(--muted); }
+.card .mprog.some { color:var(--good); font-weight:600; }
+.q { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin-bottom:14px; box-shadow:0 1px 2px rgba(0,0,0,0.03); }
+.q.done.correct { border-left:4px solid var(--good); }
+.q.done.failed  { border-left:4px solid var(--bad); }
+.qhead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.qid { font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--muted); font-size:12px; }
+.qtag { display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:1px 8px; font-size:11px; font-weight:600; }
+.qtag.mcq { background:#f5e9ff; color:#6a2cb0; }
+.qtag.open { background:#e6f0fa; color:#0066cc; }
+.qtheme { color:var(--muted); font-size:13px; font-weight:600; }
+.qstatus { margin-left:auto; font-size:12px; font-weight:600; }
+.qstatus.correct { color:var(--good); }
+.qstatus.failed  { color:var(--bad); }
+.qstem { font-size:14.5px; margin:10px 0; white-space:pre-wrap; }
+.qask  { font-size:14.5px; font-weight:600; margin:10px 0; }
+.input-row { display:flex; gap:8px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+.input-row input[type=number] { padding:6px 10px; font-size:15px; border:1px solid var(--line); border-radius:4px; width:160px; }
+.input-row input[type=number]:disabled { background:#f4f4f4; color:#999; }
+.unit { color:var(--muted); font-size:14px; }
+.choices label { display:block; padding:7px 10px; margin:3px 0; cursor:pointer; border:1px solid var(--line); border-radius:4px; background:#fff; font-size:14px; }
+.choices label:hover { background:#f5f3ec; }
+.choices label.selected { background:var(--accent-soft); border-color:var(--accent); }
+.choices input { margin-right:8px; }
+button.action { padding:6px 14px; font-size:14px; font-weight:600; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:4px; cursor:pointer; }
+button.action:hover { background:#0055aa; }
+button.action.secondary { background:#fff; color:var(--accent); }
+button.action.secondary:hover { background:var(--accent-soft); }
+button.action:disabled { background:#aaa; border-color:#aaa; cursor:not-allowed; }
+.feedback { margin:8px 0; padding:8px 12px; border-radius:4px; font-size:13.5px; font-weight:600; }
+.feedback.correct { background:var(--good-soft); color:var(--good); border-left:3px solid var(--good); }
+.feedback.wrong   { background:var(--bad-soft); color:var(--bad); border-left:3px solid var(--bad); }
+.feedback.info    { background:var(--accent-soft); color:var(--accent); border-left:3px solid var(--accent); }
+.feedback.result  { padding:14px 18px; font-size:15.5px; border-left-width:5px; display:flex; align-items:center; gap:12px; }
+.feedback.result .icon { font-size:28px; line-height:1; font-weight:700; }
+.feedback.result .sub  { font-weight:500; opacity:0.85; font-size:13.5px; margin-left:4px; }
+.hint { background:var(--warn-soft); border-left:3px solid var(--warn); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:13.5px; }
+.hint b { color:var(--warn); }
+.solution { background:#f5f3ec; border-left:3px solid #888; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; }
+.solution h4 { margin:0 0 6px; font-size:13px; color:#444; text-transform:uppercase; letter-spacing:0.04em; }
+.solution pre { margin:0; white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; line-height:1.5; }
+.attempts { color:var(--muted); font-size:12px; margin-left:8px; }
+.calc-toggle { position:fixed; bottom:18px; right:18px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:90; }
+.calc-toggle:hover { background:#0055aa; }
+.calc { position:fixed; bottom:64px; right:18px; width:260px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.18); padding:8px; display:none; z-index:90; }
+.calc.show { display:block; }
+.calc .display { background:#f5f3ec; border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:18px; text-align:right; min-height:44px; word-break:break-all; overflow-wrap:anywhere; }
+.calc .keys { display:grid; grid-template-columns:repeat(5, 1fr); gap:4px; margin-top:6px; }
+.calc .keys button { padding:9px 0; font-size:14px; font-weight:600; border:1px solid var(--line); background:#fff; cursor:pointer; border-radius:4px; }
+.calc .keys button:hover { background:#f0ede5; }
+.calc .keys button.op { background:var(--accent-soft); color:var(--accent); }
+.calc .keys button.eq { background:var(--accent); color:#fff; grid-column:span 2; }
+.calc .keys button.fn { background:#e9e6dd; color:#555; }
+.calc .err { color:var(--bad); }
+@media (max-width:640px) {
+  main { padding:14px 14px 100px; }
+  .calc { right:8px; left:8px; bottom:60px; width:auto; }
+}
+</style>
+
+<header>
+  <h1>MGMT 405 — Practice Problems</h1>
+  <div class="sub">Module 1: Basic Concepts and Economic Principles</div>
+</header>
+
+<nav class="modnav"><a href="index.html">All modules</a><a href="module-1.html" class="active">Module 1</a><a href="module-2.html">Module 2</a><a href="module-3.html">Module 3</a><a href="module-4-part-1.html">Module 4 (Part I)</a><a href="module-4-part-2.html">Module 4 (Part II)</a><a href="module-5.html">Module 5</a><a href="module-6.html">Module 6</a><a href="module-7-part-1.html">Module 7 (Part I)</a><a href="module-7-part-2.html">Module 7 (Part II)</a><a href="module-8.html">Module 8</a></nav>
+
+<div class="controls">
+  <label>Question type:</label>
+  <select id="typefilter">
+    <option value="all">All</option>
+    <option value="open">Open (numeric answer)</option>
+    <option value="mcq">Multiple choice</option>
+  </select>
+  <span class="stats">
+    <span id="progress">0 / 0 attempted</span> · <strong id="correct">0 correct</strong>
+    <button id="reset" style="margin-left:8px; font-size:11px; padding:2px 8px; background:#fff; border:1px solid var(--line); border-radius:3px; cursor:pointer;">Reset this module</button>
+  </span>
+</div>
+
+<main>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div id="main"></div>
+</main>
+
+<button class="calc-toggle" id="calctoggle">🖩 Calculator</button>
+<div class="calc" id="calc">
+  <div class="display" id="calcdisp">0</div>
+  <div class="keys">
+    <button class="fn" data-act="clear">C</button>
+    <button class="fn" data-act="back">⌫</button>
+    <button class="fn" data-key="(">(</button>
+    <button class="fn" data-key=")">)</button>
+    <button class="op" data-key="/">÷</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+    <button class="op" data-key="*">×</button>
+    <button class="fn" data-act="sqrt">√</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button class="op" data-key="-">−</button>
+    <button class="fn" data-key="**">x^y</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button class="op" data-key="+">+</button>
+    <button class="fn" data-key=".">.</button>
+    <button data-key="0">0</button>
+    <button data-key="00">00</button>
+    <button class="eq" data-act="eq">=</button>
+  </div>
+</div>
+
+<script id="QDATA" type="application/json">{"module": {"key": "M1", "label": "Module 1", "title": "Basic Concepts and Economic Principles"}, "questions": [{"id": "m1-q1", "module": "M1", "theme": "Opportunity Cost", "format": "open", "stem": "Tom currently works as a paralegal earning $60,000/year. He is considering a 3-year law degree that costs $45,000/year in tuition plus $5,000/year in required books and materials. After graduating he expects to earn $115,000/year as a lawyer.", "ask": "What is Tom's total economic cost of completing the law degree (in dollars)?", "answer": 330000, "tolerance_abs": 0, "unit": "$", "hints": ["Economic cost = EXPLICIT costs (out-of-pocket payments) + IMPLICIT costs (opportunity cost of resources used).", "Explicit costs are what he pays: tuition + books/materials, for each of the 3 years.", "The implicit cost is the salary he gives up by not working — $60,000 per year for 3 years. The future lawyer salary is NOT a cost; it only matters for deciding whether the degree is worth it, not for measuring the cost."], "solution": "Explicit cost = ($45,000 tuition + $5,000 materials) × 3 years = $150,000\nImplicit cost (foregone salary) = $60,000 × 3 years = $180,000\nTotal economic cost = $150,000 + $180,000 = $330,000\n\nThe future $115,000 salary is irrelevant to the COST — it affects whether the degree pays off, not the cost itself."}, {"id": "m1-q2", "module": "M1", "theme": "Sunk Cost", "format": "open", "stem": "A pizzeria bought a commercial pizza oven two years ago for $24,000. They can sell it today on the used market for $9,000, or keep using it for one more year. Operating it one more year would generate $30,000 in revenue but cost $34,000 in dough, toppings, energy, and labor.", "ask": "By how many dollars is the pizzeria BETTER OFF selling the oven today vs operating it one more year? (Enter the positive difference: [sell today] − [operate one more year].)", "answer": 13000, "tolerance_abs": 0, "unit": "$", "hints": ["The $24,000 purchase price is SUNK — irrelevant to today's decision. Only forward-looking cash flows matter.", "Selling today: receive $9,000. Operating: $30,000 revenue − $34,000 costs = −$4,000 net.", "Selling today gives +$9,000. Operating gives −$4,000. Difference = $9,000 − (−$4,000) = $13,000."], "solution": "Sunk-cost rule: ignore the $24,000 paid two years ago.\n\nOption A — Sell today: net = +$9,000\nOption B — Operate one more year: net = $30,000 − $34,000 = −$4,000\n\nDifference = $9,000 − (−$4,000) = $13,000\n\nSelling today is $13,000 better than operating one more year. The pizzeria should sell."}, {"id": "m1-q3", "module": "M1", "theme": "Market Equilibrium", "format": "open", "stem": "The local market for artisanal honey has demand Q_d = 300 − 5P and supply Q_s = −60 + 7P, where Q is in jars/week and P is in dollars/jar.", "ask": "What is the equilibrium price P* (in dollars/jar)?", "answer": 30, "tolerance_abs": 0, "unit": "$", "hints": ["At equilibrium, quantity demanded equals quantity supplied: Q_d = Q_s.", "Set 300 − 5P = −60 + 7P and solve for P.", "300 + 60 = 7P + 5P → 360 = 12P → P = 30."], "solution": "Set Q_d = Q_s:\n  300 − 5P = −60 + 7P\n  360 = 12P\n  P* = $30/jar\n\n(Equilibrium quantity: Q* = 300 − 5(30) = 150 jars/week. Check supply side: −60 + 7(30) = 150 ✓.)"}, {"id": "m1-q4", "module": "M1", "theme": "Combined S/D Shifts", "format": "mcq", "stem": "A severe drought sharply reduces the wheat harvest (wheat is the key input for bread). At the same time, a popular low-carb diet trend sweeps the country, reducing consumers' appetite for bread.", "ask": "What happens to the equilibrium price and quantity of bread?", "choices": ["Price rises; quantity falls", "Price falls; quantity rises", "Price is ambiguous; quantity falls", "Price rises; quantity is ambiguous", "Both price and quantity are ambiguous"], "correct_index": 2, "hints": ["Identify each shock and which curve it shifts: the drought is a SUPPLY shock (input cost); the diet trend is a DEMAND shock (taste).", "Drought reduces supply → S shifts LEFT (P up, Q down). Diet trend reduces demand → D shifts LEFT (P down, Q down).", "On quantity: both shifts push Q DOWN — unambiguous. On price: S-left pushes P up, D-left pushes P down — net depends on relative magnitudes → AMBIGUOUS."], "solution": "Supply shifts LEFT (wheat scarcity raises bread's cost). Demand shifts LEFT (low-carb taste change).\n\nQuantity: both shifts lower Q → Q falls UNAMBIGUOUSLY.\nPrice: supply-left raises P, demand-left lowers P → AMBIGUOUS (depends on which shift is larger).\n\nAnswer: Price is ambiguous; quantity falls."}, {"id": "m1-q5", "module": "M1", "theme": "Marginal Analysis (Hiring)", "format": "open", "stem": "A car wash currently serves 80 cars/day at $15 each. The owner is considering hiring another attendant at $90/day. With the extra attendant, throughput would rise to 95 cars/day, but to attract the additional volume the owner would lower the price to $14.", "ask": "What is the change in total revenue from hiring the extra attendant (new TR − old TR, in $)? Use this to check whether the wage is worth paying.", "answer": 130, "tolerance_abs": 0, "unit": "$", "hints": ["TR = price × quantity. Compute TR before and after the hire.", "Before: 80 × $15 = $1,200. After: 95 × $14 = $1,330.", "Change in TR = $1,330 − $1,200 = $130. Since $130 > $90 wage, hiring is worthwhile."], "solution": "TR_before = 80 × $15 = $1,200\nTR_after = 95 × $14 = $1,330\nΔTR = $1,330 − $1,200 = $130\n\nThe marginal revenue from the extra attendant ($130) exceeds the wage ($90), so the owner should hire. Net gain = $130 − $90 = $40/day."}, {"id": "m1-mcq-2", "module": "M1", "theme": "Relevant vs Irrelevant Costs", "format": "mcq", "stem": "A gym signed a 12-month equipment lease and prepaid $24,000 (non-refundable). Four months in, membership is weak. The owner is deciding whether to close immediately or keep operating.", "ask": "Which factor should the owner IGNORE in deciding whether to close now or stay open?", "choices": ["The $16,000 of lease already prepaid for the remaining 8 months", "Expected membership revenue over the remaining 8 months", "Expected variable costs (utilities, hourly staff) over the next 8 months", "Resale value of the treadmills if she closes today", "Wages she could earn at another job if she closed"], "correct_index": 0, "hints": ["Sunk costs are payments already made that cannot be recovered.", "The remaining $16,000 of lease was prepaid and is non-refundable — the owner pays it whether she stays open or closes.", "Forward-looking rule: include only cash flows that DEPEND on the decision. Prepaid non-refundable lease doesn't depend on the choice → ignore it."], "solution": "The prepaid, non-refundable lease is SUNK — the owner pays the $16,000 regardless of which option she picks. Sunk costs should be IGNORED in forward-looking decisions. Every other listed factor varies with the decision (future revenue, future VC, resale value, opportunity cost of her time) and IS relevant."}, {"id": "m1-mcq-3", "module": "M1", "theme": "Opportunity Cost Calculation", "format": "mcq", "stem": "Raj quits his $85,000/year corporate job to start a consultancy. In the first year, the consultancy generates $130,000 in revenue with $60,000 in explicit costs (software, rent, supplies).", "ask": "What is Raj's economic profit (in $)?", "choices": ["$70,000", "$130,000", "−$15,000", "$45,000", "$15,000"], "correct_index": 2, "hints": ["Economic profit = revenue − ALL costs (both explicit AND implicit).", "Raj's implicit cost is his foregone salary: $85,000 he gave up by not staying at his corporate job.", "Economic profit = $130,000 − $60,000 − $85,000 = −$15,000. Accounting profit alone ($70,000) ignores the opportunity cost."], "solution": "Economic profit = TR − explicit costs − implicit costs\n             = $130,000 − $60,000 − $85,000\n             = −$15,000.\n\nThe business is accounting-profitable (+$70,000) but Raj is $15,000 WORSE off than at his old job. Negative economic profit means his time would have been better deployed in the next-best alternative."}, {"id": "m1-mcq-4b", "module": "M1", "theme": "Demand vs Supply Shifts", "format": "mcq", "stem": "Consider the market for new laptops.", "ask": "Which of the following would shift the DEMAND CURVE for laptops to the right?", "choices": ["The price of laptops falls during a promotional sale", "A new income-tax rebate raises household disposable income (laptops are a normal good)", "Chip manufacturing becomes more efficient (lower marginal cost)", "Memory-chip prices fall", "A new laptop assembly plant opens"], "correct_index": 1, "hints": ["A movement ALONG the demand curve is caused by a change in the good's own price. A shift OF the demand curve is caused by anything else (income, prices of related goods, tastes, expectations).", "A rebate that raises disposable income increases demand for a normal good at every market price — that's a rightward demand shift.", "A fall in the laptop's own price is a movement along demand, not a shift. Cheaper chips, better manufacturing and a new plant are all SUPPLY-side changes."], "solution": "The income-tax rebate is the only demand shifter here. Higher disposable income raises demand for a normal good at every price, so the demand curve shifts right.\n\nWhy the others are not demand shifts:\n  A promotional price cut moves you ALONG the demand curve — the good's own price is not a demand shifter.\n  More efficient chip manufacturing, cheaper memory chips, and a new assembly plant all lower producers' costs or raise capacity, so they shift SUPPLY, not demand."}, {"id": "m1-mcq-5b", "module": "M1", "theme": "Marginal Hire Decision", "format": "mcq", "stem": "A juice bar can serve 150 cups/day with the current staff, or 230 cups/day with one extra worker. Cups sell for $5 each with a marginal cost of $2 per cup in supplies.", "ask": "What is the maximum daily wage the owner should pay the extra worker?", "choices": ["$240", "$400", "$160", "$300", "$200"], "correct_index": 0, "hints": ["Hire only if the worker's marginal benefit ≥ their wage.", "Marginal benefit = extra revenue − extra variable costs.", "Extra revenue: 80 × $5 = $400. Extra supplies: 80 × $2 = $160. Max wage = $400 − $160 = $240."], "solution": "Marginal benefit of the extra worker:\n  Extra revenue = 80 × $5 = $400\n  Extra supplies = 80 × $2 = $160\n  Net MB = $400 − $160 = $240\n\nHire if wage ≤ $240. Beyond that, the worker costs more than they generate."}, {"id": "m1-mcq-6", "module": "M1", "theme": "Combined S/D Shifts", "format": "mcq", "stem": "The price of jet fuel (a key input for airlines) spikes. At the same time, a recession sharply reduces business travel (demand for flights falls).", "ask": "What happens to the equilibrium price and quantity of airline tickets?", "choices": ["Price rises; quantity is ambiguous", "Price is ambiguous; quantity falls", "Price falls; quantity rises", "Both price and quantity rise", "Both price and quantity fall"], "correct_index": 1, "hints": ["Identify each shock and the curve it shifts. Jet fuel is an input → SUPPLY. Recession → DEMAND.", "Supply shifts LEFT (fuel more expensive → fewer flights at any price): P↑ Q↓. Demand shifts LEFT (recession cuts travel): P↓ Q↓.", "On quantity: both shifts push Q down → unambiguous fall. On price: supply-left raises P, demand-left lowers P → AMBIGUOUS."], "solution": "Jet-fuel cost ↑ shifts SUPPLY left (P up, Q down). Recession shifts DEMAND left (P down, Q down).\n\nQuantity: both shocks push Q DOWN → unambiguous fall.\nPrice: one says ↑, the other says ↓ → AMBIGUOUS."}, {"id": "m1-mcq-7", "module": "M1", "theme": "Implicit vs Explicit Cost", "format": "mcq", "stem": "A bakery owner is reviewing her annual finances.", "ask": "Which of the following is an IMPLICIT (opportunity) cost of running her own bakery?", "choices": ["Rent paid on the storefront lease", "Flour and sugar purchased each week", "The salary she gave up to open the bakery", "Wages paid to her counter staff", "The monthly electricity bill"], "correct_index": 2, "hints": ["Explicit cost = out-of-pocket cash payment. Implicit cost = opportunity cost of a resource you OWN or your own time.", "Foregone wages are the opportunity cost of HER time — a resource she contributes for free.", "Storefront rent, ingredients, staff wages, and utilities are all explicit cash outlays."], "solution": "Implicit costs are the value of resources you contribute that you don't pay for in cash — typically your own time or capital. The foregone pastry-chef wage is the opportunity cost of her time. All other listed items are explicit cash outlays."}, {"id": "m1-mcq-8", "module": "M1", "theme": "Substitute Price Change", "format": "mcq", "stem": "A steep new tax doubles the retail price of cigarettes overnight. Vaping products are a substitute for cigarettes.", "ask": "What is the most likely effect on the market for vaping products?", "choices": ["Vaping demand falls (leftward shift)", "Vaping demand rises (rightward shift)", "Vaping supply rises (rightward shift)", "Both vaping demand and supply fall", "No effect — the markets are separate"], "correct_index": 1, "hints": ["Cigarettes and vaping products are substitutes.", "When the price of a substitute rises, the demand for the other rises.", "Cigarette price up → consumers switch to vaping → vaping demand shifts RIGHT. Both vaping price and quantity rise."], "solution": "Cigarettes and vaping products are substitutes. When cigarettes get much more expensive, consumers switch to vaping — vaping demand shifts RIGHT. (Note this is a DEMAND shift on the vaping side, not a supply shift.) Vaping equilibrium price and quantity both rise."}, {"id": "m1-mcq-9", "module": "M1", "theme": "Complement Price Change", "format": "mcq", "stem": "A surge in printer prices raises the cost of buying new printers. Ink cartridges are a complement consumed with printers.", "ask": "What happens in the market for ink cartridges?", "choices": ["Demand for ink rises", "Supply of ink falls", "Demand for ink falls", "Supply of ink rises", "No effect — these are separate markets"], "correct_index": 2, "hints": ["Printers and ink are complements (used together).", "When printer prices rise, people buy fewer printers — and therefore use less ink too.", "The demand for ink shifts LEFT. Both ink's equilibrium price and quantity fall (other things equal)."], "solution": "Printers and ink are complements. Higher printer prices reduce printer purchases, which reduces demand for ink too. Ink demand shifts LEFT → ink's equilibrium P and Q both fall."}, {"id": "m1-mcq-10", "module": "M1", "theme": "Sell Now vs. Invest More", "format": "mcq", "stem": "A retailer ordered $60,000 of seasonal inventory three months ago (non-refundable). Today they can sell it in a clearance event for $28,000, OR spend $4,000 on a marketing campaign that would boost clearance revenue to an expected $40,000.", "ask": "Which is the better choice and by how much?", "choices": ["Sell now — better by $32,000 because of the campaign cost", "Run the campaign — net benefit is $40,000", "Need more information about the original $60,000 cost", "Sell now — selling and campaigning are equivalent ($0 difference)", "Run the campaign — net benefit is $8,000 better than selling now"], "correct_index": 4, "hints": ["The $60,000 already spent is SUNK — irrelevant. Only forward cash flows matter.", "Sell now: net = $28,000. Campaign: net = $40,000 revenue − $4,000 cost = $36,000.", "Difference: $36,000 − $28,000 = $8,000 in favor of the campaign."], "solution": "The $60,000 is sunk — ignore it.\n\nSell now: net cash = $28,000.\nRun campaign: net cash = $40,000 − $4,000 = $36,000.\nDifference = $8,000 in favor of the campaign.\n\nThe campaign minimizes the loss. (Both options leave the firm worse off than if it had never bought the inventory, but that's water under the bridge.)"}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('QDATA').textContent);
+const QS = D.questions;
+
+// ---- Per-question state, persisted in localStorage (shared across module pages) ----
+const STATE_KEY = 'mgmt405_practice_v1';
+let STATE = {};
+try { STATE = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch (_) { STATE = {}; }
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch (_) {} }
+function getQState(qid) {
+  if (!STATE[qid]) STATE[qid] = {attempts:0, hints_shown:0, completed:false, last_answer_correct:false, mcq_choice:null, last_input:'', show_solution:false};
+  if (STATE[qid].show_solution === undefined) STATE[qid].show_solution = false;
+  return STATE[qid];
+}
+
+let typeFilter = 'all';
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ---- Stats ----
+function updateStats() {
+  let attempted = 0, correct = 0, total = 0;
+  for (const q of QS) {
+    if (typeFilter !== 'all' && q.format !== typeFilter) continue;
+    total++;
+    const s = STATE[q.id];
+    if (s && (s.completed || s.attempts > 0)) attempted++;
+    if (s && s.last_answer_correct) correct++;
+  }
+  document.getElementById('progress').textContent = attempted + ' / ' + total + ' attempted';
+  document.getElementById('correct').textContent = correct + ' correct';
+}
+
+// ---- Render questions ----
+function renderQuestions() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filtered = QS.filter(q => typeFilter === 'all' || q.format === typeFilter);
+  if (filtered.length === 0) {
+    main.innerHTML = '<p style="color:var(--muted)">No questions match the current filter.</p>';
+    updateStats(); return;
+  }
+  for (const q of filtered) {
+    main.appendChild(renderQuestion(q));
+  }
+  updateStats();
+}
+
+function renderQuestion(q) {
+  const s = getQState(q.id);
+  const card = document.createElement('div');
+  card.className = 'q';
+  if (s.completed) card.classList.add('done', s.last_answer_correct ? 'correct' : 'failed');
+
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML =
+    '<span class="qtag ' + q.format + '">' + (q.format === 'open' ? 'OPEN' : 'MCQ') + '</span>' +
+    '<span class="qtheme">' + escapeHTML(q.theme) + '</span>' +
+    '<span class="qid">' + q.id + '</span>' +
+    '<span class="qstatus ' + (s.completed ? (s.last_answer_correct ? 'correct' : 'failed') : '') + '">' +
+      (s.completed ? (s.last_answer_correct ? '✓ Solved' : '✗ See solution') : '') +
+    '</span>';
+  card.appendChild(head);
+
+  const stem = document.createElement('div');
+  stem.className = 'qstem';
+  stem.textContent = q.stem;
+  card.appendChild(stem);
+
+  const ask = document.createElement('div');
+  ask.className = 'qask';
+  ask.textContent = q.ask;
+  card.appendChild(ask);
+
+  // Input area
+  const inputArea = document.createElement('div');
+  if (q.format === 'open') {
+    inputArea.className = 'input-row';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.placeholder = 'Numeric answer';
+    inp.value = s.last_input || '';
+    if (s.completed) inp.disabled = true;
+    inp.dataset.qid = q.id;
+    inputArea.appendChild(inp);
+    if (q.unit) {
+      const u = document.createElement('span');
+      u.className = 'unit';
+      u.textContent = q.unit;
+      inputArea.appendChild(u);
+    }
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-open';
+      inputArea.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      inputArea.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      inputArea.appendChild(att);
+    }
+  } else {
+    inputArea.className = 'choices';
+    inputArea.dataset.qid = q.id;
+    for (let i = 0; i < q.choices.length; i++) {
+      const lbl = document.createElement('label');
+      const selected = s.mcq_choice === i;
+      if (selected) lbl.classList.add('selected');
+      lbl.innerHTML = '<input type="radio" name="' + q.id + '" value="' + i + '"' + (selected ? ' checked' : '') + (s.completed ? ' disabled' : '') + '> ' +
+                     '<strong>' + String.fromCharCode(65 + i) + ')</strong> ' + escapeHTML(q.choices[i]);
+      inputArea.appendChild(lbl);
+    }
+    const row = document.createElement('div');
+    row.style.marginTop = '8px';
+    if (!s.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'action';
+      btn.textContent = 'Check answer';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'submit-mcq';
+      row.appendChild(btn);
+    } else if (s.last_answer_correct) {
+      const btn = document.createElement('button');
+      btn.className = 'action secondary';
+      btn.textContent = s.show_solution ? 'Hide solution' : 'Show solution';
+      btn.dataset.qid = q.id;
+      btn.dataset.action = 'toggle-solution';
+      row.appendChild(btn);
+    }
+    if (!s.completed && s.attempts > 0) {
+      const att = document.createElement('span');
+      att.className = 'attempts';
+      att.textContent = 'Attempts: ' + s.attempts + ' / 3';
+      row.appendChild(att);
+    }
+    inputArea.appendChild(row);
+  }
+  card.appendChild(inputArea);
+
+  // Feedback and hints
+  const fb = document.createElement('div');
+  fb.className = 'feedback-area';
+  fb.dataset.qid = q.id;
+  card.appendChild(fb);
+
+  if (s.completed) {
+    const resDiv = document.createElement('div');
+    resDiv.className = 'feedback result ' + (s.last_answer_correct ? 'correct' : 'wrong');
+    if (s.last_answer_correct) {
+      const tag = s.hints_shown > 0 ? '(after ' + s.hints_shown + ' hint' + (s.hints_shown > 1 ? 's' : '') + ')' : '(first try)';
+      resDiv.innerHTML = '<span class="icon">✓</span><span><strong>Correct!</strong> <span class="sub">' + tag + '</span></span>';
+    } else {
+      resDiv.innerHTML = '<span class="icon">✗</span><span><strong>Incorrect.</strong> <span class="sub">No attempts remaining — full solution shown below.</span></span>';
+    }
+    fb.appendChild(resDiv);
+  } else if (s.attempts > 0) {
+    const left = 3 - s.attempts;
+    const tail = left >= 0 ? ' (' + Math.max(left, 0) + ' attempt' + (left === 1 ? '' : 's') + ' left)' : '';
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'feedback wrong';
+    wrongDiv.innerHTML = '<strong>✗ Not quite — try again.</strong> Hint ' + s.hints_shown + ' revealed below.' + tail;
+    fb.appendChild(wrongDiv);
+  }
+  if (s.hints_shown > 0) renderHints(fb, q, s.hints_shown);
+  if (s.completed && (!s.last_answer_correct || s.show_solution)) renderSolution(fb, q);
+
+  return card;
+}
+
+function renderHints(container, q, n_shown) {
+  container.querySelectorAll('.hint').forEach(el => el.remove());
+  for (let i = 0; i < n_shown && i < q.hints.length; i++) {
+    const h = document.createElement('div');
+    h.className = 'hint';
+    h.innerHTML = '<b>Hint ' + (i+1) + ':</b> ' + escapeHTML(q.hints[i]);
+    container.appendChild(h);
+  }
+}
+
+function renderSolution(container, q) {
+  if (container.querySelector('.solution')) return;
+  const sol = document.createElement('div');
+  sol.className = 'solution';
+  sol.innerHTML = '<h4>Full solution</h4><pre>' + escapeHTML(q.solution) + '</pre>';
+  container.appendChild(sol);
+}
+
+// ---- Answer checking ----
+function checkOpen(q, value) {
+  const userVal = parseFloat(value);
+  if (isNaN(userVal)) return {ok:false, msg:'Please enter a numeric answer.'};
+  const tol = q.tolerance_abs || 0;
+  const correct = Math.abs(userVal - q.answer) <= tol;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+function checkMCQ(q, choiceIndex) {
+  if (choiceIndex === null || choiceIndex === undefined) return {ok:false, msg:'Pick an option first.'};
+  const correct = choiceIndex === q.correct_index;
+  return {ok:correct, msg: correct ? 'Correct!' : 'Not quite — try again.'};
+}
+
+// ---- Submit handler ----
+document.addEventListener('click', e => {
+  if (e.target.dataset.action === 'submit-open' || e.target.dataset.action === 'submit-mcq') {
+    handleSubmit(e.target);
+  } else if (e.target.dataset.action === 'toggle-solution') {
+    const qid = e.target.dataset.qid;
+    const s = getQState(qid);
+    s.show_solution = !s.show_solution;
+    saveState();
+    renderQuestions();
+  }
+});
+
+function handleSubmit(btn) {
+  const qid = btn.dataset.qid;
+  const q = QS.find(x => x.id === qid);
+  const s = getQState(qid);
+
+  if (s.completed) return;
+
+  let result;
+  if (q.format === 'open') {
+    const inp = btn.parentElement.querySelector('input[type=number]');
+    s.last_input = inp.value;
+    result = checkOpen(q, inp.value);
+  } else {
+    const sel = document.querySelector('.choices[data-qid="' + qid + '"] input[type=radio]:checked');
+    const choiceIndex = sel ? parseInt(sel.value) : null;
+    s.mcq_choice = choiceIndex;
+    result = checkMCQ(q, choiceIndex);
+  }
+
+  if (result.ok) {
+    s.attempts += 1;
+    s.completed = true;
+    s.last_answer_correct = true;
+    s.show_solution = false;
+    saveState();
+    renderQuestions();
+    return;
+  }
+
+  s.attempts += 1;
+  if (s.attempts <= 3) {
+    if (s.hints_shown < s.attempts) s.hints_shown = s.attempts;
+  } else {
+    s.completed = true;
+    s.last_answer_correct = false;
+    s.show_solution = true;
+    s.hints_shown = q.hints.length;
+  }
+  saveState();
+  renderQuestions();
+}
+
+// MCQ choice highlighting
+document.addEventListener('change', e => {
+  if (e.target.matches('.choices input[type=radio]')) {
+    const parent = e.target.closest('.choices');
+    parent.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+    e.target.closest('label').classList.add('selected');
+  }
+});
+
+// ---- Filters ----
+document.getElementById('typefilter').addEventListener('change', e => {
+  typeFilter = e.target.value;
+  renderQuestions();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Reset your progress on this module? This cannot be undone.')) return;
+  for (const q of QS) delete STATE[q.id];
+  saveState();
+  renderQuestions();
+});
+
+// ---- Calculator ----
+const calc = document.getElementById('calc');
+const calcDisp = document.getElementById('calcdisp');
+let calcExpr = '';
+function calcUpdate() { calcDisp.textContent = calcExpr || '0'; calcDisp.classList.remove('err'); }
+function calcEval() {
+  if (!calcExpr) return;
+  try {
+    if (!/^[\d+\-*/().\s*]+$/.test(calcExpr.replace(/\*\*/g, ''))) throw 'bad';
+    const v = Function('return (' + calcExpr + ')')();
+    if (!isFinite(v)) throw 'overflow';
+    calcExpr = String(+v.toFixed(10).replace(/\.?0+$/, ''));
+    calcUpdate();
+  } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+}
+document.getElementById('calctoggle').addEventListener('click', () => calc.classList.toggle('show'));
+document.querySelectorAll('.calc .keys button').forEach(b => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.key, a = b.dataset.act;
+    if (a === 'clear') { calcExpr = ''; calcUpdate(); }
+    else if (a === 'back') { calcExpr = calcExpr.slice(0, -1); calcUpdate(); }
+    else if (a === 'eq') { calcEval(); }
+    else if (a === 'sqrt') {
+      try {
+        const v = calcExpr ? Function('return (' + calcExpr + ')')() : 0;
+        if (v < 0) throw 'neg';
+        calcExpr = String(+Math.sqrt(v).toFixed(10).replace(/\.?0+$/, ''));
+        calcUpdate();
+      } catch (e) { calcDisp.textContent = 'Error'; calcDisp.classList.add('err'); calcExpr = ''; }
+    }
+    else if (k) { calcExpr += k; calcUpdate(); }
+  });
+});
+
+// ---- Init ----
+renderQuestions();
+</script>
