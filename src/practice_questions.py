@@ -40,27 +40,27 @@ QUESTIONS = []
 QUESTIONS += [
 {
     "id": "m1-q1", "module": "M1", "theme": "Opportunity Cost", "format": "open",
-    "stem": "Tom currently works as a paralegal earning $60,000/year. He is considering a 3-year law degree that costs $45,000/year in tuition plus $5,000/year in required books and materials. After graduating he expects to earn $115,000/year as a lawyer.",
+    "stem": "Tom currently works as a paralegal earning $60,000/year. He is considering a **3-year** law degree that costs $45,000/year in tuition plus $5,000/year in required books and materials. After graduating he expects to earn $115,000/year as a lawyer.",
     "ask": "What is Tom's total economic cost of completing the law degree (in dollars)?",
     "answer": 330000, "tolerance_abs": 0, "unit": "$",
     "hints": [
         "Economic cost = EXPLICIT costs (out-of-pocket payments) + IMPLICIT costs (opportunity cost of resources used).",
         "Explicit costs are what he pays: tuition + books/materials, for each of the 3 years.",
-        "The implicit cost is the salary he gives up by not working — $60,000 per year for 3 years. The future lawyer salary is NOT a cost; it only matters for deciding whether the degree is worth it, not for measuring the cost.",
+        "The implicit cost is the salary he gives up by not working: $60,000 per year for 3 years. The future lawyer salary is NOT a cost; it only matters for whether the degree pays off (the economic profit from the degree), not for measuring the cost.",
     ],
-    "solution": "Explicit cost = ($45,000 tuition + $5,000 materials) × 3 years = $150,000\nImplicit cost (foregone salary) = $60,000 × 3 years = $180,000\nTotal economic cost = $150,000 + $180,000 = $330,000\n\nThe future $115,000 salary is irrelevant to the COST — it affects whether the degree pays off, not the cost itself.",
+    "solution": "Explicit cost = ($45,000 tuition + $5,000 materials) × 3 years = $150,000\nImplicit cost (foregone salary) = $60,000 × 3 years = $180,000\nTotal economic cost = $150,000 + $180,000 = $330,000\n\nThe future $115,000 salary is irrelevant to the COST: it affects whether the degree pays off (the economic profit from the degree), not the cost itself.",
 },
 {
-    "id": "m1-q2", "module": "M1", "theme": "Sunk Cost", "format": "open",
+    "id": "m1-q2", "module": "M1", "theme": "Sunk Cost and Economic Profit", "format": "open",
     "stem": "A pizzeria bought a commercial pizza oven two years ago for $24,000. They can sell it today on the used market for $9,000, or keep using it for one more year. Operating it one more year would generate $30,000 in revenue but cost $34,000 in dough, toppings, energy, and labor.",
-    "ask": "By how many dollars is the pizzeria BETTER OFF selling the oven today vs operating it one more year? (Enter the positive difference: [sell today] − [operate one more year].)",
+    "ask": "What is the economic profit from selling the oven today rather than operating it for one more year?",
     "answer": 13000, "tolerance_abs": 0, "unit": "$",
     "hints": [
-        "The $24,000 purchase price is SUNK — irrelevant to today's decision. Only forward-looking cash flows matter.",
-        "Selling today: receive $9,000. Operating: $30,000 revenue − $34,000 costs = −$4,000 net.",
-        "Selling today gives +$9,000. Operating gives −$4,000. Difference = $9,000 − (−$4,000) = $13,000.",
+        "Economic profit = accounting profit − opportunity cost. The $24,000 paid two years ago is SUNK; only what happens from today on matters.",
+        "Accounting profit from selling today: +$9,000. The alternative you give up, operating one more year, is worth $30,000 − $34,000 = −$4,000. That −$4,000 is the opportunity cost of selling.",
+        "Economic profit of selling = $9,000 − (−$4,000) = $13,000. Giving up a losing alternative makes selling look better, not worse.",
     ],
-    "solution": "Sunk-cost rule: ignore the $24,000 paid two years ago.\n\nOption A — Sell today: net = +$9,000\nOption B — Operate one more year: net = $30,000 − $34,000 = −$4,000\n\nDifference = $9,000 − (−$4,000) = $13,000\n\nSelling today is $13,000 better than operating one more year. The pizzeria should sell.",
+    "solution": "Sunk-cost rule: ignore the $24,000 paid two years ago.\n\nAccounting profit from selling today: +$9,000\nValue of the alternative given up (operate one more year): $30,000 − $34,000 = −$4,000\n\nEconomic profit = accounting profit − opportunity cost\n                = $9,000 − (−$4,000) = $13,000\n\nBecause the alternative loses money, the opportunity cost of selling is negative, so the economic profit is larger than the $9,000 cash received. Selling is the right decision.\n\nA common slip is to answer $9,000, forgetting that the alternative counts even when it is a loss.",
 },
 {
     "id": "m1-q3", "module": "M1", "theme": "Market Equilibrium", "format": "open",
@@ -92,18 +92,6 @@ QUESTIONS += [
         "On quantity: both shifts push Q DOWN — unambiguous. On price: S-left pushes P up, D-left pushes P down — net depends on relative magnitudes → AMBIGUOUS.",
     ],
     "solution": "Supply shifts LEFT (wheat scarcity raises bread's cost). Demand shifts LEFT (low-carb taste change).\n\nQuantity: both shifts lower Q → Q falls UNAMBIGUOUSLY.\nPrice: supply-left raises P, demand-left lowers P → AMBIGUOUS (depends on which shift is larger).\n\nAnswer: Price is ambiguous; quantity falls.",
-},
-{
-    "id": "m1-q5", "module": "M1", "theme": "Marginal Analysis (Hiring)", "format": "open",
-    "stem": "A car wash currently serves 80 cars/day at $15 each. The owner is considering hiring another attendant at $90/day. With the extra attendant, throughput would rise to 95 cars/day, but to attract the additional volume the owner would lower the price to $14.",
-    "ask": "What is the change in total revenue from hiring the extra attendant (new TR − old TR, in $)? Use this to check whether the wage is worth paying.",
-    "answer": 130, "tolerance_abs": 0, "unit": "$",
-    "hints": [
-        "TR = price × quantity. Compute TR before and after the hire.",
-        "Before: 80 × $15 = $1,200. After: 95 × $14 = $1,330.",
-        "Change in TR = $1,330 − $1,200 = $130. Since $130 > $90 wage, hiring is worthwhile.",
-    ],
-    "solution": "TR_before = 80 × $15 = $1,200\nTR_after = 95 × $14 = $1,330\nΔTR = $1,330 − $1,200 = $130\n\nThe marginal revenue from the extra attendant ($130) exceeds the wage ($90), so the owner should hire. Net gain = $130 − $90 = $40/day.",
 },
 ]
 
@@ -246,6 +234,18 @@ QUESTIONS += [
         "Marginal cost of the 5th carpenter = $1,150 − $720 = $430.",
     ],
     "solution": "Before hire: total wage bill = 4 × $180 = $720.\nAfter hire (everyone at $230): 5 × $230 = $1,150.\n\nMarginal cost = $1,150 − $720 = $430.\n\nThis is much more than the new carpenter's own salary of $230 — the extra $200 reflects the raise the workshop must give the existing 4 carpenters ($50 × 4). A classic example of how labor-market constraints raise the true marginal cost of hiring.",
+},
+{
+    "id": "m3-q6", "module": "M3", "theme": "Marginal Analysis (Hiring)", "format": "open",
+    "stem": "A car wash currently serves 80 cars/day at $15 each. The owner is considering hiring another attendant at $90/day. With the extra attendant, throughput would rise to 95 cars/day, but to attract the additional volume the owner would lower the price to $14.",
+    "ask": "What is the change in total revenue from hiring the extra attendant (new TR − old TR, in $)? Use this to check whether the wage is worth paying.",
+    "answer": 130, "tolerance_abs": 0, "unit": "$",
+    "hints": [
+        "TR = price × quantity. Compute TR before and after the hire.",
+        "Before: 80 × $15 = $1,200. After: 95 × $14 = $1,330.",
+        "Change in TR = $1,330 − $1,200 = $130. Since $130 > $90 wage, hiring is worthwhile.",
+    ],
+    "solution": "TR_before = 80 × $15 = $1,200\nTR_after = 95 × $14 = $1,330\nΔTR = $1,330 − $1,200 = $130\n\nThe marginal revenue from the extra attendant ($130) exceeds the wage ($90), so the owner should hire. Net gain = $130 − $90 = $40/day.",
 },
 ]
 

@@ -218,6 +218,11 @@ function escapeHTML(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// Stems and asks are plain text except that **text** renders bold (the only markup allowed).
+function fmt(s) {
+  return escapeHTML(s).replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>');
+}
+
 // ---- Stats ----
 function updateStats() {
   let attempted = 0, correct = 0, total = 0;
@@ -266,12 +271,12 @@ function renderQuestion(q) {
 
   const stem = document.createElement('div');
   stem.className = 'qstem';
-  stem.textContent = q.stem;
+  stem.innerHTML = fmt(q.stem);
   card.appendChild(stem);
 
   const ask = document.createElement('div');
   ask.className = 'qask';
-  ask.textContent = q.ask;
+  ask.innerHTML = fmt(q.ask);
   card.appendChild(ask);
 
   // Input area
