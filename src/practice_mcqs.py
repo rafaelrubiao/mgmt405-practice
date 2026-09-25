@@ -59,7 +59,7 @@ ADDITIONAL_MCQS += [
     "hints": [
         "Demand shifts when something about the BUYERS changes: income, prices of related goods, tastes, expectations, number of buyers. Changes in producers' costs, technology or capacity shift SUPPLY. A change in the good's own price moves you along the curve and shifts nothing.",
         "Sort the five options: which describe something happening to buyers, and which describe something happening to laptop makers? Only one is about buyers.",
-        "Higher disposable income means buyers want more laptops at every price, so a normal good's demand curve shifts right. The promotional price cut is a movement along the existing demand curve, not a shift.",
+        "Higher disposable income means buyers want more laptops at every price, so a normal good's demand curve shifts right. Every other option is either on the producers' side (cheaper chips, better manufacturing and a new plant all shift SUPPLY) or is the laptop's own price changing (a movement along the curve, not a shift).",
     ],
     "solution": "The income-tax rebate is the only demand shifter here. Higher disposable income raises demand for a normal good at every price, so the demand curve shifts right.\n\nWhy the others are not demand shifts:\n  A promotional price cut moves you ALONG the demand curve — the good's own price is not a demand shifter.\n  More efficient chip manufacturing, cheaper memory chips, and a new assembly plant all lower producers' costs or raise capacity, so they shift SUPPLY, not demand.",
 },
@@ -509,7 +509,7 @@ ADDITIONAL_MCQS += [
     "solution": "Economies of SCOPE: joint production of multiple products is cheaper than separate production, due to shared resources (here: the herd, refrigeration, distribution).\n\nContrast with economies of SCALE (lower cost per unit at larger production of ONE good).",
 },
 {
-    "id": "m3-mcq-8", "module": "M3", "theme": "PC Profit-Max Quantity (Numeric)", "format": "mcq",
+    "id": "m3-mcq-8", "module": "M3", "theme": "Profit-Max Quantity in Perfect Competition (Numeric)", "format": "mcq",
     "stem": "A perfectly competitive firm has marginal cost MC = 3Q + 5. The market price is $35.",
     "ask": "What is the profit-maximizing quantity?",
     "choices": [
@@ -525,7 +525,7 @@ ADDITIONAL_MCQS += [
         "Set 35 = 3Q + 5.",
         "Solve: 3Q = 30 → Q* = 10.",
     ],
-    "solution": "Profit-max for a PC firm: P = MC.\n  35 = 3Q + 5\n  3Q = 30\n  Q* = 10.",
+    "solution": "Profit-max for a perfectly competitive firm: P = MC.\n  35 = 3Q + 5\n  3Q = 30\n  Q* = 10.",
 },
 {
     "id": "m3-mcq-9", "module": "M3", "theme": "Shutdown Condition", "format": "mcq",
@@ -608,7 +608,7 @@ ADDITIONAL_MCQS += [
 # =================== MODULE 4-I: Perfect Competition (9 new MCQs) ===================
 ADDITIONAL_MCQS += [
 {
-    "id": "m4i-mcq-2", "module": "M4-I", "theme": "PC Firm Demand Curve", "format": "mcq",
+    "id": "m4i-mcq-2", "module": "M4-I", "theme": "Demand Curve of a Perfectly Competitive Firm", "format": "mcq",
     "stem": "Consider an individual firm in a perfectly competitive market.",
     "ask": "What does its demand curve look like?",
     "choices": [
@@ -620,33 +620,33 @@ ADDITIONAL_MCQS += [
     ],
     "correct_index": 4,
     "hints": [
-        "A PC firm is a 'price taker' — too small to influence the market price.",
+        "A perfectly competitive firm is a 'price taker' — too small to influence the market price.",
         "At the market price, the firm can sell as much as it wants; at any higher price, it sells zero (customers go to other firms).",
         "This gives a horizontal (perfectly elastic) demand at the market price.",
     ],
-    "solution": "PC firms are price takers. The individual firm's demand is HORIZONTAL at the market price — perfectly elastic. The MARKET demand (sum of all consumers) is downward-sloping, but no individual firm sees that slope.",
+    "solution": "Perfectly competitive firms are price takers. The individual firm's demand is HORIZONTAL at the market price — perfectly elastic. The MARKET demand (sum of all consumers) is downward-sloping, but no individual firm sees that slope.",
 },
 {
-    "id": "m4i-mcq-3", "module": "M4-I", "theme": "MR for Price Taker", "format": "mcq",
+    "id": "m4i-mcq-3", "module": "M4-I", "theme": "Marginal Revenue in Perfect Competition", "format": "mcq",
     "stem": "A perfectly competitive firm sells at the market price P.",
-    "ask": "What is its marginal revenue?",
+    "ask": "Which statement is true?",
     "choices": [
-        "MR equals marginal cost",
-        "MR equals average total cost",
-        "MR equals the market price (P)",
-        "MR equals zero",
-        "MR equals half the market price",
+        "Marginal revenue falls as the firm sells more units",
+        "Marginal revenue equals average total cost",
+        "Marginal revenue equals the market price",
+        "Marginal revenue is zero",
+        "Marginal revenue equals half the market price",
     ],
     "correct_index": 2,
     "hints": [
-        "MR = additional revenue from one more unit sold.",
-        "A PC firm sells each unit at the unchanged market price → adding one unit just adds P to revenue.",
-        "So MR = P. (Note: this is the special case of MR = P + Q · (dP/dQ) when dP/dQ = 0.)",
+        "Marginal revenue is the extra revenue from selling one more unit.",
+        "A perfectly competitive firm is too small to move the market price. What does one more unit add to its revenue?",
+        "Each extra unit sells at the same market price P, so it adds exactly P to revenue.",
     ],
-    "solution": "For a PC firm, every additional unit sells at the unchanged market price → MR = P. Average revenue is also P (TR/Q = PQ/Q = P). For a PC firm: MR = AR = P.",
+    "solution": "A perfectly competitive firm can sell as much as it wants at the market price, so every additional unit adds exactly P to revenue: MR = P. Average revenue is also P (TR/Q = PQ/Q = P), so MR = AR = P.\n\nWhy the others are wrong:\n  MR does not fall as the firm sells more, because the firm's demand curve is flat at P. (MR falls with output only for a firm facing downward-sloping demand, such as a monopolist.)\n  MR = ATC, MR = 0 and MR = P/2 have no basis for a price taker.",
 },
 {
-    "id": "m4i-mcq-4", "module": "M4-I", "theme": "Long-Run PC Equilibrium Condition", "format": "mcq",
+    "id": "m4i-mcq-4", "module": "M4-I", "theme": "Long-Run Equilibrium Condition in Perfect Competition", "format": "mcq",
     "stem": "Consider the long-run equilibrium of a perfectly competitive industry with identical firms.",
     "ask": "Which condition holds for each firm in LR equilibrium?",
     "choices": [
@@ -662,22 +662,22 @@ ADDITIONAL_MCQS += [
         "Zero profit means P = ATC. To be on the LATC curve, the firm must produce where MR = MC and P = ATC simultaneously.",
         "This is only true at the MINIMUM of LATC, where LMC = LATC = P.",
     ],
-    "solution": "Long-run PC equilibrium for each firm:\n  P = LMC = min LATC\n  Economic profit = 0\n\nFree entry/exit drives positive profits to zero; firms operate at minimum efficient scale.",
+    "solution": "Long-run equilibrium in perfect competition, for each firm:\n  P = LMC = min LATC\n  Economic profit = 0\n\nFree entry/exit drives positive profits to zero; firms operate at minimum efficient scale.",
 },
 {
-    "id": "m4i-mcq-5", "module": "M4-I", "theme": "Entry Response to Positive Profit", "format": "mcq",
-    "stem": "PC firms in a particular industry are earning positive economic profits in the short run.",
+    "id": "m4i-mcq-5", "module": "M4-I", "theme": "Long-Run Response to Positive Profit", "format": "mcq",
+    "stem": "Perfectly competitive firms in a particular industry are earning positive economic profits in the short run.",
     "ask": "What is most likely to happen in the long run?",
     "choices": [
         "Existing firms gradually exit because of regulation",
         "Demand for the product falls due to the high profits",
         "Existing firms expand production until profits are zero",
-        "New firms enter, industry supply shifts right, price falls, profits decline to zero",
+        "New firms enter and the price falls until profits are zero",
         "The government taxes the profits away",
     ],
     "correct_index": 3,
     "hints": [
-        "In PC, there are no barriers to entry.",
+        "In perfect competition, there are no barriers to entry.",
         "Outsiders see the positive profits and enter the industry.",
         "More firms → industry supply shifts right → market price falls → profits decline. Continues until profit = 0.",
     ],
@@ -685,11 +685,11 @@ ADDITIONAL_MCQS += [
 },
 {
     "id": "m4i-mcq-6", "module": "M4-I", "theme": "Short-Run Operating Decision", "format": "mcq",
-    "stem": "A perfectly competitive firm faces market price $12. At its profit-maximizing Q, its AVC = $14 and ATC = $20.",
+    "stem": "A perfectly competitive firm faces a market price of $12. At its profit-maximizing Q, its AVC = $14 and ATC = $20.",
     "ask": "What should the firm do in the short run?",
     "choices": [
         "Raise its price to cover ATC",
-        "Exit the industry immediately",
+        "Exit the industry forever",
         "Operate — the loss is smaller than shutting down",
         "Shut down — price does not cover AVC",
         "Operate and expand until MC = ATC",
@@ -703,26 +703,26 @@ ADDITIONAL_MCQS += [
     "solution": "Compare P to AVC, not to ATC:\n  P = $12, AVC = $14 → P < AVC → SHUT DOWN.\n\nEach unit sold loses $2 on variable cost alone, on top of the fixed costs the firm owes either way. Producing nothing limits the short-run loss to total fixed cost.\n\nContrast this with the case where price falls BETWEEN AVC and ATC: there the firm still loses money overall, but each unit contributes something toward fixed cost, so operating is the smaller loss.\n\nNote that exiting is a LONG-run decision. In the short run the firm's fixed commitments stand whether or not it produces, so 'shut down' and 'exit' are not the same thing.",
 },
 {
-    "id": "m4i-mcq-7", "module": "M4-I", "theme": "LR Number of Firms (Numeric)", "format": "mcq",
-    "stem": "A perfectly competitive industry has market demand Q = 1,200 − 30P. Each firm has identical long-run cost curves with minimum LATC of $12/unit, achieved at a firm output of 6 units.",
-    "ask": "In long-run equilibrium, how many firms operate in the industry?",
+    "id": "m4i-mcq-7", "module": "M4-I", "theme": "Long-Run Equilibrium Price", "format": "mcq",
+    "stem": "In a perfectly competitive industry, every firm has the same long-run average total cost (LATC):\n  4 units per firm → LATC = $14\n  5 units per firm → LATC = $12\n  6 units per firm → LATC = $11\n  7 units per firm → LATC = $11.50\n  8 units per firm → LATC = $13\n\nThe market price is currently $13.",
+    "ask": "What will the market price be in the long-run equilibrium?",
     "choices": [
-        "70 firms",
-        "100 firms",
-        "120 firms",
-        "140 firms",
-        "840 firms",
+        "$11",
+        "$11.50",
+        "$12",
+        "$13",
+        "$14",
     ],
-    "correct_index": 3,
+    "correct_index": 0,
     "hints": [
-        "LR equilibrium price = minimum LATC = $12.",
-        "Total market quantity at P = $12: Q_market = 1,200 − 30(12) = 840.",
-        "Each firm produces 6. Number of firms = 840 / 6 = 140.",
+        "In the long run, firms enter or exit until every firm earns zero economic profit.",
+        "At today's price of $13, can a firm produce at an average cost below $13? If so, it earns positive profit, new firms enter, and the price falls. Where does this stop?",
+        "Entry stops only when no output level gives a positive profit, which is when price equals the LOWEST point of the LATC curve. Find it in the table.",
     ],
-    "solution": "LR P = min LATC = $12.\nMarket Q at P=12: Q = 1,200 − 30(12) = 840.\nEach firm produces 6 at min LATC.\nNumber of firms = 840 / 6 = 140.\n\n(Sanity check: each firm earns zero economic profit because P = min LATC.)",
+    "solution": "Long-run equilibrium in perfect competition: P = min LATC. Any higher price lets firms earn positive profit and attracts entry; any lower price causes exit.\n\nThe lowest LATC in the table is $11, at 6 units per firm. So the long-run price is $11.\n\nThe current $13 cannot last: at $13 a firm producing 6 units earns $13 − $11 = $2 per unit, which draws new firms in until the price falls to $11.\n\nNote that you did not need the demand curve. In the long run the price is set by costs alone (the bottom of LATC); demand only decides how many firms end up operating.",
 },
 {
-    "id": "m4i-mcq-8", "module": "M4-I", "theme": "PC Firm Supply Curve", "format": "mcq",
+    "id": "m4i-mcq-8", "module": "M4-I", "theme": "Supply Curve of a Perfectly Competitive Firm", "format": "mcq",
     "stem": "What is the SHORT-RUN supply curve of an individual perfectly competitive firm?",
     "ask": "The firm's SR supply curve is:",
     "choices": [
@@ -760,7 +760,7 @@ ADDITIONAL_MCQS += [
     "solution": "In a constant-cost industry:\n  SR: demand shifts right → P rises, profits become positive.\n  LR: profits attract entry → supply shifts right by the same amount as demand → P returns to the original minimum LATC. Only Q rises permanently.\n\n(Increasing-cost industries: input prices rise as the industry grows → P ends higher in LR than originally.)",
 },
 {
-    "id": "m4i-mcq-10", "module": "M4-I", "theme": "Profit-Max Condition for PC Firm", "format": "mcq",
+    "id": "m4i-mcq-10", "module": "M4-I", "theme": "Profit-Max Condition for a Perfectly Competitive Firm", "format": "mcq",
     "stem": "At the profit-maximizing quantity of a perfectly competitive firm, which relationship is ALWAYS true?",
     "ask": "Pick the always-true condition:",
     "choices": [
@@ -772,11 +772,11 @@ ADDITIONAL_MCQS += [
     ],
     "correct_index": 4,
     "hints": [
-        "PC firm: MR = P (price-taker condition).",
+        "Perfectly competitive firm: MR = P (price-taker condition).",
         "Profit-max: MR = MC.",
         "Combining: P = MR = MC at the profit-maximizing Q. (P vs ATC determines whether profit is positive, zero, or negative — but P = MC holds at profit max regardless.)",
     ],
-    "solution": "For a PC firm at profit max:\n  MR = P (price-taker)\n  MR = MC (profit-max condition)\n  ∴ P = MR = MC.\n\nThis is the always-true condition at profit max. P vs ATC tells you the profit level, but at the chosen Q, P = MC holds always.",
+    "solution": "For a perfectly competitive firm at profit max:\n  MR = P (price-taker)\n  MR = MC (profit-max condition)\n  ∴ P = MR = MC.\n\nThis is the always-true condition at profit max. P vs ATC tells you the profit level, but at the chosen Q, P = MC holds always.",
 },
 ]
 
@@ -953,25 +953,6 @@ ADDITIONAL_MCQS += [
     ],
     "solution": "Tax revenue = tax × Q_after = $5 × 90 = $450.\n\nThe lost 30 units don't generate any tax revenue — there's no transaction to tax.\n\n(Bonus: the DWL of this tax = ½ × $5 × (120 − 90) = $75.)",
 },
-{
-    "id": "m4ii-mcq-11", "module": "M4-II", "theme": "Quantity Restriction Effect", "format": "mcq",
-    "stem": "A government imposes a binding maximum-quantity quota in a market, BELOW the free-market equilibrium quantity.",
-    "ask": "What is the most likely effect on the price PAID BY BUYERS?",
-    "choices": [
-        "Buyer price unchanged",
-        "Buyer price falls in SR, rises in LR",
-        "Cannot determine",
-        "Buyer price falls",
-        "Buyer price rises",
-    ],
-    "correct_index": 4,
-    "hints": [
-        "A quota limits the quantity that can legally be sold.",
-        "At the restricted quantity, buyers' willingness to pay (read off the demand curve) is HIGHER than the original equilibrium price.",
-        "The price rises to clear the limited supply.",
-    ],
-    "solution": "A binding quota reduces Q below equilibrium. With less quantity available, buyers compete and bid the price UP (along the demand curve).\n\nExamples: taxi medallions, agricultural quotas, fishery limits. Buyers pay more; sellers (or quota-holders) capture rents from the artificial scarcity.",
-},
 ]
 
 # =================== MODULE 5: Monopoly & Mon Comp (10 new MCQs) ===================
@@ -1028,10 +1009,10 @@ ADDITIONAL_MCQS += [
     "correct_index": 1,
     "hints": [
         "Socially efficient quantity: where P (willingness to pay) = MC (cost of producing one more).",
-        "Monopolist quantity: where MR = MC, with P > MR → Q_M < Q_PC.",
+        "Monopolist quantity: where MR = MC, with P > MR → Q_M < Q_competitive.",
         "The 'missing' trades (where WTP > MC) are foregone surplus → DWL.",
     ],
-    "solution": "The monopolist sets MR = MC, but because MR < P, this implies Q_M < Q_PC (the social optimum).\n\nFor every unit between Q_M and Q_PC, the consumer's willingness to pay EXCEEDS the marginal cost — those would be welfare-improving trades. The monopolist forgoes them to keep the price high. The lost surplus is DWL.",
+    "solution": "The monopolist sets MR = MC, but because MR < P, this implies Q_M < Q_competitive (the social optimum).\n\nFor every unit between Q_M and Q_competitive, the consumer's willingness to pay EXCEEDS the marginal cost — those would be welfare-improving trades. The monopolist forgoes them to keep the price high. The lost surplus is DWL.",
 },
 {
     "id": "m5-mcq-5", "module": "M5", "theme": "Monopoly Profit-Max Price (Numeric)", "format": "mcq",
@@ -1053,23 +1034,23 @@ ADDITIONAL_MCQS += [
     "solution": "MR = 80 − 8Q. Set MR = MC:\n  80 − 8Q = 8\n  8Q = 72\n  Q* = 9.\n\nP* = 80 − 4(9) = $44.\n\n(Profit per unit = $44 − $8 = $36. Total profit assuming no FC = $36 × 9 = $324.)",
 },
 {
-    "id": "m5-mcq-6", "module": "M5", "theme": "Mon Comp LR Equilibrium", "format": "mcq",
+    "id": "m5-mcq-6", "module": "M5", "theme": "Long-Run Equilibrium in Monopolistic Competition", "format": "mcq",
     "stem": "Consider a representative firm in a monopolistically competitive industry in long-run equilibrium.",
     "ask": "Which set of conditions describes this firm?",
     "choices": [
-        "P > MC and P > ATC (positive economic profit)",
-        "P > MC and P = ATC (zero economic profit)",
-        "P = MC and P = ATC (efficient outcome like PC)",
+        "P > MC and P > ATC",
+        "P > MC and P = ATC",
+        "P = MC and P = ATC",
         "P = MC and P > ATC",
-        "P < MC",
+        "P < MC and P < ATC",
     ],
     "correct_index": 1,
     "hints": [
-        "Mon comp combines elements of monopoly and PC.",
+        "Monopolistic competition combines elements of monopoly and perfect competition.",
         "Product differentiation → downward-sloping demand → P > MC (some markup).",
         "Free entry → economic profit → 0 → P = ATC. Combining: P > MC AND P = ATC.",
     ],
-    "solution": "Monopolistic competition LR equilibrium:\n  Differentiated products → the firm has some market power → P > MC (Lerner > 0).\n  Free entry → entry erodes profits → P = ATC, economic profit = 0.\n\nSo P > MC AND P = ATC. The firm operates above min ATC (excess capacity) — the markup just covers AFC.",
+    "solution": "Monopolistic competition LR equilibrium:\n  Differentiated products → the firm has some market power → P > MC (Lerner > 0).\n  Free entry → entry erodes profits → P = ATC, economic profit = 0.\n\nSo P > MC AND P = ATC. The firm operates above min ATC (excess capacity) — the markup just covers AFC.\n\n(P = MC and P = ATC is the perfect-competition outcome; product differentiation rules it out here.)",
 },
 {
     "id": "m5-mcq-7", "module": "M5", "theme": "Sources of Market Power", "format": "mcq",
@@ -1129,23 +1110,23 @@ ADDITIONAL_MCQS += [
     "solution": "Lerner = 1/|e_D|.\n  Firm A: 1/1.8 ≈ 0.56 (56% markup share).\n  Firm B: 1/5 = 0.20 (20% markup share).\n\nFirm A has the larger markup because its demand is less elastic — customers are less able to switch away, giving the firm more pricing power.",
 },
 {
-    "id": "m5-mcq-10", "module": "M5", "theme": "PC vs Mon Comp Distinction", "format": "mcq",
+    "id": "m5-mcq-10", "module": "M5", "theme": "Perfect vs Monopolistic Competition", "format": "mcq",
     "stem": "What is the KEY distinction between a perfectly competitive firm and a monopolistically competitive firm?",
     "ask": "The defining difference is:",
     "choices": [
-        "PC firms produce homogeneous products; mon comp firms produce DIFFERENTIATED products",
-        "PC firms earn positive LR profits; mon comp firms earn zero",
-        "PC firms face downward-sloping demand; mon comp firms face horizontal demand",
-        "PC firms have higher costs than mon comp firms",
-        "Mon comp firms face high entry barriers; PC firms don't",
+        "Perfectly competitive firms sell homogeneous products; monopolistically competitive firms sell differentiated products",
+        "Perfectly competitive firms earn positive long-run profits; monopolistically competitive firms earn zero",
+        "Perfectly competitive firms face downward-sloping demand; monopolistically competitive firms face horizontal demand",
+        "Perfectly competitive firms have higher costs than monopolistically competitive firms",
+        "Monopolistically competitive firms face high entry barriers; perfectly competitive firms do not",
     ],
     "correct_index": 0,
     "hints": [
-        "Both have many firms and free entry, so LR economic profit = 0 in BOTH.",
-        "What distinguishes mon comp from PC is product differentiation.",
-        "Homogeneous (PC) vs differentiated (mon comp). Different products = different demand curves for individual firms.",
+        "Both market structures have many firms and free entry, so long-run economic profit is zero in BOTH.",
+        "Look at the products: can a customer tell one firm's product from another's? What does that do to the demand curve each firm faces?",
+        "Perfect competition: homogeneous products, so each firm faces a horizontal demand curve. Monopolistic competition: differentiated products, so each firm faces a downward-sloping demand curve.",
     ],
-    "solution": "Both PC and mon comp have:\n  • Many firms\n  • Free entry/exit (zero LR economic profit)\n\nDistinction: PC has HOMOGENEOUS products (the individual firm faces horizontal demand at the market price). Mon comp has DIFFERENTIATED products (the individual firm faces downward-sloping demand with some markup, P > MC).",
+    "solution": "Both perfect competition and monopolistic competition have:\n  • Many firms\n  • Free entry/exit (zero long-run economic profit)\n\nDistinction: under perfect competition products are HOMOGENEOUS, so the individual firm faces horizontal demand at the market price. Under monopolistic competition products are DIFFERENTIATED, so the individual firm faces downward-sloping demand and charges a markup (P > MC).",
 },
 {
     "id": "m5-mcq-11", "module": "M5", "theme": "Identifying Price Takers", "format": "mcq",
@@ -1397,10 +1378,10 @@ ADDITIONAL_MCQS += [
     "correct_index": 2,
     "hints": [
         "Monopoly maximizes joint profit, so it has the highest price.",
-        "Bertrand with identical goods and same MC drives price to MC = lowest (PC-like).",
-        "Cournot lies between PC and monopoly. Standard ranking: Monopoly > Cournot > Bertrand = MC.",
+        "Bertrand with identical goods and same MC drives price to MC = lowest (as in perfect competition).",
+        "Cournot lies between perfect competition and monopoly. Standard ranking: Monopoly > Cournot > Bertrand = MC.",
     ],
-    "solution": "Standard ranking for homogeneous goods with identical MC:\n  Monopoly P > Cournot P > Bertrand P = MC = PC P\n\nMonopoly: full pricing power, highest P.\nCournot: each firm produces more than half the monopoly Q, P is between PC and monopoly.\nBertrand: undercutting drives P to MC (Bertrand paradox).",
+    "solution": "Standard ranking for homogeneous goods with identical MC:\n  Monopoly P > Cournot P > Bertrand P = MC = perfect-competition P\n\nMonopoly: full pricing power, highest P.\nCournot: each firm produces more than half the monopoly Q, P is between perfect competition and monopoly.\nBertrand: undercutting drives P to MC (Bertrand paradox).",
 },
 {
     "id": "m7ii-mcq-2", "module": "M7-II", "theme": "Finding Nash Equilibrium (2x2 matrix)", "format": "mcq",
@@ -1552,7 +1533,7 @@ ADDITIONAL_MCQS += [
         "Symmetric NE: q = 36 − q/2 → 1.5q = 36 → q = 24 each. Total Q = 48.",
         "P = 90 − 48 = $42.",
     ],
-    "solution": "Reaction: q_i = (72 − q_j)/2. Symmetric NE: q = 24 each. Total Q = 48. P = 90 − 48 = $42.\n\nCompare with monopoly P = $54 (Q_M = 36) and PC P = $18 = MC. Cournot lies between, as expected.",
+    "solution": "Reaction: q_i = (72 − q_j)/2. Symmetric NE: q = 24 each. Total Q = 48. P = 90 − 48 = $42.\n\nCompare with monopoly P = $54 (Q_M = 36) and the perfect-competition price P = $18 = MC. Cournot lies between, as expected.",
 },
 {
     "id": "m7i-mcq-7", "module": "M7-I", "theme": "Cartel Output per Firm (Numeric)", "format": "mcq",

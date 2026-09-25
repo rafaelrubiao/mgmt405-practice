@@ -268,7 +268,7 @@ QUESTIONS += [
     "stem": "A perfectly competitive firm faces market price P = $22. At its profit-maximizing output level it has ATC = $26, AVC = $19, and MC = $22.",
     "ask": "In the short run, the firm should:",
     "choices": [
-        "Exit the industry forever",
+        "Exit the industry immediately",
         "Increase output until ATC = P",
         "Shut down — ATC exceeds price",
         "Operate — price covers AVC",
@@ -283,7 +283,7 @@ QUESTIONS += [
     "solution": "Compare P to AVC, not ATC.\n  P = $22, AVC = $19 → P > AVC → OPERATE.\n  P = $22, ATC = $26 → P < ATC → losing money.\n\nBy operating, the firm covers all variable costs and earns $3/unit toward fixed costs. Shutting down would mean a loss equal to total fixed cost. Operating is the lesser loss.",
 },
 {
-    "id": "m4i-q3", "module": "M4-I", "theme": "Profit of a Perfectly Competitive Firm", "format": "open",
+    "id": "m4i-q3", "module": "M4-I", "theme": "PC Firm Profit", "format": "open",
     "stem": "A perfectly competitive widget producer has TC = 600 + 5Q + 0.05Q². The market price is P = $9/widget.",
     "ask": "What is the firm's profit at the profit-maximizing quantity (in $; negative for loss)?",
     "answer": -520, "tolerance_abs": 1, "unit": "$",
@@ -295,7 +295,7 @@ QUESTIONS += [
     "solution": "MC = 5 + 0.1Q. Set P = MC:\n  9 = 5 + 0.1Q → Q* = 40.\n\nTR = 9 × 40 = $360\nTC = 600 + 5(40) + 0.05(40²) = 600 + 200 + 80 = $880\nProfit = $360 − $880 = −$520\n\nShould the firm operate? AVC at Q=40: VC = 5(40) + 0.05(40²) = 280, so AVC = $7. P=$9 > AVC=$7 → operate. The −$520 loss beats shutting down (loss of FC = $600).",
 },
 {
-    "id": "m4i-q4", "module": "M4-I", "theme": "Producer Surplus in Perfect Competition", "format": "open",
+    "id": "m4i-q4", "module": "M4-I", "theme": "PC Producer Surplus", "format": "open",
     "stem": "In a perfectly competitive market, the supply curve is Q_s = 5P − 25 (where Q is in units and P in $). The market price is P = $20.",
     "ask": "What is the total producer surplus (in $)?",
     "answer": 562.5, "tolerance_abs": 1, "unit": "$",
@@ -325,7 +325,7 @@ QUESTIONS += [
 {
     "id": "m4ii-q2", "module": "M4-II", "theme": "Tax Incidence", "format": "open",
     "stem": "Continuing the previous problem (Q_d = 120 − 3P, Q_s = −30 + 2P, $5 tax on sellers).",
-    "ask": "Of the $5 tax, what fraction is borne by buyers? (Express as a decimal, e.g., 0.5.)",
+    "ask": "Of the $5 tax, what fraction is borne by buyers? (Express as a decimal — e.g., 0.40.)",
     "answer": 0.40, "tolerance_abs": 0.02, "unit": "",
     "hints": [
         "Buyer's burden = how much the buyer's price ROSE from the original equilibrium.",
@@ -341,7 +341,7 @@ QUESTIONS += [
     "answer": 270, "tolerance_abs": 2, "unit": "$",
     "hints": [
         "First find the free-market equilibrium. Then determine quantities at the ceiling and the DWL triangle.",
-        "Free-market: 240 − 4P = 6P → P* = $24, Q* = 144. At ceiling P=$18: Q_s = 108 (only this much is supplied — the binding constraint), Q_d = 168 (buyers want more). Q_traded = 108.",
+        "Free-market: 240 − 4P = 6P → P* = $24, Q* = 144. At ceiling P=$18: Q_s = 108 (only this much is supplied — the binding constraint), Q_d = 168 (demanders want more). Q_traded = 108.",
         "DWL triangle: ½ × (Q_eq − Q_traded) × (P_demand at Q_traded − P_supply at Q_traded). At Q=108: P_demand = (240−108)/4 = $33; P_supply = 108/6 = $18. DWL = ½ × (144−108) × ($33 − $18) = ½ × 36 × 15 = $270.",
     ],
     "solution": "Step 1 — Free-market equilibrium:\n  240 − 4P = 6P → 240 = 10P → P* = $24, Q* = 144.\n\nStep 2 — At the ceiling P = $18:\n  Q_s = 6(18) = 108 (supplied — binding constraint)\n  Q_d = 240 − 4(18) = 168 (wanted)\n  Q_traded = 108 (the SHORT side rules)\n\nStep 3 — DWL triangle, bounded by:\n  • the demand curve (top side)\n  • the supply curve (bottom side)\n  • from Q = 108 up to Q* = 144\n\n  At Q = 108: P_demand = $33, P_supply = $18.\n  DWL = ½ × (Q* − Q_traded) × (P_d − P_s) = ½ × 36 × 15 = $270.",
@@ -399,11 +399,11 @@ QUESTIONS += [
     "ask": "What is the deadweight loss of monopoly (in $)?",
     "answer": 200, "tolerance_abs": 1, "unit": "$",
     "hints": [
-        "DWL = the triangle between the demand curve and MC, from Q_monopoly to Q_competitive. Area = ½ × (Q_competitive − Q_monopoly) × (P_monopoly − MC).",
-        "Q_competitive (where P = MC): 50 − Q = 10 → Q_competitive = 40. Q_monopoly = 20 (from the previous question). P_monopoly = $30, MC = $10.",
+        "DWL = the triangle between the demand curve and MC, from Q_monopoly to Q_competitive. Area = ½ × (Q_PC − Q_M) × (P_M − MC).",
+        "Q_competitive (where P = MC): 50 − Q = 10 → Q_PC = 40. Q_monopoly = 20 (from the previous question). P_monopoly = $30, MC = $10.",
         "DWL = ½ × (40 − 20) × ($30 − $10) = ½ × 20 × 20 = $200.",
     ],
-    "solution": "Step 1 — Perfect-competition quantity (where P = MC): 50 − Q = 10 → Q_competitive = 40.\nStep 2 — Monopoly quantity (from the previous question): Q_monopoly = 20; P_monopoly = $30.\nStep 3 — DWL is the triangle between demand and MC, from Q_monopoly to Q_competitive:\n          DWL = ½ × (Q_competitive − Q_monopoly) × (P_monopoly − MC)\n              = ½ × (40 − 20) × ($30 − $10)\n              = ½ × 20 × 20\n              = $200.",
+    "solution": "Step 1 — PC quantity (where P = MC): 50 − Q = 10 → Q_PC = 40.\nStep 2 — Monopoly quantity (from M5.Q1): Q_M = 20; P_M = $30.\nStep 3 — DWL is the triangle between demand and MC, from Q_M to Q_PC:\n          DWL = ½ × (Q_PC − Q_M) × (P_M − MC)\n              = ½ × (40 − 20) × ($30 − $10)\n              = ½ × 20 × 20\n              = $200.",
 },
 {
     "id": "m5-q3", "module": "M5", "theme": "Lerner Index", "format": "open",
@@ -444,9 +444,9 @@ QUESTIONS += [
     "hints": [
         "Long-run economic profit in monopolistic competition: free entry drives profit to zero.",
         "Profit = (P − ATC) × Q. With P = $25 and ATC = $25, what does that give?",
-        "Profit = (25 − 25) × 60 = $0. P = ATC always in the long run under monopolistic competition.",
+        "Profit = (25 − 25) × 60 = $0. P = ATC always in LR mon comp.",
     ],
-    "solution": "Long-run equilibrium in monopolistic competition: P = ATC (free entry erodes any positive profit).\n\nProfit = (P − ATC) × Q = ($25 − $25) × 60 = $0.\n\nNotice P = $25 > MC = $16, so there's still a markup (Lerner = (25−16)/25 = 36%). But because the firm operates above min ATC (excess capacity), all that markup just covers average fixed cost — no economic profit.",
+    "solution": "Long-run mon comp equilibrium: P = ATC (free entry erodes any positive profit).\n\nProfit = (P − ATC) × Q = ($25 − $25) × 60 = $0.\n\nNotice P = $25 > MC = $16, so there's still a markup (Lerner = (25−16)/25 = 36%). But because the firm operates above min ATC (excess capacity), all that markup just covers average fixed cost — no economic profit.",
 },
 ]
 
@@ -533,7 +533,7 @@ QUESTIONS += [
         "Firm 1's residual demand: P = (120 − q₂) − q₁. MR_1 = (120 − q₂) − 2q₁. Set = 30: q₁ = (90 − q₂)/2 = 45 − q₂/2.",
         "By symmetry, q₁ = q₂ = q*. Substitute: q* = 45 − q*/2 → 1.5 q* = 45 → q* = 30.",
     ],
-    "solution": "Each firm's reaction function:\n  q_i = (a − MC − q_j) / 2  where a = 120\n      = (90 − q_j) / 2\n      = 45 − q_j/2\n\nSymmetric Nash equilibrium: q₁ = q₂ = q.\n  q = 45 − q/2\n  1.5 q = 45\n  q* = 30 each.\n\nTotal Q = 60. Market P = 120 − 60 = $60. Each firm's profit = (60 − 30) × 30 = $900.\n\n(For comparison: monopoly would set Q=45, P=$75, profit $2,025. Cournot industry profit is $1,800 — less than monopoly but more than the zero profit under perfect competition.)",
+    "solution": "Each firm's reaction function:\n  q_i = (a − MC − q_j) / 2  where a = 120\n      = (90 − q_j) / 2\n      = 45 − q_j/2\n\nSymmetric Nash equilibrium: q₁ = q₂ = q.\n  q = 45 − q/2\n  1.5 q = 45\n  q* = 30 each.\n\nTotal Q = 60. Market P = 120 − 60 = $60. Each firm's profit = (60 − 30) × 30 = $900.\n\n(For comparison: monopoly would set Q=45, P=$75, profit $2,025. Cournot industry profit is $1,800 — less than monopoly but more than PC's zero.)",
 },
 {
     "id": "m7i-q2", "module": "M7-I", "theme": "Cournot Market Price", "format": "open",

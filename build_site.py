@@ -37,6 +37,7 @@ for q in QUESTIONS:
         assert q["format"] == "open", f"{q['id']} unknown format {q['format']!r}"
         assert isinstance(q["answer"], (int, float)), f"{q['id']} needs a numeric answer"
         assert q["tolerance_abs"] >= 0, f"{q['id']} needs a non-negative tolerance"
+    assert isinstance(q.get("order", 0), int), f"{q['id']} order must be an integer"
     # Each page carries one rounding note at the top, so no question repeats it
     for field in ("stem", "ask"):
         low = q[field].lower()
@@ -591,7 +592,11 @@ def nav_html(current_slug):
 
 
 # ---------------- write module pages ----------------
-by_mod = {m[0]: [q for q in QUESTIONS if q["module"] == m[0]] for m in MODULES}
+# Page order is file order, except a question may carry "order": N to move it;
+# the sort is stable, so everything without "order" keeps its place.
+by_mod = {m[0]: sorted((q for q in QUESTIONS if q["module"] == m[0]),
+                       key=lambda q: q.get("order", 0))
+          for m in MODULES}
 for key, label, title, slug in MODULES:
     qs = by_mod[key]
     assert qs, f"{key} has no questions"
