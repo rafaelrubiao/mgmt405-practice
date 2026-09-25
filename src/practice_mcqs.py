@@ -11,7 +11,7 @@ ADDITIONAL_MCQS += [
     "stem": "A gym signed a 12-month equipment lease and prepaid $24,000 (non-refundable). Four months in, membership is weak. The owner is deciding whether to close immediately or keep operating.",
     "ask": "Which factor should the owner IGNORE in deciding whether to close now or stay open?",
     "choices": [
-        "The $16,000 of lease already prepaid for the remaining 8 months",
+        "The $16,000 of lease payments covering the remaining 8 months",
         "Expected membership revenue over the remaining 8 months",
         "Expected variable costs (utilities, hourly staff) over the next 8 months",
         "Resale value of the treadmills if she closes today",
@@ -46,12 +46,12 @@ ADDITIONAL_MCQS += [
 },
 {
     "id": "m1-mcq-4b", "module": "M1", "theme": "Demand vs Supply Shifts", "format": "mcq",
-    "stem": "Consider the market for new laptops.",
+    "stem": "Consider the market for new laptops, which are a normal good.",
     "ask": "Which of the following would shift the DEMAND CURVE for laptops to the right?",
     "choices": [
         "The price of laptops falls during a promotional sale",
-        "A new income-tax rebate raises household disposable income (laptops are a normal good)",
-        "Chip manufacturing becomes more efficient (lower marginal cost)",
+        "A new income-tax rebate raises household disposable income",
+        "Chip manufacturing becomes more efficient",
         "Memory-chip prices fall",
         "A new laptop assembly plant opens",
     ],
@@ -65,7 +65,7 @@ ADDITIONAL_MCQS += [
 },
 {
     "id": "m1-mcq-6", "module": "M1", "theme": "Combined S/D Shifts", "format": "mcq",
-    "stem": "The price of jet fuel (a key input for airlines) falls sharply. At the same time, a recession sharply reduces business travel (demand for flights falls).",
+    "stem": "The price of jet fuel falls sharply. At the same time, a recession sharply reduces business travel.",
     "ask": "What happens to the equilibrium price and quantity of airline tickets?",
     "choices": [
         "Price rises; quantity is ambiguous",
@@ -85,11 +85,11 @@ ADDITIONAL_MCQS += [
 {
     "id": "m1-mcq-7", "module": "M1", "theme": "Implicit vs Explicit Cost", "format": "mcq",
     "stem": "A bakery owner is reviewing her annual finances.",
-    "ask": "Which of the following is an IMPLICIT (opportunity) cost of running her own bakery?",
+    "ask": "Which of the following is an IMPLICIT cost of running her own bakery?",
     "choices": [
         "Rent paid on the storefront lease",
         "Flour and sugar purchased each week",
-        "The salary she gave up to open the bakery",
+        "The salary she could earn in another job",
         "Wages paid to her counter staff",
         "The monthly electricity bill",
     ],
@@ -99,16 +99,16 @@ ADDITIONAL_MCQS += [
         "Foregone wages are the opportunity cost of HER time — a resource she contributes for free.",
         "Storefront rent, ingredients, staff wages, and utilities are all explicit cash outlays.",
     ],
-    "solution": "Implicit costs are the value of resources you contribute that you don't pay for in cash — typically your own time or capital. The foregone pastry-chef wage is the opportunity cost of her time. All other listed items are explicit cash outlays.",
+    "solution": "Implicit costs are the value of resources you contribute that you don't pay for in cash — typically your own time or capital. The salary she could earn in another job is the opportunity cost of her time. All other listed items are explicit cash outlays.",
 },
 {
     "id": "m1-mcq-8", "module": "M1", "theme": "Substitute Price Change", "format": "mcq",
     "stem": "A steep new tax doubles the retail price of cigarettes overnight. Vaping products are a substitute for cigarettes.",
     "ask": "What is the most likely effect on the market for vaping products?",
     "choices": [
-        "Vaping demand falls (leftward shift)",
-        "Vaping demand rises (rightward shift)",
-        "Vaping supply rises (rightward shift)",
+        "Vaping demand falls",
+        "Vaping demand rises",
+        "Vaping supply rises",
         "Both vaping demand and supply fall",
         "No effect — the markets are separate",
     ],
@@ -147,7 +147,7 @@ ADDITIONAL_MCQS += [
         "Sell now — better by $32,000 because of the campaign cost",
         "Run the campaign — net benefit is $40,000",
         "Need more information about the original $60,000 cost",
-        "Sell now — selling and campaigning are equivalent ($0 difference)",
+        "Either option — the two are equally good",
         "Run the campaign — net benefit is $8,000 better than selling now",
     ],
     "correct_index": 4,
@@ -167,9 +167,9 @@ ADDITIONAL_MCQS += [
     "stem": "The income elasticity of demand for designer handbags is estimated at +3.1.",
     "ask": "Based on this number, designer handbags are best classified as:",
     "choices": [
-        "Inferior",
-        "Necessity (normal but income-inelastic)",
-        "Normal AND luxury",
+        "Inferior good",
+        "Necessity",
+        "Luxury",
         "Giffen good",
         "Unrelated to income",
     ],
@@ -205,11 +205,11 @@ ADDITIONAL_MCQS += [
     "stem": "The income elasticity of demand for intercity bus travel is estimated at −0.6. Average household income rises by 10%.",
     "ask": "What is the most likely effect on the quantity of bus travel demanded?",
     "choices": [
-        "Falls by exactly 10%",
+        "Falls by 10%",
         "Rises by 6%",
-        "Is unchanged (since 10% is small)",
+        "Is unchanged",
         "Rises by 10%",
-        "Falls by approximately 6%",
+        "Falls by 6%",
     ],
     "correct_index": 4,
     "hints": [
@@ -245,7 +245,7 @@ ADDITIONAL_MCQS += [
     "choices": [
         "MR > P always",
         "MR = P always",
-        "MR < P always (for Q > 0)",
+        "MR < P always",
         "MR equals zero always",
         "MR is positive only when demand is inelastic",
     ],
@@ -321,7 +321,7 @@ ADDITIONAL_MCQS += [
     "choices": [
         "Elasticity is constant along the curve and equals −1",
         "Elasticity is constant and equals the slope b",
-        "Elasticity varies along the curve: elastic at the top, inelastic at the bottom",
+        "Elasticity changes as you move along the curve",
         "Elasticity equals zero everywhere",
         "Elasticity equals −∞ everywhere",
     ],
@@ -439,7 +439,7 @@ ADDITIONAL_MCQS += [
     "choices": [
         "Use more labor and less capital",
         "Use more capital and less labor",
-        "Keep the same input mix (already cost-minimizing)",
+        "Keep the same input mix",
         "Increase both inputs",
         "Decrease both inputs",
     ],
@@ -452,8 +452,8 @@ ADDITIONAL_MCQS += [
     "solution": "Bang-for-buck rule: at the cost-min mix, MP_L/w = MP_K/r.\n\nCurrent: 8 > 5. Labor is more cost-effective per dollar. Substitute toward labor — more L (MP_L falls due to diminishing returns), less K (MP_K rises). Continue until the two ratios are equal.",
 },
 {
-    "id": "m3-mcq-5", "module": "M3", "theme": "Fixed Cost and Marginal Cost", "format": "mcq",
-    "stem": "A workshop's annual insurance premium rises from $1,500 to $2,500. Everything else (wages, material prices) is unchanged.",
+    "id": "m3-mcq-5", "module": "M3", "theme": "Insurance Premium and Marginal Cost", "format": "mcq",
+    "stem": "A workshop's annual insurance premium rises from $1,500 to $2,500. Wages and material prices stay the same.",
     "ask": "What happens to the workshop's MARGINAL cost of producing each additional unit?",
     "choices": [
         "MC rises by $1,000/Q",
@@ -483,9 +483,9 @@ ADDITIONAL_MCQS += [
     ],
     "correct_index": 2,
     "hints": [
-        "Economies of scale: long-run average cost falls as output rises.",
-        "Distinct from diminishing returns (a short-run concept with one input fixed).",
-        "Common in capital-intensive industries (cloud computing, semiconductors, telecom) with large fixed costs.",
+        "Several options sound alike. Diminishing returns is a SHORT-run idea (one input fixed). Economies and diseconomies of scale describe how LONG-run average cost changes as the firm grows. Economies of scope are about producing several different products together.",
+        "Here the firm grows (it doubles its server capacity) and its long-run average cost FALLS. Is that economies or diseconomies of scale?",
+        "Long-run average cost falling as output rises = economies of scale. It is common in capital-intensive industries (cloud computing, semiconductors, telecom) with large fixed costs.",
     ],
     "solution": "Economies of scale = LR average cost falls as output rises. Typical of industries with high fixed costs spread over more units (cloud computing, semiconductors, software, pharma).\n\nDistinct from diminishing returns (SR, one input fixed) and from economies of SCOPE (joint production of multiple goods).",
 },
@@ -534,13 +534,13 @@ ADDITIONAL_MCQS += [
     "choices": [
         "Price is below average total cost (P < ATC)",
         "Price is below marginal cost (P < MC)",
-        "Price is below average VARIABLE cost (P < AVC)",
+        "Price is below average variable cost (P < AVC)",
         "Total revenue is less than total cost (TR < TC)",
         "Profit is negative",
     ],
     "correct_index": 2,
     "hints": [
-        "The right comparison is P vs AVC, not P vs ATC.",
+        "Compare the firm's two options in the short run. If it shuts down, which costs does it still have to pay? If it operates, which costs must the price cover?",
         "If P ≥ AVC, operating covers all variable cost + contributes something toward fixed cost — better than the FC loss from shutting down.",
         "Shut down only if P < AVC (operating loses MORE than just FC).",
     ],
@@ -570,11 +570,11 @@ ADDITIONAL_MCQS += [
     "stem": "A firm chooses its capital level optimally for an expected output of Q* in the long run.",
     "ask": "How does its short-run ATC at Q* compare to its long-run ATC at Q*?",
     "choices": [
-        "SR ATC at Q* equals LR ATC at Q* (they touch at this point)",
-        "SR ATC at Q* is always strictly less than LR ATC at Q*",
-        "SR ATC at Q* is always strictly greater than LR ATC at Q*",
+        "SR ATC at Q* equals LR ATC at Q*",
+        "SR ATC at Q* is less than LR ATC at Q*",
+        "SR ATC at Q* is greater than LR ATC at Q*",
         "SR ATC at Q* is unrelated to LR ATC",
-        "SR ATC is always horizontal",
+        "SR ATC is horizontal at Q*",
     ],
     "correct_index": 0,
     "hints": [
@@ -742,13 +742,13 @@ ADDITIONAL_MCQS += [
 },
 {
     "id": "m4i-mcq-9", "module": "M4-I", "theme": "Constant-Cost Industry LR Effect", "format": "mcq",
-    "stem": "In a constant-cost competitive industry (input prices independent of industry size), market demand permanently shifts right.",
+    "stem": "In a constant-cost competitive industry, market demand permanently shifts right.",
     "ask": "What happens to the equilibrium price in the LONG run?",
     "choices": [
         "Price falls permanently",
         "Price is unchanged in both the short and long run",
         "Price rises permanently above the original level",
-        "Price rises in the short run but returns to its original level in the long run",
+        "Price rises at first, then returns to its original level",
         "Price falls in the short run; rises in the long run",
     ],
     "correct_index": 3,
@@ -787,11 +787,11 @@ ADDITIONAL_MCQS += [
     "stem": "A per-unit tax is imposed in a market where demand is very INELASTIC (small |e_D|) and supply is very ELASTIC (large e_S).",
     "ask": "Who bears more of the tax burden?",
     "choices": [
-        "Burden is split evenly",
+        "The burden is split evenly",
         "The government absorbs it",
         "Cannot determine without numerical values",
-        "Sellers (supply is more elastic, so sellers absorb most of the tax)",
-        "Buyers (demand is more inelastic, so buyers absorb most of the tax)",
+        "Sellers",
+        "Buyers",
     ],
     "correct_index": 4,
     "hints": [
@@ -844,7 +844,7 @@ ADDITIONAL_MCQS += [
     "stem": "A government imposes a binding minimum wage (above the market-clearing wage) for low-skill labor.",
     "ask": "What is the predicted short-run effect?",
     "choices": [
-        "Unemployment (more workers want jobs than employers want to hire)",
+        "Unemployment",
         "A shortage of workers",
         "Equilibrium wage rises to the minimum naturally",
         "Lower wages for those already employed",
@@ -1176,7 +1176,7 @@ ADDITIONAL_MCQS += [
     "ask": "PD breaks down when:",
     "choices": [
         "Customer groups are easily identifiable",
-        "Resale (arbitrage) between groups is cheap and easy",
+        "Resale between groups is cheap and easy",
         "The product is a service consumed on-site",
         "Buyers face high switching costs",
         "The good is patented",
@@ -1221,9 +1221,9 @@ ADDITIONAL_MCQS += [
     ],
     "correct_index": 2,
     "hints": [
-        "The same customer pays different prices for different UNITS — that's block pricing.",
-        "It's 2nd-degree PD: customers self-select into a price block based on how much they consume.",
-        "Distinct from 3rd-degree PD (different prices for different GROUPS).",
+        "Look at what the price depends on: WHO the customer is, WHICH version they buy, or HOW MANY units they buy?",
+        "Every customer faces the same schedule, and the price of each extra unit falls as consumption rises. Customers sort themselves by how much they use (second-degree price discrimination).",
+        "Different per-unit prices for different quantity blocks = block pricing. Third-degree price discrimination is different: it charges different GROUPS of customers different prices.",
     ],
     "solution": "Block pricing (2nd-degree PD): the SAME customer pays different per-unit prices for different quantity blocks.\n\nHeavy users effectively get lower per-unit prices; light users pay the high block rate. The firm extracts more surplus than uniform pricing without needing to identify customer types.",
 },
@@ -1286,7 +1286,7 @@ ADDITIONAL_MCQS += [
 },
 {
     "id": "m6-mcq-9", "module": "M6", "theme": "Pricing Strategy Identification", "format": "mcq",
-    "stem": "A cable company offers Internet + Phone + TV as a 'Triple Play' bundle for $130/month, while each service costs $55/month if purchased standalone.",
+    "stem": "A cable company sells Internet + Phone + TV together as a 'Triple Play' package for $130/month, while each service costs $55/month if purchased on its own.",
     "ask": "This pricing strategy is:",
     "choices": [
         "Bundling",
@@ -1297,9 +1297,9 @@ ADDITIONAL_MCQS += [
     ],
     "correct_index": 0,
     "hints": [
-        "Multiple products sold together as a single package = bundling.",
-        "The bundle price ($130) < the sum of individual prices ($165), nudging customers to take the bundle.",
-        "Bundling works well when customer valuations are negatively correlated across the goods.",
+        "Look at what is being sold: one product at several prices, several versions of one product, or several different products sold together?",
+        "The package price ($130) is below the sum of the separate prices ($165), which nudges customers to buy all three services.",
+        "Selling several different products together as one package at one price = bundling. It works best when customers' valuations of the goods are negatively correlated.",
     ],
     "solution": "Bundling: selling multiple products together as a single package.\n\nWhen customer valuations are negatively correlated across goods (one customer values A more, another values B more), bundling extracts more surplus than separate sales: both types buy the bundle but neither would buy every item standalone.",
 },
@@ -1371,9 +1371,9 @@ ADDITIONAL_MCQS += [
     "choices": [
         "Bertrand > Cournot > Monopoly",
         "Cournot > Bertrand > Monopoly",
-        "Monopoly > Cournot > Bertrand (= MC)",
+        "Monopoly > Cournot > Bertrand",
         "Bertrand > Monopoly > Cournot",
-        "All four are equal",
+        "All three are equal",
     ],
     "correct_index": 2,
     "hints": [
@@ -1390,7 +1390,7 @@ ADDITIONAL_MCQS += [
     "choices": [
         "Only (Row-U, Col-L)",
         "Only (Row-D, Col-R)",
-        "BOTH (Row-U, Col-L) and (Row-D, Col-R)",
+        "Both (Row-U, Col-L) and (Row-D, Col-R)",
         "Only (Row-U, Col-R)",
         "There is no pure-strategy NE",
     ],
@@ -1407,11 +1407,11 @@ ADDITIONAL_MCQS += [
     "stem": "Cartels (such as OPEC) often have trouble maintaining their agreed-upon prices and production quotas.",
     "ask": "What is the fundamental reason for cartel instability?",
     "choices": [
-        "Cartels are illegal in every country",
-        "Each member has an incentive to CHEAT by producing more than its quota",
+        "Cartel prices are set by the government",
+        "Each member has an incentive to cheat by expanding its output",
         "Customers refuse to buy from cartels",
         "Cartel agreements cannot be communicated effectively",
-        "Cartel members never agree on price",
+        "Demand for cartel products is perfectly elastic",
     ],
     "correct_index": 1,
     "hints": [
@@ -1445,11 +1445,11 @@ ADDITIONAL_MCQS += [
     "stem": "Two firms produce DIFFERENTIATED products (close substitutes but not identical) and compete by simultaneously choosing prices.",
     "ask": "What is the equilibrium outcome?",
     "choices": [
-        "Both firms set P = MC (the identical-Bertrand result)",
-        "Both firms set P > MC; both earn positive economic profit",
+        "Both firms set P equal to MC",
+        "Both firms set P above MC",
         "Both firms set P below MC",
         "Both firms set P equal to the monopoly price",
-        "Equal price equal to the average of the two MCs",
+        "Both firms set P equal to the average of the two MCs",
     ],
     "correct_index": 1,
     "hints": [
@@ -1460,7 +1460,7 @@ ADDITIONAL_MCQS += [
     "solution": "Bertrand with differentiated products: each firm has its own demand curve (loyal customers + price-sensitive switchers). Undercutting doesn't capture the entire rival market, so price competition is softer.\n\nNE: both firms set P > MC; both earn positive profit. Product differentiation 'softens' price competition. Contrast with identical Bertrand: P = MC.",
 },
 {
-    "id": "m7i-mcq-5", "module": "M7-I", "theme": "Stackelberg First-Mover", "format": "mcq",
+    "id": "m7i-mcq-5", "module": "M7-I", "theme": "Stackelberg Leader and Follower", "format": "mcq",
     "stem": "In Stackelberg quantity competition with two identical-cost firms, one firm (the leader) commits to a quantity first, and the other firm (the follower) observes and best-responds.",
     "ask": "Compared to the follower, the leader produces:",
     "choices": [
@@ -1479,7 +1479,7 @@ ADDITIONAL_MCQS += [
     "solution": "The Stackelberg leader exploits the commitment advantage: by producing a high quantity first, it pushes the follower's best response down. Equilibrium: the leader produces ~2× the follower (with symmetric MC and linear demand).\n\nFirst-mover ADVANTAGE in Stackelberg (contrast with simultaneous Cournot, where both firms produce equally).",
 },
 {
-    "id": "m7ii-mcq-4", "module": "M7-II", "theme": "Game of Chicken — Multiple NE", "format": "mcq",
+    "id": "m7ii-mcq-4", "module": "M7-II", "theme": "Game of Chicken", "format": "mcq",
     "stem": "In the 'game of chicken,' two drivers race toward each other. Each can swerve or stay straight. If both swerve → tie (small loss). If both stay → catastrophe (large loss). If one stays and the other swerves → the stayer wins, the swerver loses face.",
     "ask": "How many pure-strategy Nash equilibria does this game have?",
     "choices": [
@@ -1503,7 +1503,7 @@ ADDITIONAL_MCQS += [
     "ask": "Pick the correct definition:",
     "choices": [
         "It maximizes the joint payoff for both players",
-        "It is the player's best response REGARDLESS of what the other player does",
+        "It is the best response to anything the other player does",
         "It is the strategy chosen by all rational players",
         "It is the only strategy in a Nash equilibrium",
         "It is the Pareto-optimal choice",
@@ -1540,11 +1540,11 @@ ADDITIONAL_MCQS += [
     "stem": "Two firms in Cournot competition face P = 100 − Q with MC = $20 each. Their Cournot equilibrium quantity per firm is approximately 26.67. If they instead colluded as a cartel and split production equally, how much would each firm produce?",
     "ask": "Cartel quantity per firm:",
     "choices": [
-        "13.33 (less than Cournot)",
-        "20 (less than Cournot)",
-        "26.67 (same as Cournot)",
-        "40 (more than Cournot)",
-        "80 (much more)",
+        "13.33",
+        "20",
+        "26.67",
+        "40",
+        "80",
     ],
     "correct_index": 1,
     "hints": [
@@ -1567,7 +1567,7 @@ ADDITIONAL_MCQS += [
         "Bid your value plus a small premium",
         "Bid half your value",
         "Bid just below the highest other bid you expect",
-        "Bid your true private value",
+        "Bid your true value",
     ],
     "correct_index": 4,
     "hints": [
@@ -1602,7 +1602,7 @@ ADDITIONAL_MCQS += [
     "ask": "Dutch auction ≡:",
     "choices": [
         "Reverse auction",
-        "None of the above",
+        "Negotiated sale",
         "English auction",
         "First-price sealed-bid auction",
         "Second-price sealed-bid auction",
@@ -1640,9 +1640,9 @@ ADDITIONAL_MCQS += [
     "ask": "As n increases, your optimal bid:",
     "choices": [
         "Falls to zero",
-        "Exceeds your true value",
-        "Shades MORE aggressively (bids closer to zero)",
-        "Shades LESS aggressively (bids closer to your true value)",
+        "Rises above your true value",
+        "Moves further below your true value",
+        "Moves closer to your true value",
         "Stays the same",
     ],
     "correct_index": 3,

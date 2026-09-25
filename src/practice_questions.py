@@ -76,7 +76,7 @@ QUESTIONS += [
 },
 {
     "id": "m1-q4", "module": "M1", "theme": "Combined S/D Shifts", "format": "mcq",
-    "stem": "A severe drought sharply reduces the wheat harvest (wheat is the key input for bread). At the same time, a popular low-carb diet trend sweeps the country, reducing consumers' appetite for bread.",
+    "stem": "A severe drought sharply reduces the wheat harvest. At the same time, a popular low-carb diet trend sweeps the country.",
     "ask": "What happens to the equilibrium price and quantity of bread?",
     "choices": [
         "Price rises; quantity falls",
@@ -175,7 +175,7 @@ QUESTIONS += [
     "choices": [
         "Hire more labor, less capital",
         "Hire more capital, less labor",
-        "Keep the current input mix (already cost-minimizing)",
+        "Keep the current input mix",
         "Hire more of both",
         "Hire less of both",
     ],
@@ -212,9 +212,9 @@ QUESTIONS += [
     "solution": "TC(Q) = 80 + 6Q + 0.25Q²\nMC(Q) = dTC/dQ = 6 + 0.5Q\n\nAt Q = 12:  MC = 6 + 0.5(12) = $12.\n\n(Note: the fixed cost $80 doesn't appear in MC — that's why FC never affects the profit-maximizing output level.)",
 },
 {
-    "id": "m3-q4", "module": "M3", "theme": "Shutdown Rule", "format": "open",
+    "id": "m3-q4", "module": "M3", "theme": "Profit at the Optimal Quantity", "format": "open",
     "stem": "A small candle-maker operates in a perfectly competitive market. Its total cost is TC = 800 + 6Q + 0.2Q², and the market price is $18 per candle.",
-    "ask": "Compute the firm's profit at the profit-maximizing quantity (in dollars; enter a negative number if it's a loss).",
+    "ask": "Compute the firm's profit at the profit-maximizing quantity (in dollars).",
     "answer": -620, "tolerance_abs": 1, "unit": "$",
     "hints": [
         "For a price-taker, profit-max is where P = MC. Find MC and solve.",
@@ -238,7 +238,7 @@ QUESTIONS += [
 {
     "id": "m3-q6", "module": "M3", "theme": "Marginal Analysis (Hiring)", "format": "open",
     "stem": "A car wash currently serves 80 cars/day at $15 each. The owner is considering hiring another attendant at $90/day. With the extra attendant, throughput would rise to 95 cars/day, but to attract the additional volume the owner would lower the price to $14.",
-    "ask": "What is the change in total revenue from hiring the extra attendant (new TR − old TR, in $)? Use this to check whether the wage is worth paying.",
+    "ask": "What is the change in total revenue from hiring the extra attendant (in $)? Use this to check whether the wage is worth paying.",
     "answer": 130, "tolerance_abs": 0, "unit": "$",
     "hints": [
         "TR = price × quantity. Compute TR before and after the hire.",
@@ -285,7 +285,7 @@ QUESTIONS += [
 {
     "id": "m4i-q3", "module": "M4-I", "theme": "Profit of a Perfectly Competitive Firm", "format": "open",
     "stem": "A perfectly competitive widget producer has TC = 600 + 5Q + 0.05Q². The market price is P = $9/widget.",
-    "ask": "What is the firm's profit at the profit-maximizing quantity (in $; negative for loss)?",
+    "ask": "What is the firm's profit at the profit-maximizing quantity (in $)?",
     "answer": -520, "tolerance_abs": 1, "unit": "$",
     "hints": [
         "Profit-max for a price-taker: P = MC. Solve for Q.",
@@ -349,7 +349,7 @@ QUESTIONS += [
 {
     "id": "m4ii-q4", "module": "M4-II", "theme": "Pigouvian Tax", "format": "mcq",
     "stem": "A chemical plant has a private marginal cost of $3.00/unit. Producing each unit emits pollution that imposes an estimated $0.80/unit external cost on society.",
-    "ask": "What per-unit Pigouvian tax is needed to internalize the externality and achieve the socially efficient quantity?",
+    "ask": "What per-unit Pigouvian tax achieves the socially efficient quantity?",
     "choices": [
         "$3.80/unit",
         "$2.20/unit",
@@ -408,7 +408,7 @@ QUESTIONS += [
 {
     "id": "m5-q3", "module": "M5", "theme": "Lerner Index", "format": "open",
     "stem": "A monopolist sells at P = $60 with constant MC = $24.",
-    "ask": "What is the Lerner index? (As a decimal, e.g., 0.40.)",
+    "ask": "What is the Lerner index? (As a decimal, e.g., 0.5.)",
     "answer": 0.60, "tolerance_abs": 0.01, "unit": "",
     "hints": [
         "Lerner index measures market power: L = (P − MC) / P.",
@@ -418,8 +418,8 @@ QUESTIONS += [
     "solution": "Lerner index: L = (P − MC) / P = (60 − 24) / 60 = 36/60 = 0.60.\n\nThis equals 1/|e_D| at the profit-maximizing point, so the implied demand elasticity is |e_D| = 1/0.60 ≈ 1.67.",
 },
 {
-    "id": "m5-q4", "module": "M5", "theme": "FC Effect on Monopolist", "format": "mcq",
-    "stem": "A monopolist faces a new annual government licensing fee (a fixed cost). Its marginal cost is unchanged.",
+    "id": "m5-q4", "module": "M5", "theme": "Licensing Fee and Monopoly Price", "format": "mcq",
+    "stem": "A monopolist must now pay a new flat annual licensing fee to the government.",
     "ask": "In the short run, what happens to the monopolist's profit-maximizing price?",
     "choices": [
         "Price rises to pass the new cost on to consumers",
@@ -430,15 +430,15 @@ QUESTIONS += [
     ],
     "correct_index": 2,
     "hints": [
-        "Profit-max comes from MR = MC. A fixed cost doesn't appear in MC.",
-        "If MC is unchanged, the optimal Q and P are unchanged.",
+        "Profit-max comes from MR = MC. Ask whether the licensing fee changes MR or MC.",
+        "A flat annual fee does not depend on how much the firm produces, so it is a fixed cost and does not enter MC. With MR and MC unchanged, the optimal Q and P are unchanged.",
         "Only PROFIT (level) changes — it falls by the licensing fee. (As long as the firm still earns enough to cover variable costs, it keeps the same P and Q.)",
     ],
     "solution": "Profit-max condition: MR = MC. A fixed cost doesn't enter MC, so the optimal Q (and hence P) is UNCHANGED.\n\nWhat changes: profit falls by exactly the licensing fee.\n\nThis is why a one-time fee, license, or property-tax change doesn't get passed through to consumers in the short run — even a monopolist can't profit from raising P above the MR = MC level.",
 },
 {
     "id": "m5-q5", "module": "M5", "theme": "Monopolistic Competition LR Profit", "format": "open",
-    "stem": "In a monopolistically competitive industry (many firms with differentiated products, free entry), a typical firm in long-run equilibrium has P = $25, Q = 60, ATC = $25, MC = $16.",
+    "stem": "In a monopolistically competitive industry, a typical firm in long-run equilibrium has P = $25, Q = 60, ATC = $25, MC = $16.",
     "ask": "What is the typical firm's long-run economic profit (in $)?",
     "answer": 0, "tolerance_abs": 1, "unit": "$",
     "hints": [
@@ -490,7 +490,7 @@ QUESTIONS += [
 },
 {
     "id": "m6-q4", "module": "M6", "theme": "Conditions for 3rd-Degree PD", "format": "mcq",
-    "stem": "A firm is considering third-degree price discrimination (charging different prices to different customer groups).",
+    "stem": "A firm is considering third-degree price discrimination.",
     "ask": "Which of the following is NOT a required condition for it to work?",
     "choices": [
         "The firm has market power (downward-sloping demand)",
@@ -552,7 +552,7 @@ QUESTIONS += [
     "stem": "Two firms produce identical products and compete in Bertrand fashion (choosing prices simultaneously). Both have constant MC = $8. There is no collusion.",
     "ask": "What is the equilibrium market price?",
     "choices": [
-        "$8 (equal to marginal cost)",
+        "$8",
         "The monopoly price",
         "Halfway between MC and the monopoly price",
         "Depends on the demand elasticity",
@@ -634,7 +634,7 @@ QUESTIONS += [
         "Bid randomly to confuse other bidders",
         "Bid your private estimate of the value — that's a dominant strategy",
         "Bid slightly above your estimate to ensure winning",
-        "Shade your bid BELOW your estimate, and shade more when there are MORE bidders",
+        "Shade your bid below your estimate, and shade more when there are more bidders",
     ],
     "correct_index": 4,
     "hints": [

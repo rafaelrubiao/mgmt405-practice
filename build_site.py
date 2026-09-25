@@ -38,11 +38,19 @@ for q in QUESTIONS:
         assert isinstance(q["answer"], (int, float)), f"{q['id']} needs a numeric answer"
         assert q["tolerance_abs"] >= 0, f"{q['id']} needs a non-negative tolerance"
     assert isinstance(q.get("order", 0), int), f"{q['id']} order must be an integer"
-    # Each page carries one rounding note at the top, so no question repeats it
+    # Each page carries the rounding and sign instructions at the top, so no question
+    # repeats them (a per-question "enter a negative number" tells students the sign)
     for field in ("stem", "ask"):
         low = q[field].lower()
         assert "decimal place" not in low and "round to" not in low, \
             f"{q['id']} repeats the rounding instruction in {field}"
+        assert "negative number" not in low and "negative for loss" not in low, \
+            f"{q['id']} repeats the sign instruction in {field}"
+    if q["format"] == "mcq":
+        # "None/All of the above" only makes sense as the last option
+        for i, c in enumerate(q["choices"][:-1]):
+            assert "of the above" not in c.lower(), \
+                f"{q['id']} option {chr(65 + i)} says '{c}' but is not the last option"
 
 # ---------------- shared CSS ----------------
 CSS = """
@@ -163,7 +171,7 @@ PAGE_TMPL = """<!doctype html>
 </div>
 
 <main>
-  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7).</div>
+  <div class="note">Please round all numbers to one decimal place (e.g., 43.6791 &rarr; 43.7). Enter a loss as a negative number.</div>
   <div id="main"></div>
 </main>
 
