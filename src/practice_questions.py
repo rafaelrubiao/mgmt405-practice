@@ -601,6 +601,30 @@ QUESTIONS += [
     ],
     "solution": "Cartel = joint monopoly. With combined output Q:\n  MR = 120 − 2Q. Set = MC = 30: Q* = 45.\n  P* = $75. Joint profit = (75 − 30) × 45 = $2,025.\n\nSplit equally: each firm produces 22.5 and earns $1,012.50.\n\nCompare to Cournot: each firm produced 30 and earned $900. The cartel is better for both firms BUT unstable: at the cartel quantity, each firm has incentive to cheat (best response to q_j = 22.5 is q_i = 45 − 11.25 = 33.75, not 22.5). This is why cartels are fragile.",
 },
+{
+    "id": "m7ii-q1", "module": "M7-II", "theme": "Launch Timing Game", "format": "open",
+    "stem": "A market leader (Firm A) and a smaller rival (Firm B) each decide, at the same time, whether to launch their new phone in the Spring or in the Fall. Annual profits in $ million, listed as (A, B):\n  A Spring, B Spring: (6, 2)\n  A Spring, B Fall: (9, 5)\n  A Fall, B Spring: (4, 7)\n  A Fall, B Fall: (3, 4)",
+    "ask": "What is Firm B's annual profit in the Nash equilibrium (in $ million)?",
+    "answer": 5, "tolerance_abs": 0, "unit": "",
+    "hints": [
+        "Start by checking whether either firm has a dominant strategy: a choice that is best no matter what the other firm does.",
+        "Firm A: Spring beats Fall both when B picks Spring (6 vs 4) and when B picks Fall (9 vs 3). Firm B's best choice depends on what A does.",
+        "Since A always picks Spring, B compares Spring (2) with Fall (5) and picks Fall. The equilibrium is A Spring, B Fall.",
+    ],
+    "solution": "Step 1 — Look for dominant strategies.\n  Firm A: if B picks Spring, A earns 6 (Spring) vs 4 (Fall); if B picks Fall, A earns 9 vs 3. Spring is A's dominant strategy.\n  Firm B: if A picks Spring, B earns 2 (Spring) vs 5 (Fall), so Fall; if A picks Fall, B earns 7 vs 4, so Spring. B has no dominant strategy.\n\nStep 2 — B expects A to play its dominant strategy (Spring), and B's best response to Spring is Fall.\n\nNash equilibrium: A Spring, B Fall, with profits (9, 5). Check: A would earn only 3 by switching to Fall, and B only 2 by switching to Spring, so neither wants to move.\n\nFirm B's profit: $5 million.\n\nLesson: when only one player has a dominant strategy, assume it plays that strategy, then find the other player's best response to it.",
+},
+{
+    "id": "m7ii-q2", "module": "M7-II", "theme": "Government Subsidy Game", "format": "open",
+    "stem": "Two companies, AquaPure and ClearWater, each decide at the same time whether to build a desalination plant to supply a coastal city. The city needs only one plant. Annual profits in $ million, listed as (AquaPure, ClearWater):\n  Both build: (−3, −3)\n  Only AquaPure builds: (8, 0)\n  Only ClearWater builds: (0, 8)\n  Neither builds: (0, 0)\n\nThe regional government now offers AquaPure a subsidy of $S million per year if it builds.",
+    "ask": "Above what subsidy S (in $ million per year) does building become a dominant strategy for AquaPure?",
+    "answer": 3, "tolerance_abs": 0, "unit": "",
+    "hints": [
+        "A strategy is dominant if it is the best choice whatever the other player does. Check AquaPure's choice separately for each thing ClearWater might do, adding S to AquaPure's profit whenever AquaPure builds.",
+        "If ClearWater stays out, AquaPure earns 8 + S by building versus 0 by staying out, so building already wins. If ClearWater builds, AquaPure earns −3 + S by building versus 0 by staying out.",
+        "Building wins in both cases once −3 + S is above 0, that is, once S is above 3.",
+    ],
+    "solution": "With the subsidy, AquaPure's profits are:\n  ClearWater builds:     build −3 + S, stay out 0\n  ClearWater stays out:  build 8 + S,  stay out 0\n\nWhen ClearWater stays out, building is always better (8 + S > 0). When ClearWater builds, building is better only if −3 + S > 0, i.e., S > 3.\n\nSo for any subsidy above $3 million, building is a dominant strategy for AquaPure.\n\nWhat changes in the game: without the subsidy there are two Nash equilibria (only one firm builds, but it could be either one). With S above 3, AquaPure always builds, and ClearWater's best response is to stay out (0 > −3). The unique Nash equilibrium becomes: AquaPure builds, ClearWater stays out. A subsidy can decide which firm ends up serving a market that has room for only one.",
+},
 ]
 
 # =================== MODULE 8: Auctions ===================

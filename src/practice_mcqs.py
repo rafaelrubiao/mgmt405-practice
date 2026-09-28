@@ -1554,6 +1554,82 @@ ADDITIONAL_MCQS += [
     ],
     "solution": "Bertrand with differentiated products: each firm has its own demand curve (loyal customers + price-sensitive switchers). Undercutting doesn't capture the entire rival market, so price competition is softer.\n\nNE: both firms set P > MC; both earn positive profit. Product differentiation 'softens' price competition. Contrast with identical Bertrand: P = MC.",
 },
+{
+    "id": "m7ii-mcq-5", "module": "M7-II", "theme": "Audit Game", "format": "mcq",
+    "stem": "A tax authority decides whether to audit a firm. At the same time, the firm decides whether to comply with the tax rules or evade them. Payoffs listed as (firm, authority):\n  Firm complies, authority audits: (0, −2)\n  Firm complies, no audit: (0, 0)\n  Firm evades, authority audits: (−10, 8)\n  Firm evades, no audit: (5, −5)",
+    "ask": "Which of these outcomes is a pure-strategy Nash equilibrium?",
+    "choices": [
+        "Firm complies, no audit",
+        "Firm evades, authority audits",
+        "Firm evades, no audit",
+        "Firm complies, authority audits",
+        "None of them",
+    ],
+    "correct_index": 4,
+    "hints": [
+        "An outcome is a Nash equilibrium only if NEITHER player wants to switch, given what the other is doing. Check the four outcomes one by one.",
+        "Firm complies, no audit: the firm would switch to evading (5 > 0). Firm evades, no audit: the authority would switch to auditing (8 > −5).",
+        "Firm evades, authority audits: the firm would switch to complying (0 > −10). Firm complies, authority audits: the authority would switch to not auditing (0 > −2).",
+    ],
+    "solution": "Check each outcome for a player who wants to switch:\n  Complies, no audit: the firm would rather evade (5 > 0).\n  Evades, no audit: the authority would rather audit (8 > −5).\n  Evades, audit: the firm would rather comply (0 > −10).\n  Complies, audit: the authority would rather not audit (0 > −2).\n\nEvery outcome has a player who wants to switch, so there is NO pure-strategy Nash equilibrium. The best responses chase each other in a circle: the authority wants to audit exactly when the firm evades, and the firm wants to evade exactly when there is no audit.\n\nAs with penalty kicks, the only sensible way to play a game like this is to be unpredictable. That kind of equilibrium (mixed strategies) is not part of this course.",
+},
+{
+    "id": "m7ii-mcq-6", "module": "M7-II", "theme": "Many-Player Games", "format": "mcq",
+    "stem": "Twelve fishing companies share the same fishing ground. Whatever the other companies do, each one earns more by fishing intensively. But if all of them fish intensively, the fish stock collapses and every company earns less than if all had fished moderately.",
+    "ask": "This situation is best described as:",
+    "choices": [
+        "A tragedy of the commons",
+        "A coordination game with two equilibria",
+        "A game of chicken",
+        "The invisible hand leading self-interest to the best outcome",
+        "A game with no Nash equilibrium",
+    ],
+    "correct_index": 0,
+    "hints": [
+        "Ask two things: what is each company's best move whatever the others do, and how does the result compare with what they could all achieve together?",
+        "Fishing intensively is a dominant strategy for every company, yet when all do it, all are worse off. It is the many-player version of a two-player game you know.",
+        "When individually rational choices by many players who share a resource leave everyone worse off, economists call it a tragedy of the commons, a type of collective action problem.",
+    ],
+    "solution": "Each company has a dominant strategy (fish intensively), so the unique Nash equilibrium is that everyone fishes intensively, even though all would earn more by fishing moderately. This is the prisoner's dilemma with many players: a collective action problem, known as the tragedy of the commons.\n\nWhy not the others:\n  A coordination game and a game of chicken both have two equilibria and no dominant strategies.\n  The game does have a Nash equilibrium: everyone fishes intensively.\n  It is the opposite of the invisible hand, where self-interest leads to a good outcome for all.\n\nTypical ways out: catch limits set by a regulator, clear ownership of the fishing ground, or repeated interaction with monitoring.",
+},
+{
+    "id": "m7ii-mcq-7", "module": "M7-II", "theme": "Prisoner's Dilemma Among Firms", "format": "mcq",
+    "stem": "Two competing firms are in a prisoner's dilemma: each has a dominant strategy to cut its price, so both end up with lower profits than if both had kept prices high.",
+    "ask": "Which change would most likely help them keep prices high without any formal agreement between them?",
+    "choices": [
+        "They meet only once, in a single round",
+        "Each firm's gain from undercutting the other grows",
+        "A third firm with the same payoffs enters the market",
+        "They compete every month, with no known end date",
+        "Each firm can no longer see the other's past prices",
+    ],
+    "correct_index": 3,
+    "hints": [
+        "In a one-shot prisoner's dilemma, cutting the price is the dominant strategy. Think about what could make a firm hesitate before undercutting.",
+        "If the firms face each other again and again, undercutting today can be punished tomorrow, for example by the rival cutting its own price. Which option makes that kind of punishment possible?",
+        "Repeated play with no known last round lets each firm reward high prices and punish undercutting (as in tit-for-tat). The other options remove the future, raise the temptation, add players, or hide cheating.",
+    ],
+    "solution": "Repetition is one of the classic ways out of the prisoner's dilemma. When the firms expect to meet again with no known final round, each can follow a rule like tit-for-tat: keep prices high as long as the rival does, and cut prices right after the rival cuts. Undercutting then gains a little today but lowers profits in all later rounds, so keeping prices high can be the better long-run choice.\n\nWhy the others make things worse:\n  A single round: there is no future to protect, so undercutting stays dominant.\n  A bigger gain from undercutting: more temptation to cheat.\n  A third firm: more players make cooperation harder to sustain (a collective action problem).\n  Not seeing past prices: cheating cannot be detected, so it cannot be punished.\n\nNote: an explicit agreement to fix prices would be an illegal cartel. Repetition can sustain high prices without one (tacit collusion).",
+},
+{
+    "id": "m7ii-mcq-8", "module": "M7-II", "theme": "Entry Threat", "format": "mcq",
+    "stem": "An airline is currently the only carrier on a profitable route. It announces that if a rival starts flying the route, it will cut fares below cost for as long as the rival stays. Once the rival has entered, cutting fares below cost would cost the established airline $50 million a year in profit, while sharing the route peacefully would cost it $10 million a year.",
+    "ask": "How should the potential entrant view this threat?",
+    "choices": [
+        "Credible — the airline announced it publicly",
+        "Not credible — carrying it out would cost the airline more",
+        "Credible — a price war always drives the entrant out",
+        "Irrelevant — entry depends only on market demand",
+        "Credible — the airline's losses would be temporary",
+    ],
+    "correct_index": 1,
+    "hints": [
+        "A threat only changes a rival's behavior if it is credible: the player making it must actually want to carry it out when the time comes.",
+        "Imagine the rival has already entered. At that point the established airline can cut fares below cost (losing $50 million a year) or share the route (losing $10 million a year). Which would it choose?",
+        "Once entry has happened, sharing is better for the established airline, so it would not really cut fares below cost. A rational entrant can ignore the announcement.",
+    ],
+    "solution": "Ask what the established airline would actually do after entry. Cutting fares below cost costs it $50 million a year; sharing the route costs $10 million. Once the rival is in, the airline's best move is to share, so the threat is not credible, however publicly it was announced. A rational entrant should ignore it.\n\nThis is why commitment matters. A threat becomes credible only if the player changes its own payoffs in advance, so that carrying out the threat really is its best move. In the Cold War, Mutually Assured Destruction worked because retaliation was built in. An announcement alone does not do that.",
+},
 ]
 
 # =================== MODULE 8: Auctions (8 new MCQs) ===================
