@@ -1441,25 +1441,6 @@ ADDITIONAL_MCQS += [
     "solution": "Reaction function: q_i = (a − MC − q_j)/2 = (180 − q_j)/2 = 90 − q_j/2.\n\nSymmetric NE: q₁ = q₂ = q.\n  q = 90 − q/2\n  1.5q = 90\n  q* = 60 each.\n\nTotal Q = 120, market P = 240 − 120 = $120. Each firm's profit = (120 − 60) × 60 = $3,600.",
 },
 {
-    "id": "m7ii-mcq-3", "module": "M7-II", "theme": "Bertrand with Differentiated Products", "format": "mcq",
-    "stem": "Two firms produce DIFFERENTIATED products (close substitutes but not identical) and compete by simultaneously choosing prices.",
-    "ask": "What is the equilibrium outcome?",
-    "choices": [
-        "Both firms set P equal to MC",
-        "Both firms set P above MC",
-        "Both firms set P below MC",
-        "Both firms set P equal to the monopoly price",
-        "Both firms set P equal to the average of the two MCs",
-    ],
-    "correct_index": 1,
-    "hints": [
-        "With identical products, undercutting captures the WHOLE market — so prices race to MC.",
-        "With differentiated products, undercutting only captures SOME extra customers (each firm has loyal customers).",
-        "Each firm has some market power → optimal P > MC → both firms earn positive profit.",
-    ],
-    "solution": "Bertrand with differentiated products: each firm has its own demand curve (loyal customers + price-sensitive switchers). Undercutting doesn't capture the entire rival market, so price competition is softer.\n\nNE: both firms set P > MC; both earn positive profit. Product differentiation 'softens' price competition. Contrast with identical Bertrand: P = MC.",
-},
-{
     "id": "m7i-mcq-5", "module": "M7-I", "theme": "Stackelberg Leader and Follower", "format": "mcq",
     "stem": "In Stackelberg quantity competition with two identical-cost firms, one firm (the leader) commits to a quantity first, and the other firm (the follower) observes and best-responds.",
     "ask": "Compared to the follower, the leader produces:",
@@ -1479,7 +1460,7 @@ ADDITIONAL_MCQS += [
     "solution": "The Stackelberg leader exploits the commitment advantage: by producing a high quantity first, it pushes the follower's best response down. Equilibrium: the leader produces ~2× the follower (with symmetric MC and linear demand).\n\nFirst-mover ADVANTAGE in Stackelberg (contrast with simultaneous Cournot, where both firms produce equally).",
 },
 {
-    "id": "m7ii-mcq-4", "module": "M7-II", "theme": "Game of Chicken", "format": "mcq",
+    "id": "m7ii-mcq-3", "module": "M7-II", "theme": "Game of Chicken", "format": "mcq",
     "stem": "In the 'game of chicken,' two drivers race toward each other. Each can swerve or stay straight. If both swerve → tie (small loss). If both stay → catastrophe (large loss). If one stays and the other swerves → the stayer wins, the swerver loses face.",
     "ask": "How many pure-strategy Nash equilibria does this game have?",
     "choices": [
@@ -1498,7 +1479,7 @@ ADDITIONAL_MCQS += [
     "solution": "(Stay, Stay): catastrophe — both want to deviate. Not NE.\n(Swerve, Swerve): tied — each could win by staying. Not NE.\n(Stay, Swerve): the stayer wins, the swerver avoids catastrophe — neither deviates. NE.\n(Swerve, Stay): symmetric NE.\n\nTWO pure NE — a coordination problem about who commits to staying.",
 },
 {
-    "id": "m7ii-mcq-5", "module": "M7-II", "theme": "Dominant Strategy Definition", "format": "mcq",
+    "id": "m7ii-mcq-4", "module": "M7-II", "theme": "Dominant Strategy Definition", "format": "mcq",
     "stem": "A strategy is called DOMINANT if:",
     "ask": "Pick the correct definition:",
     "choices": [
@@ -1553,6 +1534,25 @@ ADDITIONAL_MCQS += [
         "Split equally between two firms: each = 40/2 = 20. (Less than Cournot's 26.67 — that's why each firm wants to cheat.)",
     ],
     "solution": "Cartel = monopoly with output split.\n  MR = 100 − 2Q = 20 → Q_total = 40.\n  Each firm: 40 / 2 = 20.\n\nThis is LESS than Cournot (26.67 each). The cartel raises joint profits but is unstable: at q_j = 20, each firm's best response is q_i = 40 − 20/2 = 30, NOT 20. Each wants to cheat → the cartel breaks down without enforcement.",
+},
+{
+    "id": "m7i-mcq-8", "module": "M7-I", "theme": "Bertrand with Differentiated Products", "format": "mcq",
+    "stem": "Two firms produce DIFFERENTIATED products (close substitutes but not identical) and compete by simultaneously choosing prices.",
+    "ask": "What is the equilibrium outcome?",
+    "choices": [
+        "Both firms set P equal to MC",
+        "Both firms set P above MC",
+        "Both firms set P below MC",
+        "Both firms set P equal to the monopoly price",
+        "Both firms set P equal to the average of the two MCs",
+    ],
+    "correct_index": 1,
+    "hints": [
+        "With identical products, undercutting captures the WHOLE market — so prices race to MC.",
+        "With differentiated products, undercutting only captures SOME extra customers (each firm has loyal customers).",
+        "Each firm has some market power → optimal P > MC → both firms earn positive profit.",
+    ],
+    "solution": "Bertrand with differentiated products: each firm has its own demand curve (loyal customers + price-sensitive switchers). Undercutting doesn't capture the entire rival market, so price competition is softer.\n\nNE: both firms set P > MC; both earn positive profit. Product differentiation 'softens' price competition. Contrast with identical Bertrand: P = MC.",
 },
 ]
 

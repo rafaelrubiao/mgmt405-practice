@@ -17,6 +17,10 @@ document the links get pasted into, so the wording students read there should
 match what they land on. The two sources agree on structure: eight modules, with
 externalities inside Module 4 and auctions inside Module 8.
 
+Exception: Module 7 is split by topic instead of by calendar week, as requested
+in Sept 2026. Part I is all of oligopoly (Cournot, Bertrand with identical AND
+differentiated goods, Stackelberg, cartels); Part II is game theory.
+
 Each module builds to its own page (docs/<slug>.html) so the calendar can link
 to a single week's material.
 """
@@ -29,8 +33,8 @@ MODULES = [
     ("M4-II", "Module 4 (Part II)", "Market Distortions / Externalities",              "module-4-part-2"),
     ("M5",    "Module 5",           "Monopoly and Monopolistic Competition",           "module-5"),
     ("M6",    "Module 6",           "Complex Pricing and Advanced Pricing Strategies", "module-6"),
-    ("M7-I",  "Module 7 (Part I)",  "Oligopoly with Homogenous Goods",                 "module-7-part-1"),
-    ("M7-II", "Module 7 (Part II)", "Oligopoly with Diff. Goods; Game Theory",         "module-7-part-2"),
+    ("M7-I",  "Module 7 (Part I)",  "Oligopoly",                                       "module-7-part-1"),
+    ("M7-II", "Module 7 (Part II)", "Game Theory",                                     "module-7-part-2"),
     ("M8",    "Module 8",           "Auctions",                                        "module-8"),
 ]
 

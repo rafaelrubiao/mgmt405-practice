@@ -22,8 +22,8 @@ Each module has a stable URL, so the calendar can link week by week:
 | Module 4 (Part II) — Market Distortions / Externalities | https://rafaelrubiao.github.io/mgmt405-practice/module-4-part-2.html |
 | Module 5 — Monopoly and Monopolistic Competition | https://rafaelrubiao.github.io/mgmt405-practice/module-5.html |
 | Module 6 — Complex Pricing and Advanced Pricing Strategies | https://rafaelrubiao.github.io/mgmt405-practice/module-6.html |
-| Module 7 (Part I) — Oligopoly with Homogenous Goods | https://rafaelrubiao.github.io/mgmt405-practice/module-7-part-1.html |
-| Module 7 (Part II) — Oligopoly with Diff. Goods; Game Theory | https://rafaelrubiao.github.io/mgmt405-practice/module-7-part-2.html |
+| Module 7 (Part I) — Oligopoly | https://rafaelrubiao.github.io/mgmt405-practice/module-7-part-1.html |
+| Module 7 (Part II) — Game Theory | https://rafaelrubiao.github.io/mgmt405-practice/module-7-part-2.html |
 | Module 8 — Auctions | https://rafaelrubiao.github.io/mgmt405-practice/module-8.html |
 
 ## How to change the questions
