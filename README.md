@@ -6,6 +6,10 @@ comes with three escalating hints (one more is revealed after each wrong
 attempt) and a full step-by-step solution. Progress is saved in the student's
 browser; nothing is collected or sent anywhere.
 
+The site also has a mock midterm (Modules 1–3): a timed, submit-once quiz in the
+format of the real midterm, graded in the browser with full solutions and the
+point rubric.
+
 Live site: https://rafaelrubiao.github.io/mgmt405-practice/
 
 ## Links for the course calendar
@@ -25,12 +29,15 @@ Each module has a stable URL, so the calendar can link week by week:
 | Module 7 (Part I) — Oligopoly | https://rafaelrubiao.github.io/mgmt405-practice/module-7-part-1.html |
 | Module 7 (Part II) — Game Theory | https://rafaelrubiao.github.io/mgmt405-practice/module-7-part-2.html |
 | Module 8 — Auctions | https://rafaelrubiao.github.io/mgmt405-practice/module-8.html |
+| Mock Midterm (Modules 1–3, timed, same format as the real midterm) | https://rafaelrubiao.github.io/mgmt405-practice/mock-midterm.html |
 
 ## How to change the questions
 
 1. Edit `src/practice_questions.py` (open questions and some multiple choice)
    or `src/practice_mcqs.py` (the rest of the multiple choice). The schema is
    documented at the top of `practice_questions.py`.
+   The mock midterm lives in `src/mock_midterm.py` (its schema is documented at
+   the top of that file).
 2. Rebuild the pages:
 
    ```
@@ -43,7 +50,7 @@ Each module has a stable URL, so the calendar can link week by week:
 
 ## Layout
 
-- `src/` — the question bank (Python files; this is what you edit)
+- `src/` — the question bank and the mock midterm (Python files; this is what you edit)
 - `build_site.py` — turns the question bank into the web pages
 - `docs/` — the generated site, served by GitHub Pages. Do not edit these
   files by hand; they are overwritten on every build.
