@@ -1,18 +1,20 @@
 """Mock midterm for MGMT 405 (Modules 1-3), built into docs/mock-midterm.html.
 
 Same format as the real midterm: Part 1 has 10 multiple-choice questions worth
-3 points each; Part 2 has two problems worth 70 points. Every scenario and every
-number here is new (nothing is taken from a past exam or from the practice bank).
+3 points each (graded automatically); Part 2 has two problems worth 70 points,
+answered in free text and graded by the student with the rubric shown after
+submission. Every scenario and every number here is new (nothing is taken from a
+past exam or from the practice bank). The page is unlisted on the site.
 
 Schema (validated by build_site.py):
   MOCK["mcqs"]      10 dicts: id, module, topic, stem, ask, choices (5), correct_index, solution
   MOCK["problems"]  dicts: id, title, points, intro, parts
   part              id, label, points, text, items, self_rubric, solution, figure (optional)
-  item kinds        "select"  (options, correct index, points, rubric)
-                    "number"  (answer, tolerance, points, rubric, unit optional)
-                    "formula" (template with {key} slots, fields = number items with a key)
-                    "text"    (free-text box, not graded)
-  self_rubric       lines the student ticks after submitting (graph drawn, reasoning given)
+  item kinds        "text"    (free-text box, not graded)  <- the only kind used in Part 2
+                    "select"  (options, correct index, points, rubric)   } supported by the
+                    "number"  (answer, tolerance, points, rubric)        } page but unused
+                    "formula" (template with {key} slots, fields)        }
+  self_rubric       lines with points the student ticks after submitting
 Within each part, item points + self_rubric points must add up to the part's points.
 Stems, asks and texts are plain text; **bold** is the only markup rendered.
 """
@@ -24,14 +26,14 @@ MOCK = {
     "subtitle": "Managerial Economics (100 points)",
     "time_limit_minutes": 120,
     "mcq_points": 3,
-    "rounding_note": "Please round all numbers to one decimal place (e.g., 43.6791 → 43.7). Enter a loss or a decrease as a negative number, and keep the sign of elasticities. Coefficients inside formulas can be entered exactly (e.g., 0.05).",
+    "rounding_note": "Please round all numbers to one decimal place (e.g., 43.6791 → 43.7). Enter a loss or a decrease as a negative number, and keep the sign of elasticities.",
     "start_notes": [
         "Same format as the real midterm: Part 1 has 10 multiple-choice questions worth 3 points each (30 points); Part 2 has 2 problems worth 70 points. It covers Modules 1, 2 and 3.",
         "You have 2 hours. The clock starts when you click Take the Quiz and keeps running even if you close this page; the quiz is submitted automatically when the time is up.",
-        "A calculator is allowed (a simple one is built into this page, bottom right). Keep paper and a pencil at hand: Problem 1 asks you to sketch supply and demand graphs on paper and to record on the page what shifts and what happens to price and quantity.",
-        "Your answers are saved in this browser as you type, so you can reload the page without losing them. You can submit only once; after submitting you see your score, the correct answers, step-by-step solutions and the point rubric for every part. Nothing is sent anywhere.",
+        "A calculator is allowed (a simple one is built into this page, bottom right). Part 2 has a writing box under each part: write your numbers and your reasoning there, as you would on paper in the real exam. Sketch the graphs of Problem 1 on paper.",
+        "Your answers are saved in this browser as you type, so you can reload the page without losing them. You can submit only once. After submitting you see your Part 1 score (graded automatically), the correct answers, step-by-step solutions, and the point rubric for Part 2, which you grade yourself. Nothing is sent anywhere.",
     ],
-    "results_note": "Points for graphs and written explanations cannot be checked automatically. Compare your work with the solution and tick the rubric lines you got right; they are added to your total.",
+    "results_note": "Part 2 is not graded automatically. Compare what you wrote with the solution of each part and tick the rubric lines you got right; the points are added to your Part 2 score below.",
 
     # ------------------------------------------------------------------ Part 1
     "mcqs": [
@@ -108,18 +110,18 @@ MOCK = {
             "stem": "A customer-support call center recorded how many calls it can answer per day with different numbers of agents on duty (all other inputs fixed):\n\n  5 agents: 400 calls per day\n  6 agents: 470 calls per day\n  7 agents: 520 calls per day",
             "ask": "What is the marginal product of the seventh agent, and what happens to the average product per agent when the seventh agent is added?",
             "choices": [
-                "20 calls; average product falls",
-                "50 calls; average product rises",
+                "−4 calls; average product falls",
+                "4 calls; average product rises",
                 "50 calls; average product falls",
                 "74.3 calls; average product rises",
                 "520 calls; average product is unchanged",
             ],
             "correct_index": 2,
-            "solution": "Marginal product = the extra calls from one extra agent.\nMP of the 7th agent = 520 − 470 = 50 calls per day. (The 6th agent added 70, so returns are diminishing.)\n\nAverage product = calls per agent.\nWith 6 agents: 470 / 6 = 78.3 calls per agent. With 7 agents: 520 / 7 = 74.3 calls per agent.\n\nThe 7th agent's marginal product (50) is below the average of the first six (78.3), so the average is pulled down.",
+            "solution": "Marginal product = the extra calls from one extra agent.\nMP of the 7th agent = 520 − 470 = 50 calls per day. (The 6th agent added 70, so returns are diminishing.)\n\nAverage product = calls per agent.\nWith 6 agents: 470 / 6 = 78.3 calls per agent. With 7 agents: 520 / 7 = 74.3 calls per agent.\n\nThe 7th agent's marginal product (50) is below the average of the first six (78.3), so the average is pulled down, by about 4 calls per agent. That change in the average (−4) is not the marginal product; the marginal product is the whole output of the extra agent, 50 calls.",
         },
         {
             "id": "mock-mc9", "module": "Module 3", "topic": "Make or buy (relevant costs)",
-            "stem": "A lamp manufacturer needs 2,000 metal lamp bases this year. Making them in-house costs $14 per base in materials and labor. Last year the firm also paid $12,000 for the tooling needed to make the bases; the tooling cannot be resold or refunded. A supplier now offers to deliver the same bases for $18 each.",
+            "stem": "A lamp manufacturer needs 2,000 metal lamp bases this year. Making them in-house costs $14 per base in materials and labor. At the start of the year the firm also paid $12,000 to rent the tooling needed to make the bases; the rental covers only this year and the payment cannot be refunded. A supplier now offers to deliver the same bases for $18 each.",
             "ask": "Should the firm make or buy the bases, and by how much does the better option improve this year's profit compared with the other?",
             "choices": [
                 "Buy: it saves $4,000",
@@ -129,7 +131,7 @@ MOCK = {
                 "Make: it saves $20,000",
             ],
             "correct_index": 3,
-            "solution": "Only costs that change with the decision matter.\n\nThe $12,000 tooling was paid last year and cannot be recovered: it is a sunk cost, the same whether the firm makes or buys, so it is ignored.\n\nMaking: 2,000 × $14 = $28,000. Buying: 2,000 × $18 = $36,000.\n\nMaking is cheaper by $8,000, so the firm should make the bases. (Adding the sunk $12,000 to the make option would give $40,000 and wrongly point to buying.)",
+            "solution": "Only costs that change with the decision matter.\n\nThe $12,000 rental for the tooling has already been paid for this year and cannot be recovered, and it gives nothing beyond this year: it is a sunk cost, the same whether the firm makes or buys, so it is ignored.\n\nMaking: 2,000 × $14 = $28,000. Buying: 2,000 × $18 = $36,000.\n\nMaking is cheaper by $8,000, so the firm should make the bases. (Adding the sunk $12,000 to the make option would give $40,000 and wrongly point to buying.)",
         },
         {
             "id": "mock-mc10", "module": "Module 3", "topic": "Marginal versus average cost",
@@ -159,74 +161,45 @@ MOCK = {
                     "id": "mock-p1a", "label": "(a)", "points": 6,
                     "text": "The world market for cocoa beans. Draw the market before and after the harvest shock. Which curve shifts, and in which direction? What happens to the equilibrium price and quantity of cocoa beans? Explain in words.",
                     "items": [
-                        {"id": "mock-p1a-shift", "kind": "select", "points": 2,
-                         "label": "Which curve shifts, and in which direction?",
-                         "options": ["Demand shifts to the right", "Demand shifts to the left", "Supply shifts to the right", "Supply shifts to the left", "Both curves shift", "No curve shifts; there is only a movement along the curves"],
-                         "correct": 3, "rubric": "Supply shifts to the left"},
-                        {"id": "mock-p1a-price", "kind": "select", "points": 1,
-                         "label": "Equilibrium price of cocoa beans",
-                         "options": ["Rises", "Falls", "Ambiguous (depends on the size of the shifts)"],
-                         "correct": 0, "rubric": "Price rises"},
-                        {"id": "mock-p1a-qty", "kind": "select", "points": 1,
-                         "label": "Equilibrium quantity of cocoa beans",
-                         "options": ["Rises", "Falls", "Ambiguous (depends on the size of the shifts)"],
-                         "correct": 1, "rubric": "Quantity falls"},
-                        {"id": "mock-p1a-expl", "kind": "text", "label": "Explain in words", "rows": 4},
+                        {"id": "mock-p1a-ans", "kind": "text", "label": "Your answer (write which curve shifts and why, and what happens to price and quantity; draw the graph on paper)", "rows": 6},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p1a-graph", "points": 1, "text": "Graph: downward-sloping demand, upward-sloping supply, the initial equilibrium and the new equilibrium marked"},
-                        {"id": "mock-p1a-reason", "points": 1, "text": "Explanation: a smaller harvest means less cocoa is offered at every price, so the market moves up along the demand curve to a higher price and a lower quantity"},
+                        {"id": "mock-p1a-r1", "points": 2, "text": "The supply curve shifts to the left"},
+                        {"id": "mock-p1a-r2", "points": 2, "text": "The equilibrium price rises and the equilibrium quantity falls"},
+                        {"id": "mock-p1a-r3", "points": 1, "text": "Graph: downward-sloping demand, upward-sloping supply, the initial equilibrium and the new equilibrium marked"},
+                        {"id": "mock-p1a-r4", "points": 1, "text": "Explanation: a smaller harvest means less cocoa is offered at every price, so the market moves up along the demand curve"},
                     ],
-                    "solution": "The harvest shock reduces the quantity of cocoa offered at every price: the supply curve shifts to the left (from S to S').\n\nAt the old price there is now excess demand, so the price rises and the market moves up along the demand curve to the new equilibrium E': the equilibrium price of cocoa rises and the equilibrium quantity falls.\n\nRubric: 2 points for the shift, 2 for price and quantity, 1 for the graph, 1 for the explanation.",
+                    "solution": "The harvest shock reduces the quantity of cocoa offered at every price: the supply curve shifts to the left (from S to S').\n\nAt the old price there is now excess demand, so the price rises and the market moves up along the demand curve to the new equilibrium E': the equilibrium price of cocoa rises and the equilibrium quantity falls.",
                     "figure": {"kind": "sd", "title": "(a) Cocoa beans: supply shifts left", "d": [90], "s": [10, 30]},
                 },
                 {
                     "id": "mock-p1b", "label": "(b)", "points": 7,
                     "text": "The market for fruit gummies. Because cocoa became more expensive, chocolate makers raised the price of chocolate bars. What does this do to the market for fruit gummies? Draw the gummies market before and after, say which curve shifts and in which direction, and what happens to the equilibrium price and quantity of gummies. Explain in words why the curve shifts.",
                     "items": [
-                        {"id": "mock-p1b-shift", "kind": "select", "points": 3,
-                         "label": "Which curve shifts, and in which direction?",
-                         "options": ["Demand shifts to the right", "Demand shifts to the left", "Supply shifts to the right", "Supply shifts to the left", "Both curves shift", "No curve shifts; there is only a movement along the curves"],
-                         "correct": 0, "rubric": "Demand for gummies shifts to the right (chocolate bars and gummies are substitutes)"},
-                        {"id": "mock-p1b-price", "kind": "select", "points": 1,
-                         "label": "Equilibrium price of gummies",
-                         "options": ["Rises", "Falls", "Ambiguous (depends on the size of the shifts)"],
-                         "correct": 0, "rubric": "Price rises"},
-                        {"id": "mock-p1b-qty", "kind": "select", "points": 1,
-                         "label": "Equilibrium quantity of gummies",
-                         "options": ["Rises", "Falls", "Ambiguous (depends on the size of the shifts)"],
-                         "correct": 0, "rubric": "Quantity rises"},
-                        {"id": "mock-p1b-expl", "kind": "text", "label": "Explain in words", "rows": 4},
+                        {"id": "mock-p1b-ans", "kind": "text", "label": "Your answer (which curve shifts, in which direction and why; what happens to price and quantity; draw the graph on paper)", "rows": 6},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p1b-graph", "points": 1, "text": "Graph: demand and supply for gummies, the initial equilibrium and the new equilibrium marked"},
-                        {"id": "mock-p1b-reason", "points": 1, "text": "Explanation: chocolate bars and gummies are substitutes, so a higher chocolate price makes more consumers buy gummies at every gummy price (the shock comes from the demand side)"},
+                        {"id": "mock-p1b-r1", "points": 3, "text": "The demand curve for gummies shifts to the right"},
+                        {"id": "mock-p1b-r2", "points": 2, "text": "Both the equilibrium price and the equilibrium quantity of gummies rise"},
+                        {"id": "mock-p1b-r3", "points": 1, "text": "Graph: demand and supply for gummies, the initial equilibrium and the new equilibrium marked"},
+                        {"id": "mock-p1b-r4", "points": 1, "text": "Explanation: chocolate bars and gummies are substitutes, so a higher chocolate price makes more consumers buy gummies at every gummy price (the shock comes from the demand side)"},
                     ],
-                    "solution": "Chocolate bars and fruit gummies are substitutes. When chocolate bars get more expensive, some consumers switch to gummies: at every price of gummies, a larger quantity is demanded, so the demand curve for gummies shifts to the right (from D to D').\n\nAt the old price there is now excess demand; the price rises and the market moves up along the supply curve to the new equilibrium E': both the equilibrium price and the equilibrium quantity of gummies rise.\n\nNote the difference from part (a): there the shock hit supply and price and quantity moved in opposite directions; here the shock hits demand and they move in the same direction.\n\nRubric: 3 points for the shift and its direction, 2 for price and quantity, 1 for the graph, 1 for the explanation.",
+                    "solution": "Chocolate bars and fruit gummies are substitutes. When chocolate bars get more expensive, some consumers switch to gummies: at every price of gummies, a larger quantity is demanded, so the demand curve for gummies shifts to the right (from D to D').\n\nAt the old price there is now excess demand; the price rises and the market moves up along the supply curve to the new equilibrium E': both the equilibrium price and the equilibrium quantity of gummies rise.\n\nNote the difference from part (a): there the shock hit supply and price and quantity moved in opposite directions; here the shock hits demand and they move in the same direction.",
                     "figure": {"kind": "sd", "title": "(b) Gummies: demand shifts right", "d": [80, 100], "s": [20]},
                 },
                 {
                     "id": "mock-p1c", "label": "(c)", "points": 7,
                     "text": "The market for chocolate bars. Two things happen at the same time: cocoa, the main input, has become more expensive (part a), and a popular diet trend leads many consumers to cut back on chocolate. Which curves shift, and in which direction? Taking both changes together, what can you say for certain about the equilibrium price and quantity of chocolate bars, and what is ambiguous? Explain why. (No graph is required, but you may use one.)",
                     "items": [
-                        {"id": "mock-p1c-shift", "kind": "select", "points": 1.5,
-                         "label": "Which curves shift in the market for chocolate bars?",
-                         "options": ["Only demand shifts, to the left", "Only supply shifts, to the left", "Supply shifts to the left and demand shifts to the right", "Supply shifts to the left and demand shifts to the left", "Supply shifts to the right and demand shifts to the left"],
-                         "correct": 3, "rubric": "Supply shifts left (dearer input) and demand shifts left (diet trend)"},
-                        {"id": "mock-p1c-price", "kind": "select", "points": 2,
-                         "label": "Equilibrium price of chocolate bars, both changes together",
-                         "options": ["Rises", "Falls", "Ambiguous (depends on the size of the shifts)"],
-                         "correct": 2, "rubric": "Price: ambiguous"},
-                        {"id": "mock-p1c-qty", "kind": "select", "points": 2,
-                         "label": "Equilibrium quantity of chocolate bars, both changes together",
-                         "options": ["Rises", "Falls", "Ambiguous (depends on the size of the shifts)"],
-                         "correct": 1, "rubric": "Quantity falls"},
-                        {"id": "mock-p1c-expl", "kind": "text", "label": "Explain why", "rows": 4},
+                        {"id": "mock-p1c-ans", "kind": "text", "label": "Your answer (which curves shift and in which direction; what is certain and what is ambiguous for price and quantity, and why)", "rows": 6},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p1c-reason", "points": 1.5, "text": "Explanation: both shifts reduce the quantity; the supply shift pushes the price up and the demand shift pushes it down, so the price depends on which shift is larger"},
+                        {"id": "mock-p1c-r1", "points": 1.5, "text": "Supply shifts to the left (dearer cocoa) and demand shifts to the left (diet trend)"},
+                        {"id": "mock-p1c-r2", "points": 2, "text": "The equilibrium quantity falls for certain"},
+                        {"id": "mock-p1c-r3", "points": 2, "text": "The effect on the equilibrium price is ambiguous"},
+                        {"id": "mock-p1c-r4", "points": 1.5, "text": "Explanation: both shifts reduce the quantity; the supply shift pushes the price up and the demand shift pushes it down, so the price depends on which shift is larger"},
                     ],
-                    "solution": "The higher cocoa price raises the cost of making chocolate, so at every price of chocolate, makers offer fewer bars: the supply curve shifts to the left (on its own: price up, quantity down).\n\nThe diet trend reduces the quantity of chocolate wanted at every price: the demand curve shifts to the left (on its own: price down, quantity down).\n\nTogether: both shifts reduce the quantity, so the quantity of chocolate bars sold falls for sure. The supply shift pushes the price up and the demand shift pushes it down, so the net effect on the price is ambiguous: it depends on which shift is larger (left panel: the supply shift dominates and the price rises; right panel: the demand shift dominates and the price falls).\n\nRubric: 1.5 points for the two shifts, 4 for price and quantity, 1.5 for the explanation.",
+                    "solution": "The higher cocoa price raises the cost of making chocolate, so at every price of chocolate, makers offer fewer bars: the supply curve shifts to the left (on its own: price up, quantity down).\n\nThe diet trend reduces the quantity of chocolate wanted at every price: the demand curve shifts to the left (on its own: price down, quantity down).\n\nTogether: both shifts reduce the quantity, so the quantity of chocolate bars sold falls for sure. The supply shift pushes the price up and the demand shift pushes it down, so the net effect on the price is ambiguous: it depends on which shift is larger (left panel: the supply shift dominates and the price rises; right panel: the demand shift dominates and the price falls).",
                     "figure": {"kind": "sd2",
                                "panels": [{"title": "Supply shift larger: price rises", "d": [90, 80], "s": [10, 40]},
                                           {"title": "Demand shift larger: price falls", "d": [90, 60], "s": [10, 20]}]},
@@ -235,74 +208,63 @@ MOCK = {
         },
         {
             "id": "mock-p2",
-            "title": "StandWell: a price test, elasticity and marginal revenue",
+            "title": "StandWell: a pricing experiment, elasticity and marginal revenue",
             "points": 50,
-            "intro": "StandWell sells an adjustable standing desk online. At its regular price of $200 it sells 2,000 desks per month. To learn about its demand, the company ran a one-month price test: at a price of $180 it sold 2,400 desks. Nothing else changed during the test (same marketing, no seasonal effects). Treat the regular price of $200 as the initial situation.",
+            "intro": "StandWell sells an adjustable standing desk online. At its regular price of $200 it sells 2,000 desks per month. To learn about its demand, the company ran a one-month pricing experiment: it cut the price to $180 for one month and sold 2,400 desks. Nothing else changed during the experiment (same marketing, no seasonal effects). Treat the regular price of $200 as the initial situation.",
             "parts": [
                 {
                     "id": "mock-p2a", "label": "(a)", "points": 8,
-                    "text": "Using the two observations, compute the price elasticity of demand at the regular price of $200. Is demand elastic, inelastic or unit elastic at this price?",
+                    "text": "Using the two observations from the experiment, compute the price elasticity of demand at the regular price of $200. Is demand elastic, inelastic or unit elastic at this price?",
                     "items": [
-                        {"id": "mock-p2a-e", "kind": "number", "points": 4, "label": "Price elasticity of demand at P = $200", "answer": -2, "tolerance": 0.06, "rubric": "Elasticity = (+20%) / (−10%) = −2"},
-                        {"id": "mock-p2a-type", "kind": "select", "points": 2, "label": "At this price, demand is", "options": ["Elastic", "Inelastic", "Unit elastic"], "correct": 0, "rubric": "Demand is elastic (absolute value above 1)"},
+                        {"id": "mock-p2a-ans", "kind": "text", "label": "Your answer (formula, calculation and conclusion)", "rows": 5},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p2a-formula", "points": 2, "text": "Uses elasticity = %ΔQ / %ΔP, with both percentage changes measured from the initial point (P = $200, Q = 2,000)"},
+                        {"id": "mock-p2a-r1", "points": 4, "text": "Formula and reasoning: elasticity = %ΔQ / %ΔP, with both percentage changes measured from the initial point (P = $200, Q = 2,000)"},
+                        {"id": "mock-p2a-r2", "points": 4, "text": "Elasticity = −2, and demand is elastic at this price"},
                     ],
-                    "solution": "Percentage changes from the initial point:\n%ΔP = (180 − 200) / 200 = −10%.\n%ΔQ = (2,400 − 2,000) / 2,000 = +20%.\n\nElasticity = %ΔQ / %ΔP = 20% / (−10%) = −2.\n\n|E| = 2 > 1: demand is elastic at the regular price. A 1% price cut raises the quantity sold by about 2%.\n\nRubric: 4 points for the formula and reasoning, 4 points for the number and the classification.",
+                    "solution": "Percentage changes from the initial point:\n%ΔP = (180 − 200) / 200 = −10%.\n%ΔQ = (2,400 − 2,000) / 2,000 = +20%.\n\nElasticity = %ΔQ / %ΔP = 20% / (−10%) = −2.\n\n|E| = 2 > 1: demand is elastic at the regular price. A 1% price cut raises the quantity sold by about 2%.",
                 },
                 {
                     "id": "mock-p2b", "label": "(b)", "points": 8,
-                    "text": "Assume that the demand for the desk is linear. Use the two observations to derive the demand function, with quantity Q (desks per month) as a function of the price P (in dollars).",
+                    "text": "Assume that the demand for the desk is linear. Use the two observations from the experiment to derive the demand function, with the quantity Q (desks per month) as a function of the price P (in dollars).",
                     "items": [
-                        {"id": "mock-p2b-dem", "kind": "formula", "points": 6, "label": "Demand function", "template": "Q = {a} − {b} × P",
-                         "fields": [{"key": "a", "id": "mock-p2b-dem-a", "points": 3, "answer": 6000, "tolerance": 0.5},
-                                    {"key": "b", "id": "mock-p2b-dem-b", "points": 3, "answer": 20, "tolerance": 0.005}],
-                         "rubric": "Demand: Q = 6,000 − 20 × P"},
+                        {"id": "mock-p2b-ans", "kind": "text", "label": "Your answer (show how you get the slope and the intercept, and state the demand function)", "rows": 5},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p2b-method", "points": 2, "text": "Method: slope from the two points, ΔQ/ΔP = 400 / (−20) = −20; intercept by plugging one of the points into Q = a − 20P"},
+                        {"id": "mock-p2b-r1", "points": 3, "text": "Slope from the two points: ΔQ/ΔP = 400 / (−20) = −20, so Q = a − 20P"},
+                        {"id": "mock-p2b-r2", "points": 3, "text": "Intercept by plugging in one of the points: a = 6,000"},
+                        {"id": "mock-p2b-r3", "points": 2, "text": "States the demand function Q = 6,000 − 20 × P (and checks it with the other point)"},
                     ],
-                    "solution": "A linear demand function has the form Q = a − b × P.\n\nSlope: b = −ΔQ/ΔP = −(2,400 − 2,000) / (180 − 200) = −400 / (−20) = 20, so each extra dollar of price costs 20 desks per month: Q = a − 20P.\n\nIntercept: plug in the regular point: 2,000 = a − 20 × 200, so a = 6,000.\n\nDemand function: Q = 6,000 − 20 × P. Check with the test point: 6,000 − 20 × 180 = 2,400.\n\n(Consistency check with part a: at P = 200 the point elasticity is −20 × 200 / 2,000 = −2, the same number, because demand is linear.)\n\nRubric: 3 points for the slope, 3 for the intercept, 2 for the method.",
+                    "solution": "A linear demand function has the form Q = a − b × P.\n\nSlope: b = −ΔQ/ΔP = −(2,400 − 2,000) / (180 − 200) = −400 / (−20) = 20, so each extra dollar of price costs 20 desks per month: Q = a − 20P.\n\nIntercept: plug in the regular point: 2,000 = a − 20 × 200, so a = 6,000.\n\nDemand function: Q = 6,000 − 20 × P. Check with the experiment's second point: 6,000 − 20 × 180 = 2,400.\n\n(Consistency check with part a: at P = 200 the point elasticity is −20 × 200 / 2,000 = −2, the same number, because demand is linear.)",
                 },
                 {
                     "id": "mock-p2c", "label": "(c)", "points": 10,
-                    "text": "Compute StandWell's total revenue per month at the regular price of $200 and at the test price of $180, and the change in revenue. Which of the two prices brings in more revenue, and why?",
+                    "text": "Consider only the two prices used in the experiment, $200 and $180. Compute StandWell's total revenue per month at each of these two prices, and the change in revenue from cutting the price from $200 to $180. Which of these two prices brings in more revenue, and why?",
                     "items": [
-                        {"id": "mock-p2c-tr0", "kind": "number", "points": 3, "label": "Total revenue at P = $200", "unit": "$ per month", "answer": 200 * 2000, "tolerance": 1, "rubric": "Revenue at $200: 200 × 2,000 = $400,000"},
-                        {"id": "mock-p2c-tr1", "kind": "number", "points": 3, "label": "Total revenue at P = $180", "unit": "$ per month", "answer": 180 * 2400, "tolerance": 1, "rubric": "Revenue at $180: 180 × 2,400 = $432,000"},
-                        {"id": "mock-p2c-dtr", "kind": "number", "points": 2, "label": "Change in revenue from cutting the price to $180", "unit": "$ per month", "answer": 180 * 2400 - 200 * 2000, "tolerance": 1, "rubric": "Change: 432,000 − 400,000 = +$32,000"},
-                        {"id": "mock-p2c-which", "kind": "select", "points": 1, "label": "Which price brings in more revenue?", "options": ["$200", "$180", "They bring in the same revenue"], "correct": 1, "rubric": "The lower price, $180"},
-                        {"id": "mock-p2c-expl", "kind": "text", "label": "Why?", "rows": 3},
+                        {"id": "mock-p2c-ans", "kind": "text", "label": "Your answer (the two revenues, the change, which of the two prices wins and why)", "rows": 5},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p2c-reason", "points": 1, "text": "Links the result to elastic demand: the 20% gain in quantity outweighs the 10% price cut, so revenue rises"},
+                        {"id": "mock-p2c-r1", "points": 3, "text": "Revenue at $200: 200 × 2,000 = $400,000 per month"},
+                        {"id": "mock-p2c-r2", "points": 3, "text": "Revenue at $180: 180 × 2,400 = $432,000 per month"},
+                        {"id": "mock-p2c-r3", "points": 2, "text": "Change in revenue: +$32,000 per month"},
+                        {"id": "mock-p2c-r4", "points": 1, "text": "The lower price, $180, brings in more revenue"},
+                        {"id": "mock-p2c-r5", "points": 1, "text": "Reason: demand is elastic, so the 20% gain in quantity outweighs the 10% price cut"},
                     ],
-                    "solution": "At the regular price: 200 × 2,000 = $400,000 per month.\nAt the test price: 180 × 2,400 = $432,000 per month.\nChange: 432,000 − 400,000 = +$32,000 per month (+8%).\n\nThe lower price brings in more revenue because demand is elastic at $200: the quantity sold rises by 20%, more than the 10% fall in price, so the extra units more than make up for the lower price on every unit.\n\nRubric: 3 points for each revenue figure, 2 for the change, 1 for the comparison, 1 for the reason.",
+                    "solution": "At the regular price: 200 × 2,000 = $400,000 per month.\nAt the experiment price: 180 × 2,400 = $432,000 per month.\nChange: 432,000 − 400,000 = +$32,000 per month (+8%).\n\nOf the two prices, $180 brings in more revenue, because demand is elastic at $200: the quantity sold rises by 20%, more than the 10% fall in price, so the extra desks more than make up for the lower price on every desk.",
                 },
                 {
                     "id": "mock-p2d", "label": "(d)", "points": 12,
                     "text": "Using the demand function from (b), derive marginal revenue as a function of the quantity sold, and compute marginal revenue at the regular price (where Q = 2,000). Interpret the number you obtain.",
                     "items": [
-                        {"id": "mock-p2d-inv", "kind": "formula", "points": 3, "label": "Inverse demand function", "template": "P = {a} − {b} × Q",
-                         "fields": [{"key": "a", "id": "mock-p2d-inv-a", "points": 1.5, "answer": 300, "tolerance": 0.5},
-                                    {"key": "b", "id": "mock-p2d-inv-b", "points": 1.5, "answer": 0.05, "tolerance": 0.0005}],
-                         "rubric": "Inverse demand: P = 300 − 0.05 × Q"},
-                        {"id": "mock-p2d-tr", "kind": "formula", "points": 3, "label": "Total revenue as a function of Q", "template": "TR = {a} × Q − {b} × Q²",
-                         "fields": [{"key": "a", "id": "mock-p2d-tr-a", "points": 1.5, "answer": 300, "tolerance": 0.5},
-                                    {"key": "b", "id": "mock-p2d-tr-b", "points": 1.5, "answer": 0.05, "tolerance": 0.0005}],
-                         "rubric": "Total revenue: TR = 300 × Q − 0.05 × Q²"},
-                        {"id": "mock-p2d-mr", "kind": "formula", "points": 3, "label": "Marginal revenue as a function of Q", "template": "MR = {a} − {b} × Q",
-                         "fields": [{"key": "a", "id": "mock-p2d-mr-a", "points": 1.5, "answer": 300, "tolerance": 0.5},
-                                    {"key": "b", "id": "mock-p2d-mr-b", "points": 1.5, "answer": 0.1, "tolerance": 0.0005}],
-                         "rubric": "Marginal revenue: MR = 300 − 0.1 × Q"},
-                        {"id": "mock-p2d-mr0", "kind": "number", "points": 2, "label": "Marginal revenue at Q = 2,000", "unit": "$", "answer": 300 - 0.1 * 2000, "tolerance": 0.5, "rubric": "At Q = 2,000: MR = 300 − 0.1 × 2,000 = $100"},
-                        {"id": "mock-p2d-interp", "kind": "text", "label": "Interpret this number", "rows": 3},
+                        {"id": "mock-p2d-ans", "kind": "text", "label": "Your answer (show each step and interpret the final number)", "rows": 6},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p2d-interp-r", "points": 1, "text": "Interpretation: selling one more desk per month adds about $100 to monthly revenue, half the $200 price, because the small price cut needed to sell it applies to all 2,000 desks"},
+                        {"id": "mock-p2d-r1", "points": 3, "text": "Inverse demand: P = 300 − 0.05 × Q"},
+                        {"id": "mock-p2d-r2", "points": 3, "text": "Total revenue: TR = 300 × Q − 0.05 × Q²"},
+                        {"id": "mock-p2d-r3", "points": 3, "text": "Marginal revenue: MR = 300 − 0.1 × Q"},
+                        {"id": "mock-p2d-r4", "points": 3, "text": "At Q = 2,000, MR = $100, interpreted as the extra monthly revenue from selling one more desk, well below the $200 price because the small price cut needed to sell it applies to all desks"},
                     ],
-                    "solution": "Step 1, inverse demand (price as a function of quantity): from Q = 6,000 − 20P, 20P = 6,000 − Q, so P = 300 − 0.05 × Q.\n\nStep 2, total revenue: TR = P × Q = (300 − 0.05 × Q) × Q = 300 × Q − 0.05 × Q².\n\nStep 3, marginal revenue is the derivative of total revenue with respect to Q: MR = 300 − 0.1 × Q (same intercept as the inverse demand, twice the slope).\n\nStep 4, at the regular price Q = 2,000: MR = 300 − 0.1 × 2,000 = $100.\n\nInterpretation: at the regular price, selling one more desk per month raises monthly revenue by about $100, only half of the $200 price. To sell one more desk, StandWell must lower the price a little, and the lower price applies to all 2,000 desks it already sells. Marginal revenue is positive, consistent with elastic demand at this price.\n\nRubric: 3 points for the inverse demand, 3 for total revenue, 3 for marginal revenue, 3 for the number and its interpretation.",
+                    "solution": "Step 1, inverse demand (price as a function of quantity): from Q = 6,000 − 20P, 20P = 6,000 − Q, so P = 300 − 0.05 × Q.\n\nStep 2, total revenue: TR = P × Q = (300 − 0.05 × Q) × Q = 300 × Q − 0.05 × Q².\n\nStep 3, marginal revenue is the derivative of total revenue with respect to Q: MR = 300 − 0.1 × Q (same intercept as the inverse demand, twice the slope).\n\nStep 4, at the regular price Q = 2,000: MR = 300 − 0.1 × 2,000 = $100.\n\nInterpretation: at the regular price, selling one more desk per month raises monthly revenue by about $100, only half of the $200 price. To sell one more desk, StandWell must lower the price a little, and the lower price applies to all 2,000 desks it already sells. Marginal revenue is positive, consistent with elastic demand at this price.",
                     "figure": {"kind": "dmr", "a": 300, "b": 0.05, "xlabel": "Desks per month",
                                "points": [{"q": 2000, "p": 200, "label": "regular price: P = $200, Q = 2,000"}, {"q": 3000, "p": 150, "label": "MR = 0: P = $150, Q = 3,000"}],
                                "mrpoint": {"q": 2000, "mr": 100, "label": "MR = $100"},
@@ -312,27 +274,28 @@ MOCK = {
                     "id": "mock-p2e", "label": "(e)", "points": 6,
                     "text": "Which quantity and which price would maximize StandWell's total revenue?",
                     "items": [
-                        {"id": "mock-p2e-q", "kind": "number", "points": 2, "label": "Revenue-maximizing quantity", "unit": "desks per month", "answer": 3000, "tolerance": 0.5, "rubric": "MR = 0 at Q = 300 / 0.1 = 3,000"},
-                        {"id": "mock-p2e-p", "kind": "number", "points": 2, "label": "Revenue-maximizing price", "unit": "$", "answer": 150, "tolerance": 0.05, "rubric": "Price from inverse demand: 300 − 0.05 × 3,000 = $150"},
+                        {"id": "mock-p2e-ans", "kind": "text", "label": "Your answer (condition, quantity and price)", "rows": 4},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p2e-cond", "points": 2, "text": "States that total revenue is maximized where marginal revenue equals zero (MR = 0)"},
+                        {"id": "mock-p2e-r1", "points": 2, "text": "States that total revenue is maximized where marginal revenue equals zero (MR = 0)"},
+                        {"id": "mock-p2e-r2", "points": 2, "text": "Revenue-maximizing quantity: Q = 3,000 desks per month"},
+                        {"id": "mock-p2e-r3", "points": 2, "text": "Revenue-maximizing price: P = $150"},
                     ],
-                    "solution": "Total revenue is maximized where marginal revenue is zero: adding desks raises revenue as long as MR > 0 and lowers it once MR < 0.\n\nMR = 300 − 0.1 × Q = 0 gives Q = 3,000 desks per month.\n\nThe price that sells this quantity comes from the inverse demand: P = 300 − 0.05 × 3,000 = $150.\n\nCheck: at P = $150 the elasticity is −20 × 150 / 3,000 = −1 (unit elastic), as it must be at the revenue maximum. Revenue there is 150 × 3,000 = $450,000, above the $432,000 earned at $180.\n\nRubric: 2 points for saying that revenue is maximized where MR = 0, 2 for the quantity, 2 for the price.",
+                    "solution": "Total revenue is maximized where marginal revenue is zero: adding desks raises revenue as long as MR > 0 and lowers it once MR < 0.\n\nMR = 300 − 0.1 × Q = 0 gives Q = 3,000 desks per month.\n\nThe price that sells this quantity comes from the inverse demand: P = 300 − 0.05 × 3,000 = $150.\n\nCheck: at P = $150 the elasticity is −20 × 150 / 3,000 = −1 (unit elastic), as it must be at the revenue maximum. Revenue there is 150 × 3,000 = $450,000, above the $432,000 earned at $180.",
                 },
                 {
                     "id": "mock-p2f", "label": "(f)", "points": 6,
                     "text": "StandWell's marginal cost of producing and delivering a desk is $60 and does not change with the number of desks sold. Should the company lower its price all the way to the revenue-maximizing price from (e)? Compared with the regular price of $200, should the profit-maximizing price be higher or lower? Explain using marginal revenue and marginal cost.",
                     "items": [
-                        {"id": "mock-p2f-all", "kind": "select", "points": 1, "label": "Lower the price all the way to the revenue-maximizing price?", "options": ["Yes", "No"], "correct": 1, "rubric": "No: at the revenue maximum MR = 0 is below the marginal cost"},
-                        {"id": "mock-p2f-vs200", "kind": "select", "points": 2, "label": "Compared with the regular price of $200, the profit-maximizing price is", "options": ["Higher", "Lower", "The same"], "correct": 1, "rubric": "Lower: at Q = 2,000, MR = $100 is above MC = $60, so selling more adds profit"},
-                        {"id": "mock-p2f-vsmax", "kind": "select", "points": 1, "label": "Compared with the revenue-maximizing price from (e), the profit-maximizing price is", "options": ["Higher", "Lower", "The same"], "correct": 0, "rubric": "Higher: the company should stop before MR falls to zero"},
-                        {"id": "mock-p2f-expl", "kind": "text", "label": "Explain why", "rows": 3},
+                        {"id": "mock-p2f-ans", "kind": "text", "label": "Your answer (yes or no, higher or lower, and the reasoning with marginal revenue and marginal cost)", "rows": 5},
                     ],
                     "self_rubric": [
-                        {"id": "mock-p2f-reason", "points": 2, "text": "Reasoning with MR and MC: profit rises as long as the next desk adds more revenue than cost (MR > MC); at Q = 2,000, MR = $100 > $60, so sell more (lower the price); at the revenue maximum MR = 0 < $60, so that is too far"},
+                        {"id": "mock-p2f-r1", "points": 1, "text": "No: at the revenue maximum MR = 0, below the marginal cost of $60"},
+                        {"id": "mock-p2f-r2", "points": 2, "text": "The profit-maximizing price is lower than $200: at Q = 2,000, MR = $100 is above MC = $60, so selling more adds profit"},
+                        {"id": "mock-p2f-r3", "points": 1, "text": "It is higher than the revenue-maximizing price: the company should stop before MR falls to zero"},
+                        {"id": "mock-p2f-r4", "points": 2, "text": "Reasoning: profit rises as long as the next desk adds more revenue than cost (MR > MC) and falls once MR < MC"},
                     ],
-                    "solution": "Profit rises when selling one more desk adds more revenue than cost (MR > MC) and falls when it adds less (MR < MC).\n\nAt the regular price, Q = 2,000 and MR = $100, above the $60 marginal cost: the next desks add to profit, so StandWell should sell more, which means a price below $200.\n\nBut it should not go all the way to the revenue-maximizing price: there MR = 0, below the $60 marginal cost, so the last desks sold would cost more than they bring in. The best price is therefore below $200 but above $150.\n\n(For the curious: setting MR = MC, 300 − 0.1 × Q = 60 gives Q = 2,400 and P = $180, exactly the test price. You will study this rule in detail in Module 5.)\n\nRubric: 1 point for no, 2 for a lower price than $200, 1 for a higher price than the revenue maximum, 2 for the marginal revenue versus marginal cost reasoning.",
+                    "solution": "Profit rises when selling one more desk adds more revenue than cost (MR > MC) and falls when it adds less (MR < MC).\n\nAt the regular price, Q = 2,000 and MR = $100, above the $60 marginal cost: the next desks add to profit, so StandWell should sell more, which means a price below $200.\n\nBut it should not go all the way to the revenue-maximizing price: there MR = 0, below the $60 marginal cost, so the last desks sold would cost more than they bring in. The best price is therefore below $200 but above $150.\n\n(For the curious: setting MR = MC, 300 − 0.1 × Q = 60 gives Q = 2,400 and P = $180, exactly the experiment's price. You will study this rule in detail in Module 5.)",
                 },
             ],
         },

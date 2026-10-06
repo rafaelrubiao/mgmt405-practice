@@ -852,9 +852,16 @@ function checkItem(it) {
   return {answered: answered, ok: answered && answers.some(x => Math.abs(v - x) <= it.tolerance + 1e-9)};
 }
 function sectionState(sec) {
-  const its = ITEMS.filter(it => it.sec === sec.id);
-  const n = its.filter(it => checkItem(it).answered).length;
-  return n === 0 ? 'none' : (n === its.length ? 'all' : 'partial');
+  // every gradable field, plus every free-text box, counts as something to answer
+  const answered = [];
+  if (sec.kind === 'mcq') answered.push(checkItem(ITEM_BY_ID[sec.id]).answered);
+  else sec.part.items.forEach(it => {
+    if (it.kind === 'text') answered.push(!!(S.answers[it.id] && String(S.answers[it.id]).trim()));
+    else if (it.kind === 'formula') it.fields.forEach(f => answered.push(checkItem(ITEM_BY_ID[f.id]).answered));
+    else answered.push(checkItem(ITEM_BY_ID[it.id]).answered);
+  });
+  const n = answered.filter(a => a).length;
+  return n === 0 ? 'none' : (n === answered.length ? 'all' : 'partial');
 }
 function computeScore() {
   let auto = 0, autoMax = 0, selfPts = 0, selfMax = 0;
@@ -1029,7 +1036,7 @@ function itemResultHTML(it, sc) {
 }
 function selfRubricHTML(part) {
   if (!part.self_rubric || !part.self_rubric.length) return '';
-  let h = '<div class="rubric"><div class="rubric-title">Self-graded: compare with the solution and tick what you got right</div>';
+  let h = '<div class="rubric"><div class="rubric-title">Rubric: compare your answer with the solution below and tick what you got right</div>';
   part.self_rubric.forEach(r => {
     h += '<label><input type="checkbox" class="selfchk" data-rubric="' + r.id + '"' + (S.self[r.id] ? ' checked' : '') + '> ' + esc(r.text) +
          ' <span class="rpts">(' + fmtPts(r.points) + ' pt' + (r.points === 1 ? '' : 's') + ')</span></label>';
@@ -1044,7 +1051,7 @@ function partBox(sec, mode, sc) {
   } else {
     part.items.forEach(it => { h += itemResultHTML(it, sc); });
     h += selfRubricHTML(part);
-    h += '<div class="sec-score" data-sec="' + part.id + '">Points: ' + fmtPts(sectionScore(sec, sc)) + ' / ' + fmtPts(sec.points) + '</div>';
+    h += '<div class="sec-score" data-sec="' + part.id + '">Points (self-graded): ' + fmtPts(sectionScore(sec, sc)) + ' / ' + fmtPts(sec.points) + '</div>';
     h += '<div class="solution"><h4>Solution</h4><pre>' + esc(part.solution) + '</pre>' + figureHTML(part.figure) + '</div>';
   }
   return h + '</div></div>';
@@ -1085,8 +1092,8 @@ function updateSide() {
 // ---- Results screen ----
 function scoreCardHTML(sc) {
   const used = S.submitted_at && S.started_at ? Math.min(S.submitted_at - S.started_at, LIMIT_MS) : 0;
-  return '<div class="score-card" id="scorecard"><div class="big">Score: ' + fmtPts(sc.total) + ' / ' + fmtPts(sc.max) + ' points</div>' +
-    '<div class="score-sub">Auto-graded: <strong>' + fmtPts(sc.auto) + ' / ' + fmtPts(sc.autoMax) + '</strong> · Self-graded (tick the rubric lines below): <strong>' + fmtPts(sc.selfPts) + ' / ' + fmtPts(sc.selfMax) + '</strong></div>' +
+  return '<div class="score-card" id="scorecard"><div class="big">Part 1, multiple choice: ' + fmtPts(sc.auto) + ' / ' + fmtPts(sc.autoMax) + ' points</div>' +
+    '<div class="score-sub">Graded automatically. Part 2, problems (graded by you with the rubric lines below): <strong>' + fmtPts(sc.selfPts) + ' / ' + fmtPts(sc.selfMax) + '</strong> · Total: <strong>' + fmtPts(sc.total) + ' / ' + fmtPts(sc.max) + '</strong></div>' +
     '<div class="score-sub muted">Submitted ' + (S.submitted_at ? new Date(S.submitted_at).toLocaleString() : '') + ' · time used ' + hms(used) +
     (S.auto_submitted ? ' · submitted automatically when the time ran out' : '') + '</div></div>';
 }
@@ -1111,7 +1118,7 @@ function refreshScore() {
   if (card) card.outerHTML = scoreCardHTML(sc);
   document.querySelectorAll('.sec-score').forEach(el => {
     const sec = SECTIONS.find(s => s.id === el.dataset.sec);
-    if (sec) el.textContent = 'Points: ' + fmtPts(sectionScore(sec, sc)) + ' / ' + fmtPts(sec.points);
+    if (sec) el.textContent = 'Points (self-graded): ' + fmtPts(sectionScore(sec, sc)) + ' / ' + fmtPts(sec.points);
   });
   storeScore(sc);
 }
