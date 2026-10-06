@@ -768,16 +768,14 @@ MOCK_TMPL = r"""<!doctype html>
 <html lang=en>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width, initial-scale=1">
-<title>Mock Midterm · MGMT 405 Practice</title>
+<title>MGMT 405 — Mock Midterm</title>
 <style>__CSS__
 __MOCKCSS__</style>
 
 <header>
-  <h1>MGMT 405 — Practice Problems</h1>
-  <div class="sub">Mock Midterm: Modules 1–3 · 100 points · 2-hour time limit · same format as the real midterm</div>
+  <h1>MGMT 405 — Mock Midterm</h1>
+  <div class="sub">Modules 1–3 · 100 points · 2-hour time limit · same format as the real midterm</div>
 </header>
-
-<nav class="modnav">__NAV__</nav>
 
 <div id="app"></div>
 
@@ -1282,10 +1280,8 @@ def nav_html(current_slug):
     for key, label, title, slug in MODULES:
         cls = ' class="active"' if slug == current_slug else ""
         parts.append(f'<a href="{slug}.html"{cls}>{label}</a>')
-    # The mock midterm is unlisted: students reach it only through a link they are
-    # given, so its tab appears only on the mock page itself.
-    if current_slug == MOCK["slug"]:
-        parts.append(f'<a href="{MOCK["slug"]}.html" class="active">Mock Midterm</a>')
+    # The mock midterm is unlisted (reached only by a link students are given) and
+    # its own page has no navigation bar, so no page links to it.
     return "".join(parts)
 
 
@@ -1336,7 +1332,6 @@ index = (INDEX_TMPL
 mock_page = (MOCK_TMPL
              .replace("__CSS__", CSS)
              .replace("__MOCKCSS__", MOCK_CSS)
-             .replace("__NAV__", nav_html(MOCK["slug"]))
              .replace("__CALC_HTML__", CALC_HTML)
              .replace("__CALC_JS__", CALC_JS)
              .replace("__DATA__", safe_embed(MOCK)))
