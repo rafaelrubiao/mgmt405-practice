@@ -663,12 +663,6 @@ for (const m of D.modules) {
   if (attempted === 0) { el.textContent = 'Not started'; }
   else { el.textContent = attempted + ' / ' + m.ids.length + ' attempted · ' + correct + ' correct'; el.classList.add('some'); }
 }
-try {
-  const m = JSON.parse(localStorage.getItem('mgmt405_mock_midterm_v1'));
-  const el = document.getElementById('mockprog');
-  if (el && m && m.status === 'in_progress') { el.textContent = 'In progress'; el.classList.add('some'); }
-  else if (el && m && m.status === 'submitted') { el.textContent = 'Submitted · ' + (m.score_total !== undefined ? m.score_total + ' / 100 points' : 'see results'); el.classList.add('some'); }
-} catch (_) {}
 </script>
 """
 
@@ -1281,8 +1275,10 @@ def nav_html(current_slug):
     for key, label, title, slug in MODULES:
         cls = ' class="active"' if slug == current_slug else ""
         parts.append(f'<a href="{slug}.html"{cls}>{label}</a>')
-    cls = ' class="active"' if current_slug == MOCK["slug"] else ""
-    parts.append(f'<a href="{MOCK["slug"]}.html"{cls}>Mock Midterm</a>')
+    # The mock midterm is unlisted: students reach it only through a link they are
+    # given, so its tab appears only on the mock page itself.
+    if current_slug == MOCK["slug"]:
+        parts.append(f'<a href="{MOCK["slug"]}.html" class="active">Mock Midterm</a>')
     return "".join(parts)
 
 
@@ -1322,15 +1318,6 @@ for key, label, title, slug in MODULES:
         f'</a>')
     mods_meta.append({"slug": slug, "label": label, "title": title,
                       "ids": [q["id"] for q in qs]})
-cards.append(
-    f'<a class="card" href="{MOCK["slug"]}.html">'
-    f'<div class="mlabel" style="color:#6a2cb0">Mock Midterm</div>'
-    f'<div class="mtitle">Modules 1–3 · 100 points · {MOCK["time_limit_minutes"] // 60}-hour timed quiz</div>'
-    f'<div class="mmeta">{len(MOCK["mcqs"])} multiple choice + {len(MOCK["problems"])} problems, in the format of the real midterm; '
-    f'submit once, then see the score, the solutions and the rubric</div>'
-    f'<div class="mprog" id="mockprog">Not started</div>'
-    f'</a>')
-
 index = (INDEX_TMPL
          .replace("__CSS__", CSS)
          .replace("__NAV__", nav_html("index"))
