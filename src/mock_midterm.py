@@ -39,11 +39,11 @@ MOCK = {
     "mcqs": [
         {
             "id": "mock-mc1", "module": "Module 1", "topic": "Economic profit and implicit costs",
-            "stem": "Priya left a job that paid her $85,000 a year to open a tutoring center. She runs it in a small building she owns, which she had been renting out to a shop for $24,000 a year. In its first year the center brought in $230,000 in revenue and paid $120,000 for instructors, utilities and materials.",
+            "stem": "Priya left a job that paid her $85,000 a year to open a tutoring center. She runs it in a small building she owns. To use the building herself, she had to cancel the rental contract with a shop that had been paying her $24,000 a year for it. In its first year the center brought in $230,000 in revenue and paid $120,000 for instructors, utilities and materials.",
             "ask": "What was the tutoring center's economic profit in its first year?",
             "choices": ["−$23,000", "$1,000", "$25,000", "$86,000", "$110,000"],
             "correct_index": 1,
-            "solution": "Accounting profit = revenue − explicit costs = 230,000 − 120,000 = $110,000.\n\nEconomic profit also subtracts the implicit costs, the value of what Priya gave up:\n  the salary from her old job: $85,000\n  the rent the building no longer earns: $24,000\n\nEconomic profit = 230,000 − 120,000 − 85,000 − 24,000 = $1,000.\n\nThe center only just beats her next-best alternatives. Leaving out the forgone rent gives $25,000; leaving out the forgone salary gives $86,000; leaving out both gives the accounting profit of $110,000.",
+            "solution": "Accounting profit = revenue − explicit costs = 230,000 − 120,000 = $110,000.\n\nEconomic profit also subtracts the implicit costs, the value of what Priya gave up:\n  the salary from her old job: $85,000\n  the rent she gave up by cancelling the shop's contract: $24,000\n\nEconomic profit = 230,000 − 120,000 − 85,000 − 24,000 = $1,000.\n\nThe center only just beats her next-best alternatives. Leaving out the forgone rent gives $25,000; leaving out the forgone salary gives $86,000; leaving out both gives the accounting profit of $110,000.",
         },
         {
             "id": "mock-mc2", "module": "Module 1", "topic": "Marginal analysis (how many units)",
