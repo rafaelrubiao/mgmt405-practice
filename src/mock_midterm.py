@@ -26,7 +26,7 @@ MOCK = {
     "subtitle": "Managerial Economics (100 points)",
     "time_limit_minutes": 120,
     "mcq_points": 3,
-    "rounding_note": "Please round all numbers to one decimal place (e.g., 43.6791 → 43.7). Enter a loss or a decrease as a negative number, and keep the sign of elasticities.",
+    "rounding_note": "Please round all numbers to two decimal places (e.g., 43.6791 → 43.68). Enter a loss or a decrease as a negative number, and keep the sign of elasticities.",
     "start_notes": [
         "Same format as the real midterm: Part 1 has 10 multiple-choice questions worth 3 points each (30 points); Part 2 has 2 problems worth 70 points. It covers Modules 1, 2 and 3.",
         "You have 2 hours. The clock starts when you click Take the Quiz and keeps running even if you close this page; the quiz is submitted automatically when the time is up.",
@@ -47,11 +47,11 @@ MOCK = {
         },
         {
             "id": "mock-mc2", "module": "Module 1", "topic": "Marginal analysis (how many units)",
-            "stem": "A catering company is deciding how many extra ovens to rent for the busy wedding season. Each oven rents for $400 per week. The company estimates the additional weekly profit, before paying the rent, that each extra oven would bring: the first oven $900, the second $700, the third $500, the fourth $450 and the fifth $200.",
+            "stem": "A catering company is deciding how many extra ovens to rent for the busy wedding season. Each oven rents for $400 per week. The company estimates the additional weekly revenue that each extra oven would bring: the first oven $900, the second $700, the third $500, the fourth $450 and the fifth $200.",
             "ask": "How many ovens should the company rent?",
-            "choices": ["2 ovens", "3 ovens", "4 ovens", "5 ovens", "As many as it can get, since every oven adds profit before rent"],
+            "choices": ["2 ovens", "3 ovens", "4 ovens", "5 ovens", "As many as it can get, since every oven adds revenue"],
             "correct_index": 2,
-            "solution": "Rent an oven if its marginal benefit (the extra profit before rent) is at least its marginal cost (the $400 rent).\n\nOven 1: $900 > $400, rent it. Oven 2: $700 > $400, rent it. Oven 3: $500 > $400, rent it. Oven 4: $450 > $400, rent it. Oven 5: $200 < $400, do not rent it.\n\nSo the company should rent 4 ovens. Net gain = (900 − 400) + (700 − 400) + (500 − 400) + (450 − 400) = $850 per week; a fifth oven would lose $200 per week.\n\nLooking at totals or averages misleads here: five ovens still give a positive total, but the fifth oven by itself does not pay for its rent.",
+            "solution": "Rent an oven if its marginal benefit (the extra revenue it brings) is at least its marginal cost (the $400 rent).\n\nOven 1: $900 > $400, rent it. Oven 2: $700 > $400, rent it. Oven 3: $500 > $400, rent it. Oven 4: $450 > $400, rent it. Oven 5: $200 < $400, do not rent it.\n\nSo the company should rent 4 ovens. Net gain = (900 − 400) + (700 − 400) + (500 − 400) + (450 − 400) = $850 per week; a fifth oven would lose $200 per week.\n\nLooking at totals or averages misleads here: five ovens still bring in more revenue than they cost in total, but the fifth oven by itself does not pay for its rent.",
         },
         {
             "id": "mock-mc3", "module": "Module 1", "topic": "Reading a market change (shift or movement)",
@@ -77,7 +77,7 @@ MOCK = {
         },
         {
             "id": "mock-mc5", "module": "Module 2", "topic": "Marginal revenue of one more unit",
-            "stem": "A small knife workshop sells 100 chef's knives per month at $50 each. Its owner believes that to sell one more knife per month she would have to lower the price to $49.60, and that the lower price would apply to all the knives she sells.",
+            "stem": "A small knife workshop sells 100 chef's knives per month at $50 each. Its owner believes that to sell one more knife per month she would have to lower the price to $49.60 (for all knives).",
             "ask": "What is the marginal revenue of the 101st knife?",
             "choices": ["−$40.00", "$9.60", "$40.00", "$49.60", "$50.00"],
             "correct_index": 1,
@@ -95,7 +95,7 @@ MOCK = {
                 "Demand is inelastic; revenue rose",
             ],
             "correct_index": 4,
-            "solution": "Percentage changes relative to the initial point:\n%ΔP = (23 − 20) / 20 = +15%.\n%ΔQ = (3,760 − 4,000) / 4,000 = −6%.\n\nElasticity = −6% / 15% = −0.4. Its absolute value is below 1, so demand is inelastic.\n\nRevenue before: $20 × 4,000 = $80,000 per week. Revenue after: $23 × 3,760 = $86,480 per week. Revenue rose by $6,480 (8.1%).\n\nWith inelastic demand the quantity lost is proportionally smaller than the price gained, so a price increase raises revenue.",
+            "solution": "Percentage changes relative to the initial point:\n%ΔP = (23 − 20) / 20 = +15%.\n%ΔQ = (3,760 − 4,000) / 4,000 = −6%.\n\nElasticity = −6% / 15% = −0.4. Its absolute value is below 1, so demand is inelastic.\n\nRevenue before: $20 × 4,000 = $80,000 per week. Revenue after: $23 × 3,760 = $86,480 per week. Revenue rose by $6,480 (8.10%).\n\nWith inelastic demand the quantity lost is proportionally smaller than the price gained, so a price increase raises revenue.",
         },
         {
             "id": "mock-mc7", "module": "Module 3", "topic": "Marginal cost",
@@ -113,11 +113,11 @@ MOCK = {
                 "−4 calls; average product falls",
                 "4 calls; average product rises",
                 "50 calls; average product falls",
-                "74.3 calls; average product rises",
+                "74.29 calls; average product rises",
                 "520 calls; average product is unchanged",
             ],
             "correct_index": 2,
-            "solution": "Marginal product = the extra calls from one extra agent.\nMP of the 7th agent = 520 − 470 = 50 calls per day. (The 6th agent added 70, so returns are diminishing.)\n\nAverage product = calls per agent.\nWith 6 agents: 470 / 6 = 78.3 calls per agent. With 7 agents: 520 / 7 = 74.3 calls per agent.\n\nThe 7th agent's marginal product (50) is below the average of the first six (78.3), so the average is pulled down, by about 4 calls per agent. That change in the average (−4) is not the marginal product; the marginal product is the whole output of the extra agent, 50 calls.",
+            "solution": "Marginal product = the extra calls from one extra agent.\nMP of the 7th agent = 520 − 470 = 50 calls per day. (The 6th agent added 70, so returns are diminishing.)\n\nAverage product = calls per agent.\nWith 6 agents: 470 / 6 = 78.33 calls per agent. With 7 agents: 520 / 7 = 74.29 calls per agent.\n\nThe 7th agent's marginal product (50) is below the average of the first six (78.33), so the average is pulled down, by about 4 calls per agent (78.33 − 74.29 = 4.04). That change in the average (−4) is not the marginal product; the marginal product is the whole output of the extra agent, 50 calls.",
         },
         {
             "id": "mock-mc9", "module": "Module 3", "topic": "Make or buy (relevant costs)",
