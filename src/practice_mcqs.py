@@ -509,7 +509,7 @@ ADDITIONAL_MCQS += [
     "solution": "Economies of SCOPE: joint production of multiple products is cheaper than separate production, due to shared resources (here: the herd, refrigeration, distribution).\n\nContrast with economies of SCALE (lower cost per unit at larger production of ONE good).",
 },
 {
-    "id": "m3-mcq-8", "module": "M3", "theme": "Profit-Max Quantity in Perfect Competition (Numeric)", "format": "mcq",
+    "id": "m4i-mcq-11", "module": "M4-I", "order": 1, "theme": "Profit-Max Quantity in Perfect Competition (Numeric)", "format": "mcq",
     "stem": "A perfectly competitive firm has marginal cost MC = 3Q + 5. The market price is $35.",
     "ask": "What is the profit-maximizing quantity?",
     "choices": [
@@ -528,7 +528,7 @@ ADDITIONAL_MCQS += [
     "solution": "Profit-max for a perfectly competitive firm: P = MC.\n  35 = 3Q + 5\n  3Q = 30\n  Q* = 10.",
 },
 {
-    "id": "m3-mcq-9", "module": "M3", "theme": "Shutdown Condition", "format": "mcq",
+    "id": "m4i-mcq-12", "module": "M4-I", "order": 1, "theme": "Shutdown Condition", "format": "mcq",
     "stem": "Under what condition should a perfectly competitive firm shut down in the SHORT RUN?",
     "ask": "The firm should shut down if and only if:",
     "choices": [

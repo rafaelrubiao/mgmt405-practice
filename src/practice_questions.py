@@ -216,7 +216,7 @@ QUESTIONS += [
     "solution": "TC(Q) = 80 + 6Q + 0.25Q²\nMC(Q) = dTC/dQ = 6 + 0.5Q\n\nAt Q = 12:  MC = 6 + 0.5(12) = $12.\n\n(Note: the fixed cost $80 doesn't appear in MC — that's why FC never affects the profit-maximizing output level.)",
 },
 {
-    "id": "m3-q4", "module": "M3", "theme": "Profit at the Optimal Quantity", "format": "open",
+    "id": "m4i-q5", "module": "M4-I", "order": 1, "theme": "Profit at the Optimal Quantity", "format": "open",
     "stem": "A small candle-maker operates in a perfectly competitive market. Its total cost is TC = 800 + 6Q + 0.2Q², and the market price is $18 per candle.",
     "ask": "Compute the firm's profit at the profit-maximizing quantity (in dollars).",
     "answer": -620, "tolerance_abs": 1, "unit": "$",
