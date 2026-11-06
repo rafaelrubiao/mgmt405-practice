@@ -6,7 +6,9 @@ answered in free text and graded by the student with the rubric shown after
 submission. Every scenario and every number here is new (nothing is taken from a
 past exam or from the practice bank). The page is unlisted on the site.
 
-Schema (validated by build_site.py):
+Schema (validated by build_site.py; src/mock_final.py uses the same one):
+  MOCK              slug, state_key, name, header_sub, covers, n_mcqs, title, subtitle,
+                    time_limit_minutes, mcq_points, rounding_note, start_notes, results_note
   MOCK["mcqs"]      10 dicts: id, module, topic, stem, ask, choices (5), correct_index, solution
   MOCK["problems"]  dicts: id, title, points, intro, parts
   part              id, label, points, text, items, self_rubric, solution, figure (optional)
@@ -22,6 +24,10 @@ Stems, asks and texts are plain text; **bold** is the only markup rendered.
 MOCK = {
     "slug": "mock-midterm",
     "state_key": "mgmt405_mock_midterm_v1",
+    "name": "Mock Midterm",
+    "header_sub": "Modules 1–3 · 100 points · 2-hour time limit · same format as the real midterm",
+    "covers": "Modules 1, 2 and 3",
+    "n_mcqs": 10,
     "title": "Mock Midterm Exam",
     "subtitle": "Managerial Economics (100 points)",
     "time_limit_minutes": 120,

@@ -5,8 +5,9 @@ question, and writes one page per module to docs/ plus a docs/index.html
 overview. GitHub Pages serves the docs/ folder, so each module gets a stable
 URL the course calendar can link to directly, e.g. .../module-4-part-1.html
 
-It also reads src/mock_midterm.py and writes docs/mock-midterm.html, a timed,
-submit-once quiz in the format of the real midterm (Modules 1-3).
+It also reads src/mock_midterm.py and src/mock_final.py and writes
+docs/mock-midterm.html and docs/mock-final.html: timed, submit-once quizzes in
+the format of the real midterm (Modules 1-3) and the real final (all modules).
 
 Do not edit docs/*.html by hand -- edit the sources and rerun this script.
 """
@@ -17,9 +18,11 @@ ROOT = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 from practice_questions import QUESTIONS, MODULES
 from practice_mcqs import ADDITIONAL_MCQS
-from mock_midterm import MOCK
+from mock_midterm import MOCK as MOCK_MIDTERM
+from mock_final import MOCK as MOCK_FINAL
 
 QUESTIONS = QUESTIONS + ADDITIONAL_MCQS
+MOCKS = [MOCK_MIDTERM, MOCK_FINAL]
 DOCS = ROOT / "docs"
 DOCS.mkdir(exist_ok=True)
 
@@ -56,7 +59,7 @@ for q in QUESTIONS:
             assert "of the above" not in c.lower(), \
                 f"{q['id']} option {chr(65 + i)} says '{c}' but is not the last option"
 
-# ---------------- validation (mock midterm) ----------------
+# ---------------- validation (mock exams) ----------------
 def _numeric_choice(c):
     t = c.replace(",", "").replace("$", "").replace("%", "").replace("+", "").replace("−", "-").strip()
     try:
@@ -69,66 +72,68 @@ def _mock_id(i):
     assert i not in _mock_ids and i not in seen_ids, f"mock: duplicate id {i}"
     _mock_ids.add(i)
 
-assert len(MOCK["mcqs"]) == 10, "mock: Part 1 needs exactly 10 multiple-choice questions"
-for q in MOCK["mcqs"]:
-    _mock_id(q["id"])
-    assert len(q["choices"]) == 5 and 0 <= q["correct_index"] < 5, f"{q['id']}: needs 5 choices and a valid correct_index"
-    assert q.get("solution") and q.get("module") and q.get("topic"), f"{q['id']}: needs module, topic and solution"
-    for field in ("stem", "ask"):
-        low = q[field].lower()
-        assert "decimal place" not in low and "round to" not in low and "negative number" not in low, \
-            f"{q['id']}: repeats the rounding or sign instruction in {field}"
-    for i, c in enumerate(q["choices"][:-1]):
-        assert "of the above" not in c.lower(), f"{q['id']}: option {chr(65 + i)} says 'of the above' but is not last"
-    for c in q["choices"]:
-        assert "approximately" not in c.lower() and "[" not in c, f"{q['id']}: option '{c}' singles itself out"
-    nums = [_numeric_choice(c) for c in q["choices"]]
-    if all(n is not None for n in nums):
-        assert nums == sorted(nums), f"{q['id']}: numeric options must be in ascending order"
-_pos = Counter(q["correct_index"] for q in MOCK["mcqs"])
-assert max(_pos.values()) <= 3, f"mock: correct answers cluster on one letter: {dict(_pos)}"
+for MOCK in MOCKS:
 
-_total = len(MOCK["mcqs"]) * MOCK["mcq_points"]
-for p in MOCK["problems"]:
-    _mock_id(p["id"])
-    assert abs(sum(part["points"] for part in p["parts"]) - p["points"]) < 1e-9, \
-        f"{p['id']}: part points do not add up to {p['points']}"
-    _total += p["points"]
-    for part in p["parts"]:
-        _mock_id(part["id"])
-        assert part.get("solution"), f"{part['id']}: needs a solution"
-        low = part["text"].lower()
-        assert "decimal place" not in low and "round to" not in low, f"{part['id']}: repeats the rounding instruction"
-        pts = 0
-        for it in part["items"]:
-            _mock_id(it["id"])
-            if it["kind"] == "select":
-                assert 0 <= it["correct"] < len(it["options"]), f"{it['id']}: bad correct index"
-                pts += it["points"]
-            elif it["kind"] == "number":
-                assert isinstance(it["answer"], (int, float)) and it["tolerance"] >= 0, \
-                    f"{it['id']}: needs a numeric answer and a non-negative tolerance"
-                pts += it["points"]
-            elif it["kind"] == "formula":
-                fpts = 0
-                for f in it["fields"]:
-                    _mock_id(f["id"])
-                    assert "{" + f["key"] + "}" in it["template"], f"{it['id']}: template has no slot for {f['key']}"
-                    assert isinstance(f["answer"], (int, float)) and f["tolerance"] >= 0, \
-                        f"{f['id']}: needs a numeric answer and a non-negative tolerance"
-                    fpts += f["points"]
-                assert abs(fpts - it["points"]) < 1e-9, f"{it['id']}: field points do not add up to {it['points']}"
-                pts += it["points"]
-            else:
-                assert it["kind"] == "text", f"{it['id']}: unknown item kind {it['kind']!r}"
-        for r in part.get("self_rubric", []):
-            _mock_id(r["id"])
-            pts += r["points"]
-        assert abs(pts - part["points"]) < 1e-9, f"{part['id']}: items + self rubric = {pts} points, expected {part['points']}"
-assert _total == 100, f"mock: total points = {_total}, expected 100"
-for _txt in [q["stem"] + " " + q["ask"] for q in MOCK["mcqs"]] + \
-            [p["intro"] + " " + " ".join(part["text"] for part in p["parts"]) for p in MOCK["problems"]]:
-    assert " PC " not in _txt and "mon comp" not in _txt.lower(), "mock: spell out terms in student text"
+    assert len(MOCK["mcqs"]) == MOCK["n_mcqs"], f"{MOCK['slug']}: Part 1 needs exactly {MOCK['n_mcqs']} multiple-choice questions"
+    for q in MOCK["mcqs"]:
+        _mock_id(q["id"])
+        assert len(q["choices"]) == 5 and 0 <= q["correct_index"] < 5, f"{q['id']}: needs 5 choices and a valid correct_index"
+        assert q.get("solution") and q.get("module") and q.get("topic"), f"{q['id']}: needs module, topic and solution"
+        for field in ("stem", "ask"):
+            low = q[field].lower()
+            assert "decimal place" not in low and "round to" not in low and "negative number" not in low, \
+                f"{q['id']}: repeats the rounding or sign instruction in {field}"
+        for i, c in enumerate(q["choices"][:-1]):
+            assert "of the above" not in c.lower(), f"{q['id']}: option {chr(65 + i)} says 'of the above' but is not last"
+        for c in q["choices"]:
+            assert "approximately" not in c.lower() and "[" not in c, f"{q['id']}: option '{c}' singles itself out"
+        nums = [_numeric_choice(c) for c in q["choices"]]
+        if all(n is not None for n in nums):
+            assert nums == sorted(nums), f"{q['id']}: numeric options must be in ascending order"
+    _pos = Counter(q["correct_index"] for q in MOCK["mcqs"])
+    assert max(_pos.values()) <= -(-3 * len(MOCK["mcqs"]) // 10), f"{MOCK['slug']}: correct answers cluster on one letter: {dict(_pos)}"
+
+    _total = len(MOCK["mcqs"]) * MOCK["mcq_points"]
+    for p in MOCK["problems"]:
+        _mock_id(p["id"])
+        assert abs(sum(part["points"] for part in p["parts"]) - p["points"]) < 1e-9, \
+            f"{p['id']}: part points do not add up to {p['points']}"
+        _total += p["points"]
+        for part in p["parts"]:
+            _mock_id(part["id"])
+            assert part.get("solution"), f"{part['id']}: needs a solution"
+            low = part["text"].lower()
+            assert "decimal place" not in low and "round to" not in low, f"{part['id']}: repeats the rounding instruction"
+            pts = 0
+            for it in part["items"]:
+                _mock_id(it["id"])
+                if it["kind"] == "select":
+                    assert 0 <= it["correct"] < len(it["options"]), f"{it['id']}: bad correct index"
+                    pts += it["points"]
+                elif it["kind"] == "number":
+                    assert isinstance(it["answer"], (int, float)) and it["tolerance"] >= 0, \
+                        f"{it['id']}: needs a numeric answer and a non-negative tolerance"
+                    pts += it["points"]
+                elif it["kind"] == "formula":
+                    fpts = 0
+                    for f in it["fields"]:
+                        _mock_id(f["id"])
+                        assert "{" + f["key"] + "}" in it["template"], f"{it['id']}: template has no slot for {f['key']}"
+                        assert isinstance(f["answer"], (int, float)) and f["tolerance"] >= 0, \
+                            f"{f['id']}: needs a numeric answer and a non-negative tolerance"
+                        fpts += f["points"]
+                    assert abs(fpts - it["points"]) < 1e-9, f"{it['id']}: field points do not add up to {it['points']}"
+                    pts += it["points"]
+                else:
+                    assert it["kind"] == "text", f"{it['id']}: unknown item kind {it['kind']!r}"
+            for r in part.get("self_rubric", []):
+                _mock_id(r["id"])
+                pts += r["points"]
+            assert abs(pts - part["points"]) < 1e-9, f"{part['id']}: items + self rubric = {pts} points, expected {part['points']}"
+    assert _total == 100, f"{MOCK['slug']}: total points = {_total}, expected 100"
+    for _txt in [q["stem"] + " " + q["ask"] for q in MOCK["mcqs"]] + \
+                [p["intro"] + " " + " ".join(part["text"] for part in p["parts"]) for p in MOCK["problems"]]:
+        assert " PC " not in _txt and "mon comp" not in _txt.lower(), "mock: spell out terms in student text"
 
 # ---------------- shared CSS ----------------
 CSS = """
@@ -666,7 +671,7 @@ for (const m of D.modules) {
 </script>
 """
 
-# ---------------- mock midterm template ----------------
+# ---------------- mock exam template (midterm and final) ----------------
 # A timed, submit-once quiz that imitates a Canvas (BruinLearn) quiz: start screen,
 # countdown, question list, autosave in localStorage, confirmation on submit, then
 # the auto-graded score, correct answers, step-by-step solutions and the rubric.
@@ -768,13 +773,13 @@ MOCK_TMPL = r"""<!doctype html>
 <html lang=en>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width, initial-scale=1">
-<title>MGMT 405 — Mock Midterm</title>
+<title>MGMT 405 — __MOCKNAME__</title>
 <style>__CSS__
 __MOCKCSS__</style>
 
 <header>
-  <h1>MGMT 405 — Mock Midterm</h1>
-  <div class="sub">Modules 1–3 · 100 points · 2-hour time limit · same format as the real midterm</div>
+  <h1>MGMT 405 — __MOCKNAME__</h1>
+  <div class="sub">__MOCKSUB__</div>
 </header>
 
 <div id="app"></div>
@@ -922,7 +927,7 @@ function renderStart() {
   h += '<table class="meta">' +
     '<tr><td>Time limit</td><td><strong>' + (D.time_limit_minutes / 60) + ' hours</strong></td></tr>' +
     '<tr><td>Points</td><td><strong>' + (P1_PTS + P2_PTS) + '</strong> · Part 1: ' + D.mcqs.length + ' multiple-choice questions × ' + D.mcq_points + ' points (' + P1_PTS + ' points) · Part 2: ' + D.problems.length + ' problems (' + P2_PTS + ' points)</td></tr>' +
-    '<tr><td>Covers</td><td>Modules 1, 2 and 3</td></tr>' +
+    '<tr><td>Covers</td><td>' + esc(D.covers) + '</td></tr>' +
     '<tr><td>Attempts</td><td>One; you can retake the quiz after seeing your results</td></tr></table>';
   h += '<div class="note">' + esc(D.rounding_note) + '</div>';
   h += '<h3>Instructions</h3><ul class="instr">' + D.start_notes.map(n => '<li>' + fmt(n) + '</li>').join('') + '</ul>';
@@ -1280,8 +1285,8 @@ def nav_html(current_slug):
     for key, label, title, slug in MODULES:
         cls = ' class="active"' if slug == current_slug else ""
         parts.append(f'<a href="{slug}.html"{cls}>{label}</a>')
-    # The mock midterm is unlisted (reached only by a link students are given) and
-    # its own page has no navigation bar, so no page links to it.
+    # The mock exams are unlisted (reached only by a link students are given) and
+    # their own pages have no navigation bar, so no page links to them.
     return "".join(parts)
 
 
@@ -1328,21 +1333,24 @@ index = (INDEX_TMPL
          .replace("__DATA__", safe_embed({"modules": mods_meta})))
 (DOCS / "index.html").write_text(index, encoding="utf-8")
 
-# ---------------- write the mock midterm ----------------
-mock_page = (MOCK_TMPL
-             .replace("__CSS__", CSS)
-             .replace("__MOCKCSS__", MOCK_CSS)
-             .replace("__CALC_HTML__", CALC_HTML)
-             .replace("__CALC_JS__", CALC_JS)
-             .replace("__DATA__", safe_embed(MOCK)))
-assert "__DATA" + "__" not in mock_page and "__CALC" + "_" not in mock_page, "mock: unresolved placeholder"
-(DOCS / f"{MOCK['slug']}.html").write_text(mock_page, encoding="utf-8")
+# ---------------- write the mock exams ----------------
+for MOCK in MOCKS:
+    mock_page = (MOCK_TMPL
+                 .replace("__CSS__", CSS)
+                 .replace("__MOCKCSS__", MOCK_CSS)
+                 .replace("__MOCKNAME__", MOCK["name"])
+                 .replace("__MOCKSUB__", MOCK["header_sub"])
+                 .replace("__CALC_HTML__", CALC_HTML)
+                 .replace("__CALC_JS__", CALC_JS)
+                 .replace("__DATA__", safe_embed(MOCK)))
+    assert "__DATA" + "__" not in mock_page and "__CALC" + "_" not in mock_page         and "__MOCK" not in mock_page, f"{MOCK['slug']}: unresolved placeholder"
+    (DOCS / f"{MOCK['slug']}.html").write_text(mock_page, encoding="utf-8")
 
 # GitHub Pages: skip the Jekyll build, serve files as-is
 (DOCS / ".nojekyll").write_text("", encoding="utf-8")
 
 # ---------------- report ----------------
-print(f"Wrote {len(MODULES)} module pages + index.html + {MOCK['slug']}.html to docs/")
+print(f"Wrote {len(MODULES)} module pages + index.html + " + " + ".join(f"{m['slug']}.html" for m in MOCKS) + " to docs/")
 print(f"\n{'key':6s}{'page':24s}{'open':>5s}{'mcq':>5s}{'total':>6s}")
 for key, label, title, slug in MODULES:
     qs = by_mod[key]

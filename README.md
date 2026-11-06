@@ -6,8 +6,12 @@ comes with three escalating hints (one more is revealed after each wrong
 attempt) and a full step-by-step solution. Progress is saved in the student's
 browser; nothing is collected or sent anywhere.
 
-The repository also builds an unlisted mock midterm page (Modules 1–3), which is
-not linked from the site; the TA hands out its address.
+The repository also builds two unlisted mock exam pages, a mock midterm
+(Modules 1–3) and a mock final (all modules). They are not linked from the site;
+the TA hands out their addresses:
+
+- https://rafaelrubiao.github.io/mgmt405-practice/mock-midterm.html
+- https://rafaelrubiao.github.io/mgmt405-practice/mock-final.html
 
 Live site: https://rafaelrubiao.github.io/mgmt405-practice/
 
@@ -34,8 +38,8 @@ Each module has a stable URL, so the calendar can link week by week:
 1. Edit `src/practice_questions.py` (open questions and some multiple choice)
    or `src/practice_mcqs.py` (the rest of the multiple choice). The schema is
    documented at the top of `practice_questions.py`.
-   The unlisted mock midterm lives in `src/mock_midterm.py` (its schema is
-   documented at the top of that file).
+   The unlisted mock exams live in `src/mock_midterm.py` and `src/mock_final.py`
+   (the schema is documented at the top of `mock_midterm.py`).
 2. Rebuild the pages:
 
    ```
@@ -48,7 +52,7 @@ Each module has a stable URL, so the calendar can link week by week:
 
 ## Layout
 
-- `src/` — the question bank and the mock midterm (Python files; this is what you edit)
+- `src/` — the question bank and the two mock exams (Python files; this is what you edit)
 - `build_site.py` — turns the question bank into the web pages
 - `docs/` — the generated site, served by GitHub Pages. Do not edit these
   files by hand; they are overwritten on every build.
