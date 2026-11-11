@@ -791,7 +791,9 @@ __CALC_HTML__
 'use strict';
 const D = JSON.parse(document.getElementById('QDATA').textContent);
 const KEY = D.state_key;
-const LIMIT_MS = D.time_limit_minutes * 60 * 1000;
+// time_limit_minutes = null means an untimed practice: no clock, no automatic submission
+const TIMED = D.time_limit_minutes != null;
+const LIMIT_MS = TIMED ? D.time_limit_minutes * 60 * 1000 : Infinity;
 const P1_PTS = D.mcqs.length * D.mcq_points;
 const P2_PTS = D.problems.reduce((a, p) => a + p.points, 0);
 const app = document.getElementById('app');
@@ -882,7 +884,7 @@ function sectionScore(sec, sc) {
 function storeScore(sc) { S.score_auto = sc.auto; S.score_total = sc.total; saveState(); }
 
 // ---- Timer ----
-function startTimer() { stopTimer(); tick(); timerHandle = setInterval(tick, 500); }
+function startTimer() { stopTimer(); if (!TIMED) return; tick(); timerHandle = setInterval(tick, 500); }
 function stopTimer() { if (timerHandle) { clearInterval(timerHandle); timerHandle = null; } }
 function tick() {
   if (S.status !== 'in_progress') { stopTimer(); return; }
@@ -925,7 +927,7 @@ function renderStart() {
   stopTimer();
   let h = '<main class="start"><h2>' + esc(D.title) + ' — ' + esc(D.subtitle) + '</h2>';
   h += '<table class="meta">' +
-    '<tr><td>Time limit</td><td><strong>' + (D.time_limit_minutes / 60) + ' hours</strong></td></tr>' +
+    '<tr><td>Time limit</td><td>' + (TIMED ? '<strong>' + (D.time_limit_minutes / 60) + ' hours</strong>' : fmt(D.time_note)) + '</td></tr>' +
     '<tr><td>Points</td><td><strong>' + (P1_PTS + P2_PTS) + '</strong> · Part 1: ' + D.mcqs.length + ' multiple-choice questions × ' + D.mcq_points + ' points (' + P1_PTS + ' points) · Part 2: ' + D.problems.length + ' problems (' + P2_PTS + ' points)</td></tr>' +
     '<tr><td>Covers</td><td>' + esc(D.covers) + '</td></tr>' +
     '<tr><td>Attempts</td><td>One; you can retake the quiz after seeing your results</td></tr></table>';
@@ -1071,7 +1073,10 @@ function renderQuiz() {
     SECTIONS.filter(s => s.kind === 'part' && s.problem === p).forEach(sec => { main += partBox(sec, 'quiz', null); });
   });
   main += '<div class="submit-row"><button class="action big" id="submitbtn">Submit Quiz</button><span class="side-note" id="unans"></span></div>';
-  const side = '<div class="side-box"><div class="side-title">Time Running</div><div class="timer" id="timer">–:––:––</div><div class="side-note">The quiz is submitted automatically at 0:00:00.</div></div>' +
+  const clock = TIMED
+    ? '<div class="side-box"><div class="side-title">Time Running</div><div class="timer" id="timer">–:––:––</div><div class="side-note">The quiz is submitted automatically at 0:00:00.</div></div>'
+    : '<div class="side-box"><div class="side-title">No time limit</div><div class="side-note">Your answers are saved in this browser as you type. Close the page and come back any time; submit when you are done.</div></div>';
+  const side = clock +
                '<div class="side-box"><div class="side-title">Questions</div><div class="qlist" id="qlist"></div></div>' +
                '<button class="action" id="submitbtn2">Submit Quiz</button>';
   app.innerHTML = '<div class="quiz-wrap"><div class="quiz-main">' + main + '</div><aside class="quiz-side">' + side + '</aside></div>';
@@ -1097,7 +1102,7 @@ function scoreCardHTML(sc) {
   const used = S.submitted_at && S.started_at ? Math.min(S.submitted_at - S.started_at, LIMIT_MS) : 0;
   return '<div class="score-card" id="scorecard"><div class="big">Part 1, multiple choice: ' + fmtPts(sc.auto) + ' / ' + fmtPts(sc.autoMax) + ' points</div>' +
     '<div class="score-sub">Graded automatically. Part 2, problems (graded by you with the rubric lines below): <strong>' + fmtPts(sc.selfPts) + ' / ' + fmtPts(sc.selfMax) + '</strong> · Total: <strong>' + fmtPts(sc.total) + ' / ' + fmtPts(sc.max) + '</strong></div>' +
-    '<div class="score-sub muted">Submitted ' + (S.submitted_at ? new Date(S.submitted_at).toLocaleString() : '') + ' · time used ' + hms(used) +
+    '<div class="score-sub muted">Submitted ' + (S.submitted_at ? new Date(S.submitted_at).toLocaleString() : '') + (TIMED ? ' · time used ' + hms(used) : '') +
     (S.auto_submitted ? ' · submitted automatically when the time ran out' : '') + '</div></div>';
 }
 function renderResults() {

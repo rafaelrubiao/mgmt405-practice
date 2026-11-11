@@ -9,6 +9,7 @@ past exam or from the practice bank). The page is unlisted on the site.
 Schema (validated by build_site.py; src/mock_final.py uses the same one):
   MOCK              slug, state_key, name, header_sub, covers, n_mcqs, title, subtitle,
                     time_limit_minutes, mcq_points, rounding_note, start_notes, results_note
+                    (time_limit_minutes = None makes the page untimed; it then shows time_note)
   MOCK["mcqs"]      10 dicts: id, module, topic, stem, ask, choices (5), correct_index, solution
   MOCK["problems"]  dicts: id, title, points, intro, parts
   part              id, label, points, text, items, self_rubric, solution, figure (optional)
