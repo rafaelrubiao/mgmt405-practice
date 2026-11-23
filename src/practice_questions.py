@@ -170,6 +170,85 @@ QUESTIONS += [
 },
 ]
 
+# ---- VeloCity: one story in six steps, modeled on the last question of the Fall 2026 midterm
+#      (elasticity, % change in Q, revenue, MR, revenue-maximizing price, profit-maximizing price).
+#      Demand is ELASTIC here, the opposite case from the midterm. Added Nov 2026.
+VELO = "VeloCity sells e-bikes. Its estimated demand is Q = 18,000 − 30P, where Q is the number of e-bikes sold per month and P is the price per e-bike (in dollars). The current price is $400."
+QUESTIONS += [
+{
+    "id": "m2-q6a", "module": "M2", "theme": "VeloCity (1/6): Elasticity", "format": "open",
+    "stem": VELO,
+    "ask": "What is the own-price elasticity of demand at the current price of $400? (Is demand elastic or inelastic there?)",
+    "answer": -2.0, "tolerance_abs": 0.05, "unit": "",
+    "hints": [
+        "Point elasticity: E = (ΔQ/ΔP) × (P/Q).",
+        "First find Q at P = $400. From the demand equation, ΔQ/ΔP = −30.",
+        "Q = 18,000 − 30 × 400 = 6,000, so E = −30 × 400 / 6,000.",
+    ],
+    "solution": "Q = 18,000 − 30 × 400 = 6,000 e-bikes per month.\n\nE = (ΔQ/ΔP) × (P/Q) = −30 × 400 / 6,000 = −2.0\n\nSince E < −1, demand is ELASTIC at $400: a 1% price increase lowers the quantity sold by 2%.",
+},
+{
+    "id": "m2-q6b", "module": "M2", "theme": "VeloCity (2/6): % Change in Quantity", "format": "open",
+    "stem": VELO + " At this price, the elasticity of demand is −2.0.",
+    "ask": "Using the elasticity, by how much (in %) does the quantity sold change if VeloCity raises its price by 10%?",
+    "answer": -20, "tolerance_abs": 0.1, "unit": "%",
+    "hints": [
+        "Elasticity = (% change in Q) / (% change in P).",
+        "So % change in Q = elasticity × % change in P.",
+        "% change in Q = −2.0 × 10%.",
+    ],
+    "solution": "% change in Q = E × % change in P = −2.0 × 10% = −20%.\n\nCheck with the demand equation: the new price is $440, so Q = 18,000 − 30 × 440 = 4,800, and (4,800 − 6,000) / 6,000 = −20%. (With a straight-line demand, the two methods can give slightly different numbers; here they happen to match.)",
+},
+{
+    "id": "m2-q6c", "module": "M2", "theme": "VeloCity (3/6): Price Increase and Revenue", "format": "open",
+    "stem": VELO,
+    "ask": "VeloCity raises its price by 10%. By how much does total revenue change (in $)?",
+    "answer": -288000, "tolerance_abs": 0, "unit": "$",
+    "hints": [
+        "Total revenue = P × Q. Compute it at the old price and at the new price.",
+        "Old: P = $400, Q = 6,000. New: P = $440, and Q comes from the demand equation.",
+        "New Q = 18,000 − 30 × 440 = 4,800. Compare $440 × 4,800 with $400 × 6,000.",
+    ],
+    "solution": "Old revenue: $400 × 6,000 = $2,400,000\nNew price: $400 × 1.10 = $440, so Q = 18,000 − 30 × 440 = 4,800\nNew revenue: $440 × 4,800 = $2,112,000\n\nChange in revenue = $2,112,000 − $2,400,000 = −$288,000.\n\nRevenue FALLS because demand is elastic: the % drop in quantity (20%) is larger than the % rise in price (10%). On the midterm the opposite happened, because demand was inelastic there.",
+},
+{
+    "id": "m2-q6d", "module": "M2", "theme": "VeloCity (4/6): Marginal Revenue", "format": "open",
+    "stem": VELO,
+    "ask": "What is marginal revenue at the current price of $400 (in $)?",
+    "answer": 200, "tolerance_abs": 0, "unit": "$",
+    "hints": [
+        "Write inverse demand (P as a function of Q). Solving Q = 18,000 − 30P for P gives P = 600 − Q/30.",
+        "For a straight-line inverse demand P = a − bQ, MR = a − 2bQ. Here MR = 600 − Q/15.",
+        "At P = $400, Q = 6,000. Plug it into MR = 600 − Q/15.",
+    ],
+    "solution": "Inverse demand: P = 600 − Q/30\nTotal revenue: TR = 600Q − Q²/30\nMarginal revenue: MR = 600 − Q/15\n\nAt P = $400, Q = 6,000, so MR = 600 − 6,000/15 = 600 − 400 = $200.\n\nMeaning: selling one more e-bike (which requires lowering the price a little on all units) raises total revenue by about $200. MR is positive because demand is elastic at this price.",
+},
+{
+    "id": "m2-q6e", "module": "M2", "theme": "VeloCity (5/6): Revenue-Maximizing Price", "format": "open",
+    "stem": VELO + " Marginal revenue is MR = 600 − Q/15.",
+    "ask": "What price maximizes VeloCity's total revenue (in $)?",
+    "answer": 300, "tolerance_abs": 0, "unit": "$",
+    "hints": [
+        "Total revenue is maximized where MR = 0.",
+        "600 − Q/15 = 0 gives Q = 9,000.",
+        "Plug Q = 9,000 into inverse demand P = 600 − Q/30.",
+    ],
+    "solution": "Set MR = 0: 600 − Q/15 = 0, so Q = 9,000.\nPrice: P = 600 − 9,000/30 = $300.\n\nAt $300 demand is unit-elastic (E = −30 × 300 / 9,000 = −1). Check: TR = $300 × 9,000 = $2,700,000, more than the $2,400,000 earned at $400.",
+},
+{
+    "id": "m2-q6f", "module": "M2", "theme": "VeloCity (6/6): Profit-Maximizing Price", "format": "open",
+    "stem": VELO + " Marginal revenue is MR = 600 − Q/15. Producing one more e-bike costs $240 (constant marginal cost).",
+    "ask": "What price maximizes VeloCity's PROFIT (in $)?",
+    "answer": 420, "tolerance_abs": 0, "unit": "$",
+    "hints": [
+        "Profit is maximized where MR = MC, not where MR = 0. With MC > 0, the profit-maximizing price is above the revenue-maximizing price ($300).",
+        "At the current price, MR = $200 < MC = $240: the last e-bike sold brings in less than it costs. So VeloCity should sell fewer e-bikes at a higher price.",
+        "Solve 600 − Q/15 = 240 for Q, then plug Q into P = 600 − Q/30.",
+    ],
+    "solution": "Set MR = MC: 600 − Q/15 = 240, so Q/15 = 360 and Q = 5,400.\nPrice: P = 600 − 5,400/30 = 600 − 180 = $420.\n\nSo the current price of $400 is a bit too low: at Q = 6,000, MR ($200) is below MC ($240). Raising the price to $420 sells 600 fewer e-bikes and raises profit.\n\nThe revenue-maximizing price ($300) is not the right target either: there MR = 0 < MC. A firm with positive marginal cost always prices in the elastic part of demand, above the revenue-maximizing price.",
+},
+]
+
 # =================== MODULE 3: Production & Costs ===================
 QUESTIONS += [
 {
@@ -642,35 +721,38 @@ QUESTIONS += [
     "solution": "Dominant strategy in 2nd-price sealed-bid auctions: bid your true value.\n\nWhy?\n  • If you bid above true value: you might win the auction but pay more than the item is worth → loss.\n  • If you bid below true value: you might lose to someone who values it less but bid higher than you → forgone profit.\n  • Bidding exactly your value: you win when (and only when) you're the highest valuer, and you pay the 2nd price — so winning is always weakly profitable.\n\nOptimal bid: $1,500. Expected payment if you win: $1,100. Expected surplus: $400.",
 },
 {
-    "id": "m8-q2", "module": "M8", "theme": "First-Price Bidding (Symmetric)", "format": "open",
-    "stem": "You're bidding in a first-price sealed-bid auction. Your private value is $80. You have ONE opponent whose value is independently drawn from a uniform distribution on [$0, $80]. Both bidders use the symmetric Bayes-Nash equilibrium strategy.",
-    "ask": "What is your optimal bid (in $)?",
-    "answer": 40, "tolerance_abs": 1, "unit": "$",
+    # Replaced Nov 2026: the old m8-q2 used the (n-1)/n equilibrium formula, which is not taught.
+    # New id so that progress saved in students' browsers for the old question does not carry over.
+    "id": "m8-q2b", "module": "M8", "theme": "First-Price Bid: Expected Surplus", "format": "open",
+    "stem": "You bid in a first-price sealed-bid auction for a used fishing boat that you value at $40,000. There is one other bidder, and you believe their bid is equally likely to be anywhere between $10,000 and $50,000.",
+    "ask": "Which bid maximizes your expected surplus (in $)?",
+    "answer": 25000, "tolerance_abs": 0, "unit": "$",
     "hints": [
-        "In a first-price auction with n symmetric bidders, each with value uniformly drawn from [0, V], the equilibrium bid is ((n−1)/n) × your value.",
-        "Here n = 2, so the optimal bid is ((2−1)/2) × your value = half your value.",
-        "Bid = ½ × $80 = $40.",
+        "Expected surplus = (your value − your bid) × Pr(you win). In a first-price auction you pay your own bid, so a higher bid wins more often but leaves less surplus.",
+        "You win if the other bid is below yours. The other bid is spread evenly over a $40,000 range starting at $10,000, so Pr(win) = (b − 10,000) / 40,000 for a bid b between $10,000 and $50,000.",
+        "Compute (40,000 − b) × (b − 10,000) / 40,000 for b = $20,000, $25,000 and $30,000, and compare.",
     ],
-    "solution": "In a first-price sealed-bid auction with n symmetric bidders (each value drawn IID from uniform [0, V_max]), the equilibrium bid is:\n  b(v) = ((n − 1) / n) × v\n\nFor n = 2: b(v) = v/2.\n\nYour bid: $80 / 2 = $40.\n\nIntuition: you SHADE your bid below your value because in first-price you pay what you bid. Bidding too low → low win probability. Bidding too high → win but small surplus. The optimum balances these.",
+    "solution": "Expected surplus = (v − b) × Pr(win), with v = $40,000.\n\nPr(win) = (b − 10,000) / 40,000, because the other bid is equally likely to be anywhere between $10,000 and $50,000.\n\n  b = $20,000: ($20,000) × 0.25 = $5,000\n  b = $25,000: ($15,000) × 0.375 = $5,625\n  b = $30,000: ($10,000) × 0.50 = $5,000\n\nThe best bid is $25,000. It sits halfway between the lowest possible rival bid ($10,000) and your value ($40,000): bidding higher raises your chance of winning, but each extra dollar is a dollar less of surplus when you win.\n\nNever bid above $40,000: you would pay more than the boat is worth to you. This is the same trade-off as the house example in class.",
 },
 {
-    "id": "m8-q3", "module": "M8", "theme": "Winner's Curse", "format": "mcq",
-    "stem": "An energy company is bidding for the rights to develop an offshore wind tract. The true value depends on the wind resource and grid conditions — uncertain to all bidders, who each form their own estimate. This is a COMMON-VALUE auction.",
-    "ask": "What is the recommended strategy to avoid the winner's curse?",
+    # Replaced Nov 2026: compares common and private values when more bidders join (slide 25).
+    "id": "m8-q3b", "module": "M8", "theme": "More Bidders: Common vs Private Value", "format": "mcq",
+    "stem": "You take part in two first-price sealed-bid auctions. In both, the number of rival bidders rises from 3 to 20.\n• Auction A: the rights to an offshore wind tract. Its value depends on wind conditions nobody knows for sure, and each bidder has their own estimate.\n• Auction B: a painting you love. Each bidder values it according to personal taste.",
+    "ask": "How should the gap between your bid and your value (or estimate) change in each auction?",
     "choices": [
-        "Refuse to participate in common-value auctions — they're never profitable",
-        "Bid randomly to confuse other bidders",
-        "Bid your private estimate of the value — that's a dominant strategy",
-        "Bid slightly above your estimate to ensure winning",
-        "Shade your bid below your estimate, and shade more when there are more bidders",
+        "Shrink the gap in both auctions",
+        "Widen the gap in both auctions",
+        "Widen the gap in A, shrink it in B",
+        "Shrink the gap in A, widen it in B",
+        "Keep the gap the same in both, because the number of bidders does not matter",
     ],
-    "correct_index": 4,
+    "correct_index": 2,
     "hints": [
-        "The 'winner's curse' refers to what happens to whoever wins a common-value auction.",
-        "Whoever wins likely had the HIGHEST estimate among all bidders. If estimates are unbiased, the highest estimate is likely an OVERESTIMATE of the true value.",
-        "To avoid systematically overpaying, shade your bid BELOW your estimate. The more bidders there are, the more extreme the winning estimate likely is — shade more aggressively.",
+        "First decide which auction is common value and which is private value.",
+        "In A, you only win if your estimate is the highest of all. With 20 rivals, the highest estimate is more likely to be too high than with 3 rivals.",
+        "In B, there is no estimate that can be wrong: your value is your own. With more rivals, shading a lot just means you lose to someone who values the painting less.",
     ],
-    "solution": "Winner's curse: in a common-value auction, the bidder with the highest estimate is the one most likely to have OVERESTIMATED the true value. Naively bidding your estimate leads to systematic overpayment.\n\nOptimal response: shade your bid BELOW your private estimate. With more bidders, the gap between the highest estimate and the true value grows on average, so shade more aggressively when n is large.\n\n(In private-value auctions like 1st-price, you also shade — but for a different reason: to balance win probability against surplus. The winner's-curse shading is on top of that strategic shading.)",
+    "solution": "Auction A is a common-value auction, so the winner's curse applies: the winner is the bidder with the highest estimate, who has most likely overestimated the value. Winning against 20 bidders is stronger bad news about your estimate than winning against 3, so shade MORE (widen the gap).\n\nAuction B is a private-value auction. There is no winner's curse, only competition. With more rivals, a heavily shaded bid is likely to lose, so shade LESS and bid closer to your value (shrink the gap).\n\nThe same change, more bidders, pushes your bid in opposite directions in the two kinds of auction.",
 },
 ]
 
